@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sikh Aid Global — Educate. Empower. Uplift.</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&family=Raleway:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- AOS — Animate on Scroll -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- Swiper -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <style>
+    /* ── VARIABLES ── */
+    :root {
+      --navy:   #00365B;
+      --orange: #F44708;
+      --orange2:#EE802F;
+      --cream:  #F7EDDB;
+      --light:  #F5F7FA;
+      --dark:   #111827;
+      --gray:   #6B7280;
+      --white:  #FFFFFF;
+      --font-primary: 'Jost', sans-serif;
+      --font-heading: 'Raleway', sans-serif;
+      --font-body:    'Lato', sans-serif;
+    }
+
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--dark);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; }
+    a { text-decoration: none; transition: all .25s ease; }
+    img { max-width: 100%; }
+    section { position: relative; }
+
+    /* ── UTILITY ── */
+    .text-navy   { color: var(--navy) !important; }
+    .text-orange { color: var(--orange) !important; }
+    .bg-navy     { background-color: var(--navy) !important; }
+    .bg-orange   { background-color: var(--orange) !important; }
+    .bg-cream    { background-color: var(--cream) !important; }
+    .bg-light-sag{ background-color: var(--light) !important; }
+    .section-pad { padding: 90px 0; }
+    .section-pad-sm { padding: 60px 0; }
+
+    .btn-sag-primary {
+      background: var(--orange);
+      color: #fff;
+      font-family: var(--font-primary);
+      font-weight: 600;
+      font-size: .95rem;
+      letter-spacing: .5px;
+      padding: 12px 32px;
+      border-radius: 4px;
+      border: 2px solid var(--orange);
+      transition: all .3s ease;
+    }
+    .btn-sag-primary:hover {
+      background: transparent;
+      color: var(--orange);
+    }
+    .btn-sag-outline {
+      background: transparent;
+      color: #fff;
+      font-family: var(--font-primary);
+      font-weight: 600;
+      font-size: .95rem;
+      padding: 12px 32px;
+      border-radius: 4px;
+      border: 2px solid #fff;
+      transition: all .3s ease;
+    }
+    .btn-sag-outline:hover {
+      background: #fff;
+      color: var(--navy);
+    }
+    .section-label {
+      font-family: var(--font-primary);
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--orange);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .divider-bar {
+      width: 60px;
+      height: 4px;
+      background: var(--orange);
+      border-radius: 2px;
+      margin: 0 auto 24px;
+    }
+    .divider-bar.left { margin: 0 0 24px; }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      background: var(--navy);
+      color: rgba(255,255,255,.85);
+      font-family: var(--font-primary);
+      font-size: .82rem;
+      padding: 8px 0;
+    }
+    .top-bar a { color: rgba(255,255,255,.85); }
+    .top-bar a:hover { color: var(--orange2); }
+    .top-bar .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.12);
+      color: #fff;
+      font-size: .75rem;
+      margin-left: 6px;
+      transition: all .25s;
+    }
+    .top-bar .social-links a:hover { background: var(--orange); }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      background: #fff;
+      box-shadow: 0 2px 20px rgba(0,0,0,.08);
+      padding: 0;
+      transition: all .35s ease;
+    }
+    .navbar.scrolled {
+      box-shadow: 0 4px 30px rgba(0,0,0,.14);
+    }
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+    }
+    .navbar-brand img { height: 52px; width: auto; }
+    .navbar-brand .brand-text { display: flex; flex-direction: column; }
+    .navbar-brand .brand-name {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.1;
+    }
+    .navbar-brand .brand-sub {
+      font-family: var(--font-primary);
+      font-size: .7rem;
+      color: var(--orange);
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .navbar-nav .nav-link {
+      font-family: var(--font-primary);
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--navy) !important;
+      padding: 24px 16px !important;
+      position: relative;
+      letter-spacing: .3px;
+    }
+    .navbar-nav .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 16px; right: 16px;
+      height: 3px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transition: transform .25s ease;
+    }
+    .navbar-nav .nav-link:hover::after,
+    .navbar-nav .nav-link.active::after { transform: scaleX(1); }
+    .navbar-nav .nav-link:hover { color: var(--orange) !important; }
+    .btn-donate-nav {
+      background: var(--orange);
+      color: #fff !important;
+      padding: 10px 24px !important;
+      border-radius: 4px;
+      font-weight: 700 !important;
+      margin: auto 0 auto 12px;
+      letter-spacing: .5px;
+    }
+    .btn-donate-nav:hover {
+      background: var(--navy) !important;
+      color: #fff !important;
+    }
+    .btn-donate-nav::after { display: none !important; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--navy);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      opacity: .22;
+    }
+    .hero-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 80%, rgba(238,128,47,.18) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(244,71,8,.12) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; z-index: 2; padding: 120px 0 80px; }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(244,71,8,.15);
+      border: 1px solid rgba(244,71,8,.35);
+      border-radius: 50px;
+      padding: 6px 18px;
+      color: var(--orange2);
+      font-family: var(--font-primary);
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow span { width: 6px; height: 6px; background: var(--orange); border-radius: 50%; }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero h1 em { color: var(--orange2); font-style: normal; }
+    .hero p {
+      font-family: var(--font-primary);
+      font-size: 1.15rem;
+      color: rgba(255,255,255,.82);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+    .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-stat-bar {
+      position: relative;
+      z-index: 2;
+      margin-top: 60px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      padding-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+    }
+    .hero-stat-item {
+      text-align: center;
+      padding: 0 20px;
+      border-right: 1px solid rgba(255,255,255,.12);
+    }
+    .hero-stat-item:last-child { border-right: none; }
+    .hero-stat-num {
+      font-family: var(--font-heading);
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--orange2);
+    }
+    .hero-stat-label {
+      font-family: var(--font-primary);
+      font-size: .82rem;
+      color: rgba(255,255,255,.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+    .hero-image-col {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-card-stack {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      margin: 0 auto;
+    }
+    .hero-main-img {
+      border-radius: 16px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.45);
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-floating-badge {
+      position: absolute;
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 20px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.25);
+      z-index: 3;
+      font-family: var(--font-primary);
+    }
+    .hero-floating-badge.top-left {
+      top: -20px; left: -30px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hero-floating-badge.bottom-right {
+      bottom: 30px; right: -30px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .badge-icon {
+      width: 44px; height: 44px;
+      background: var(--orange);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .badge-text-big {
+      font-size: 1.3rem; font-weight: 800; color: var(--navy); line-height: 1;
+    }
+    .badge-text-small {
+      font-size: .72rem; color: var(--gray); text-transform: uppercase; letter-spacing: .5px;
+    }
+
+    /* ── ANNOUNCEMENT BAR ── */
+    .announcement-bar {
+      background: linear-gradient(135deg, var(--orange) 0%, var(--orange2) 100%);
+      color: #fff;
+      font-family: var(--font-primary);
+      font-size: .92rem;
+      font-weight: 500;
+      padding: 14px 0;
+      text-align: center;
+    }
+    .announcement-bar strong { font-weight: 700; }
+    .announcement-bar a { color: #fff; text-decoration: underline; }
+
+    /* ── ABOUT ── */
+    .about-section { background: var(--white); }
+    .about-img-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .about-img-wrap img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+    .about-years-badge {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      background: var(--orange);
+      color: #fff;
+      border-radius: 12px;
+      padding: 18px 22px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(244,71,8,.4);
+    }
+    .about-years-badge .num {
+      font-family: var(--font-heading);
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .about-years-badge .label {
+      font-family: var(--font-primary);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .about-feature {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .about-feature-icon {
+      width: 50px; height: 50px;
+      background: var(--cream);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--orange);
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .about-feature-text h5 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .about-feature-text p {
+      font-size: .88rem;
+      color: var(--gray);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── PROGRAMS ── */
+    .programs-section { background: var(--light); }
+    .program-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+      transition: transform .3s ease, box-shadow .3s ease;
+      height: 100%;
+    }
+    .program-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(0,0,0,.13);
+    }
+    .program-card-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .program-card-img img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: transform .4s ease;
+    }
+    .program-card:hover .program-card-img img { transform: scale(1.06); }
+    .program-card-icon {
+      position: absolute;
+      bottom: -22px; left: 28px;
+      width: 50px; height: 50px;
+      background: var(--orange);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1.3rem;
+      box-shadow: 0 4px 16px rgba(244,71,8,.4);
+    }
+    .program-card-body { padding: 36px 28px 28px; }
+    .program-card-body h4 {
+      color: var(--navy);
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    .program-card-body p {
+      color: var(--gray);
+      font-size: .9rem;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .program-card-link {
+      color: var(--orange);
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: .88rem;
+      letter-spacing: .5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .program-card-link:hover { color: var(--navy); gap: 10px; }
+
+    /* ── MISSION QUOTE ── */
+    .mission-section {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+    .mission-section::before {
+      content: '\201C';
+      position: absolute;
+      top: -60px; left: 40px;
+      font-size: 20rem;
+      color: rgba(255,255,255,.04);
+      font-family: serif;
+      line-height: 1;
+    }
+    .mission-section blockquote {
+      font-family: var(--font-heading);
+      font-size: clamp(1.3rem, 2.5vw, 1.85rem);
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.6;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .mission-section blockquote cite {
+      display: block;
+      font-size: .9rem;
+      color: var(--orange2);
+      font-style: normal;
+      font-family: var(--font-primary);
+      font-weight: 500;
+      margin-top: 20px;
+    }
+    .mission-charity {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 50px;
+      padding: 8px 20px;
+      color: rgba(255,255,255,.75);
+      font-family: var(--font-primary);
+      font-size: .82rem;
+      margin-top: 32px;
+    }
+    .mission-charity i { color: var(--orange); }
+
+    /* ── IMPACT COUNTERS ── */
+    .impact-section { background: var(--cream); }
+    .impact-card {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .impact-icon {
+      width: 70px; height: 70px;
+      background: var(--white);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--orange);
+      font-size: 1.8rem;
+      margin: 0 auto 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.1);
+    }
+    .impact-num {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .impact-num span { color: var(--orange); }
+    .impact-label {
+      font-family: var(--font-primary);
+      font-size: .88rem;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 8px;
+    }
+
+    /* ── NEWS & EVENTS ── */
+    .news-section { background: var(--white); }
+    .news-card {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,.07);
+      background: #fff;
+      transition: transform .3s ease, box-shadow .3s ease;
+      height: 100%;
+      display: flex; flex-direction: column;
+    }
+    .news-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 40px rgba(0,0,0,.13);
+    }
+    .news-card-img { position: relative; overflow: hidden; }
+    .news-card-img img {
+      width: 100%; height: 210px; object-fit: cover;
+      transition: transform .4s ease;
+    }
+    .news-card:hover .news-card-img img { transform: scale(1.05); }
+    .news-date-badge {
+      position: absolute;
+      top: 16px; left: 16px;
+      background: var(--orange);
+      color: #fff;
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: .78rem;
+      padding: 4px 12px;
+      border-radius: 4px;
+    }
+    .news-card-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .news-card-body h5 {
+      color: var(--navy);
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .news-card-body p {
+      color: var(--gray);
+      font-size: .88rem;
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 18px;
+    }
+    .news-card-link {
+      color: var(--orange);
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: .85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .news-card-link:hover { color: var(--navy); gap: 10px; }
+
+    /* ── DONATE CTA ── */
+    .donate-cta {
+      background: linear-gradient(135deg, var(--orange) 0%, #c93600 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .donate-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .donate-cta-content { position: relative; z-index: 1; }
+    .donate-cta h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .donate-cta p {
+      color: rgba(255,255,255,.88);
+      font-family: var(--font-primary);
+      font-size: 1.05rem;
+      margin-bottom: 0;
+    }
+    .btn-donate-cta {
+      background: #fff;
+      color: var(--orange);
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 14px 40px;
+      border-radius: 4px;
+      border: 2px solid #fff;
+      display: inline-block;
+      transition: all .3s;
+      letter-spacing: .5px;
+    }
+    .btn-donate-cta:hover {
+      background: transparent;
+      color: #fff;
+    }
+
+    /* ── GET INVOLVED ── */
+    .involve-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 36px 28px;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,.06);
+      transition: transform .3s ease, box-shadow .3s ease;
+      height: 100%;
+      border-top: 4px solid transparent;
+    }
+    .involve-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 40px rgba(0,0,0,.12);
+      border-top-color: var(--orange);
+    }
+    .involve-icon {
+      width: 72px; height: 72px;
+      background: var(--cream);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--orange);
+      font-size: 1.8rem;
+      margin: 0 auto 20px;
+    }
+    .involve-card h4 { color: var(--navy); font-size: 1.15rem; margin-bottom: 12px; }
+    .involve-card p { color: var(--gray); font-size: .9rem; line-height: 1.7; margin-bottom: 20px; }
+
+    /* ── CONTACT ── */
+    .contact-section { background: var(--light); }
+    .contact-info-card {
+      background: var(--navy);
+      border-radius: 16px;
+      padding: 48px 36px;
+      height: 100%;
+      color: #fff;
+    }
+    .contact-info-card h3 { color: #fff; font-size: 1.6rem; margin-bottom: 8px; }
+    .contact-info-card .subtitle {
+      color: rgba(255,255,255,.7);
+      font-family: var(--font-primary);
+      margin-bottom: 36px;
+    }
+    .contact-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .contact-item-icon {
+      width: 46px; height: 46px;
+      background: rgba(255,255,255,.1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--orange2);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .contact-item-text h6 {
+      color: rgba(255,255,255,.6);
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+      font-family: var(--font-primary);
+      font-weight: 600;
+    }
+    .contact-item-text p {
+      color: #fff;
+      font-family: var(--font-primary);
+      font-size: .95rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .contact-item-text a { color: #fff; }
+    .contact-item-text a:hover { color: var(--orange2); }
+    .contact-socials { display: flex; gap: 10px; margin-top: 36px; }
+    .contact-socials a {
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,.1);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1rem;
+      transition: all .25s;
+    }
+    .contact-socials a:hover { background: var(--orange); }
+
+    .contact-form-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 48px 40px;
+      box-shadow: 0 4px 30px rgba(0,0,0,.07);
+      height: 100%;
+    }
+    .contact-form-card h3 { color: var(--navy); font-size: 1.6rem; margin-bottom: 8px; }
+    .contact-form-card .subtitle { color: var(--gray); font-family: var(--font-primary); margin-bottom: 32px; }
+    .form-control-sag {
+      border: 1.5px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 13px 16px;
+      font-family: var(--font-primary);
+      font-size: .93rem;
+      color: var(--dark);
+      transition: border-color .25s;
+      width: 100%;
+      background: #FAFAFA;
+    }
+    .form-control-sag:focus {
+      outline: none;
+      border-color: var(--orange);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(244,71,8,.1);
+    }
+    .form-label-sag {
+      font-family: var(--font-primary);
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 6px;
+    }
+    .form-group-sag { margin-bottom: 20px; }
+
+    /* ── FOOTER ── */
+    .footer { background: var(--dark); }
+    .footer-top { padding: 70px 0 50px; }
+    .footer-brand img { height: 52px; margin-bottom: 16px; }
+    .footer-brand p {
+      font-family: var(--font-primary);
+      color: rgba(255,255,255,.6);
+      font-size: .9rem;
+      line-height: 1.7;
+      max-width: 280px;
+      margin-bottom: 20px;
+    }
+    .footer-charity-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(244,71,8,.15);
+      border: 1px solid rgba(244,71,8,.3);
+      border-radius: 6px;
+      padding: 6px 14px;
+      color: var(--orange2);
+      font-family: var(--font-primary);
+      font-size: .8rem;
+      font-weight: 600;
+    }
+    .footer-heading {
+      font-family: var(--font-primary);
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,.45);
+      margin-bottom: 20px;
+    }
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a {
+      color: rgba(255,255,255,.65);
+      font-family: var(--font-primary);
+      font-size: .9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-links a i { color: var(--orange); font-size: .7rem; }
+    .footer-links a:hover { color: var(--orange2); padding-left: 4px; }
+    .footer-contact-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      color: rgba(255,255,255,.65);
+      font-family: var(--font-primary);
+      font-size: .88rem;
+      line-height: 1.5;
+    }
+    .footer-contact-item i { color: var(--orange); margin-top: 2px; flex-shrink: 0; }
+    .footer-contact-item a { color: rgba(255,255,255,.65); }
+    .footer-contact-item a:hover { color: var(--orange2); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.07);
+      padding: 20px 0;
+    }
+    .footer-bottom p {
+      color: rgba(255,255,255,.4);
+      font-family: var(--font-primary);
+      font-size: .82rem;
+      margin: 0;
+    }
+    .footer-bottom a { color: rgba(255,255,255,.5); }
+    .footer-bottom a:hover { color: var(--orange2); }
+    .footer-socials { display: flex; gap: 8px; justify-content: flex-end; }
+    .footer-socials a {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,.07);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.6); font-size: .9rem;
+      transition: all .25s;
+    }
+    .footer-socials a:hover { background: var(--orange); color: #fff; }
+
+    /* ── BACK TO TOP ── */
+    #backToTop {
+      position: fixed;
+      bottom: 30px; right: 30px;
+      width: 44px; height: 44px;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      opacity: 0; pointer-events: none;
+      transition: all .3s;
+      z-index: 999;
+      box-shadow: 0 4px 16px rgba(244,71,8,.4);
+    }
+    #backToTop.visible { opacity: 1; pointer-events: auto; }
+    #backToTop:hover { background: var(--navy); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 991px) {
+      .hero-stat-bar { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+      .hero-stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.12); padding-bottom: 20px; }
+      .hero-stat-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,.12); }
+      .hero-stat-item:last-child, .hero-stat-item:nth-last-child(2) { border-bottom: none; }
+      .hero-image-col { display: none; }
+      .navbar-nav .nav-link { padding: 12px 16px !important; }
+      .navbar-nav .nav-link::after { left: 16px; right: auto; width: 40px; }
+    }
+    @media (max-width: 767px) {
+      .section-pad { padding: 60px 0; }
+      .contact-form-card { padding: 32px 24px; }
+      .contact-info-card { padding: 36px 24px; }
+      .footer-socials { justify-content: flex-start; margin-top: 12px; }
+      .hero-floating-badge { display: none; }
+    }
+    @media (max-width: 575px) {
+      .hero-stat-bar { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── TOP BAR ── -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+          <a href="mailto:sikhaidglobal@gmail.com"><i class="fa fa-envelope me-1"></i>sikhaidglobal@gmail.com</a>
+          <span class="d-none d-md-inline opacity-50">|</span>
+          <a href="tel:+447723013160" class="d-none d-md-inline"><i class="fa fa-phone me-1"></i>+44 7723 013160</a>
+        </div>
+        <div class="social-links d-flex align-items-center">
+          <span class="me-2 d-none d-sm-inline">Follow us:</span>
+          <a href="https://web.facebook.com/sikh007" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar navbar-expand-lg sticky-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="https://sikhaidglobal.com/images/newLogo.png" alt="Sikh Aid Global Logo" onerror="this.style.display='none'" />
+        <div class="brand-text">
+          <span class="brand-name">Sikh Aid Global</span>
+          <span class="brand-sub">Educate. Empower. Uplift.</span>
+        </div>
+      </a>
+      <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-expanded="false">
+        <i class="fas fa-bars text-navy"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#programs">Programs</a></li>
+          <li class="nav-item"><a class="nav-link" href="#impact">Impact</a></li>
+          <li class="nav-item"><a class="nav-link" href="#news">News &amp; Events</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item"><a class="nav-link btn-donate-nav" href="https://sikhaidglobal.com/donation" target="_blank"><i class="fas fa-heart me-1"></i>Donate</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── ANNOUNCEMENT ── -->
+  <div class="announcement-bar">
+    <div class="container">
+      <i class="fas fa-star me-2"></i>
+      <strong>Gala Night Event — 28 September 2025</strong> at Normandy Hotel. An evening of fun, dinner &amp; entertainment for all ages!
+      <a href="https://sikhaidglobal.com/events/Gala-Night-Event" target="_blank" class="ms-2">Get Tickets &rarr;</a>
+    </div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="container hero-content">
+      <div class="row align-items-center">
+
+        <!-- Left copy -->
+        <div class="col-lg-6" data-aos="fade-right" data-aos-duration="800">
+          <div class="hero-eyebrow">
+            <span></span>
+            Established 2002 &bull; Charity Reg. SC042137
+          </div>
+          <h1>
+            Educate a Child.<br />
+            <em>Change the World.</em>
+          </h1>
+          <p>
+            Sikh Aid Global is a non-profit organisation dedicated to serving underprivileged communities through education, clean water, healthcare, and welfare programmes across India and beyond.
+          </p>
+          <div class="hero-cta">
+            <a href="https://sikhaidglobal.com/donation" target="_blank" class="btn-sag-primary">
+              <i class="fas fa-heart me-2"></i>Donate Now
+            </a>
+            <a href="#about" class="btn-sag-outline">Learn More</a>
+          </div>
+        </div>
+
+        <!-- Right image stack -->
+        <div class="col-lg-6 hero-image-col" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+          <div class="hero-card-stack">
+            <div class="hero-floating-badge top-left">
+              <div class="badge-icon"><i class="fas fa-graduation-cap"></i></div>
+              <div>
+                <div class="badge-text-big">500+</div>
+                <div class="badge-text-small">Children Educated</div>
+              </div>
+            </div>
+            <img
+              src="https://images.unsplash.com/photo-1594708767771-a7502209ff51?auto=format&fit=crop&w=800&q=80"
+              alt="Children in classroom"
+              class="hero-main-img"
+            />
+            <div class="hero-floating-badge bottom-right">
+              <div class="badge-icon" style="background:var(--navy)"><i class="fas fa-hands-helping"></i></div>
+              <div>
+                <div class="badge-text-big">3 Countries</div>
+                <div class="badge-text-small">UK &bull; India &bull; USA</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="hero-stat-bar" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">22+</div>
+          <div class="hero-stat-label">Years of Service</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">3</div>
+          <div class="hero-stat-label">Countries Active</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">10K+</div>
+          <div class="hero-stat-label">Lives Impacted</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-label">Transparent</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section class="about-section section-pad" id="about">
+    <div class="container">
+      <div class="row align-items-center g-5">
+
+        <div class="col-lg-5" data-aos="fade-right">
+          <div class="about-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=800&q=80"
+              alt="Sikh Aid Global volunteers"
+            />
+            <div class="about-years-badge">
+              <div class="num">22</div>
+              <div class="label">Years of<br />Impact</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-7" data-aos="fade-left">
+          <span class="section-label">About Us</span>
+          <h2 class="section-title">We Believe Every Child<br />Deserves an Education</h2>
+          <div class="divider-bar left"></div>
+          <p class="text-secondary mb-4" style="font-size:.97rem;line-height:1.8;font-family:var(--font-primary)">
+            Every person on the earth has the right to basic needs. Yet many people lack access to fundamental things like education. Sikh Aid Global was established in 2002 as a non-profit organisation devoted to serving underprivileged communities — particularly in the rural areas of India — by providing access to health, clean water, and education to improve their quality of life.
+          </p>
+          <p class="text-secondary mb-4" style="font-size:.97rem;line-height:1.8;font-family:var(--font-primary)">
+            We operate a fully transparent model: we only collect donations for verified cases displayed on our website, acting as a direct bridge between donors and beneficiaries.
+          </p>
+
+          <div class="about-feature" data-aos="fade-up" data-aos-delay="100">
+            <div class="about-feature-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="about-feature-text">
+              <h5>100% Verified Cases</h5>
+              <p>Every beneficiary is verified and their profile is published. Donors can view, contact, and even meet recipients.</p>
+            </div>
+          </div>
+          <div class="about-feature" data-aos="fade-up" data-aos-delay="200">
+            <div class="about-feature-icon"><i class="fas fa-hand-holding-heart"></i></div>
+            <div class="about-feature-text">
+              <h5>Community Driven</h5>
+              <p>Rooted in Sikh values of Seva (selfless service), we empower communities rather than creating dependency.</p>
+            </div>
+          </div>
+          <div class="about-feature" data-aos="fade-up" data-aos-delay="300">
+            <div class="about-feature-icon"><i class="fas fa-globe"></i></div>
+            <div class="about-feature-text">
+              <h5>Global Reach</h5>
+              <p>With supporters in the UK, USA, and Canada, we deliver impact in India's most underserved rural areas.</p>
+            </div>
+          </div>
+
+          <a href="#programs" class="btn-sag-primary mt-2 d-inline-block">Our Programs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MISSION QUOTE ── -->
+  <section class="mission-section section-pad-sm" id="mission">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-9 text-center" data-aos="fade-up">
+          <i class="fas fa-quote-left fa-2x mb-4" style="color:var(--orange2);opacity:.6"></i>
+          <blockquote>
+            Sikh Aid Global is a non-profit organisation dedicated to addressing poverty, injustice, and inequality through education, healthcare, and community development — guided by the timeless Sikh principle of Seva.
+            <cite>— Sikh Aid Global Mission Statement, est. 2002</cite>
+          </blockquote>
+          <div class="mission-charity">
+            <i class="fas fa-certificate"></i>
+            Registered Charity No. SC042137 &bull; Operating since 2002
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROGRAMS ── -->
+  <section class="programs-section section-pad" id="programs">
+    <div class="container">
+      <div class="text-center mb-5" data-aos="fade-up">
+        <span class="section-label">What We Do</span>
+        <h2 class="section-title">Our Core Programs</h2>
+        <div class="divider-bar"></div>
+        <p class="text-secondary mx-auto" style="max-width:560px;font-family:var(--font-primary)">
+          From skill development to schooling and community welfare, our programmes create lasting change in underserved communities.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+          <div class="program-card">
+            <div class="program-card-img">
+              <img src="https://images.unsplash.com/photo-1574602903219-e0e6e90de7f8?auto=format&fit=crop&w=800&q=80" alt="Training" />
+              <div class="program-card-icon"><i class="fas fa-tools"></i></div>
+            </div>
+            <div class="program-card-body">
+              <h4>Skills Training</h4>
+              <p>We organise skill development workshops covering vocational skills through to digital literacy, equipping participants with tools to achieve economic independence.</p>
+              <a href="https://sikhaidglobal.com/project/training" target="_blank" class="program-card-link">
+                Learn More <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+          <div class="program-card">
+            <div class="program-card-img">
+              <img src="https://images.unsplash.com/photo-1497375638960-5c6db1bb8ff0?auto=format&fit=crop&w=800&q=80" alt="Education" />
+              <div class="program-card-icon"><i class="fas fa-graduation-cap"></i></div>
+            </div>
+            <div class="program-card-body">
+              <h4>Education</h4>
+              <p>Education is a superpower that transforms our planet. By giving the next generation access to quality schooling, we unlock their potential and our collective future.</p>
+              <a href="https://sikhaidglobal.com/project/education" target="_blank" class="program-card-link">
+                Learn More <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="program-card">
+            <div class="program-card-img">
+              <img src="https://images.unsplash.com/photo-1593113616828-6f22bca04804?auto=format&fit=crop&w=800&q=80" alt="Welfare Aid" />
+              <div class="program-card-icon"><i class="fas fa-hands-holding-child"></i></div>
+            </div>
+            <div class="program-card-body">
+              <h4>Welfare Aid</h4>
+              <p>Our welfare activities extend to community development projects — housing for Sikligar families, clean water access, healthcare support, and women's empowerment.</p>
+              <a href="https://sikhaidglobal.com/project/welfare_aid" target="_blank" class="program-card-link">
+                Learn More <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── IMPACT COUNTERS ── -->
+  <section class="impact-section section-pad" id="impact">
+    <div class="container">
+      <div class="text-center mb-5" data-aos="fade-up">
+        <span class="section-label">Our Impact</span>
+        <h2 class="section-title">Numbers That Tell Our Story</h2>
+        <div class="divider-bar"></div>
+      </div>
+      <div class="row g-0">
+        <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="0">
+          <div class="impact-card">
+            <div class="impact-icon"><i class="fas fa-users"></i></div>
+            <div class="impact-num counter" data-target="10000">0<span>+</span></div>
+            <div class="impact-label">Lives Impacted</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="100">
+          <div class="impact-card">
+            <div class="impact-icon"><i class="fas fa-school"></i></div>
+            <div class="impact-num counter" data-target="15">0<span>+</span></div>
+            <div class="impact-label">Schools Supported</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="200">
+          <div class="impact-card">
+            <div class="impact-icon"><i class="fas fa-home"></i></div>
+            <div class="impact-num counter" data-target="120">0<span>+</span></div>
+            <div class="impact-label">Homes Built</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
+          <div class="impact-card">
+            <div class="impact-icon"><i class="fas fa-calendar-check"></i></div>
+            <div class="impact-num counter" data-target="22">0<span>+</span></div>
+            <div class="impact-label">Years of Service</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NEWS & EVENTS ── -->
+  <section class="news-section section-pad" id="news">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end mb-5 flex-wrap gap-3" data-aos="fade-up">
+        <div>
+          <span class="section-label">Latest</span>
+          <h2 class="section-title mb-0">News &amp; Events</h2>
+          <div class="divider-bar left mt-3"></div>
+        </div>
+        <a href="https://sikhaidglobal.com/events" target="_blank" class="btn-sag-primary">
+          View All <i class="fas fa-arrow-right ms-1"></i>
+        </a>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+          <div class="news-card">
+            <div class="news-card-img">
+              <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80" alt="Gala Night" />
+              <span class="news-date-badge">28 Sep 2025</span>
+            </div>
+            <div class="news-card-body">
+              <h5>Gala Night Event — Normandy Hotel</h5>
+              <p>A spectacular evening of fun, laughter, and entertainment for all ages with dinner, kids corner, face painting, and a mini zoo.</p>
+              <a href="https://sikhaidglobal.com/events/Gala-Night-Event" target="_blank" class="news-card-link">
+                Read More <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+          <div class="news-card">
+            <div class="news-card-img">
+              <img src="https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=600&q=80" alt="Punjabi Classes" />
+              <span class="news-date-badge">23 Aug 2024</span>
+            </div>
+            <div class="news-card-body">
+              <h5>Gurmat Camp &amp; Punjabi Classes</h5>
+              <p>In addition to the core academic curriculum, children receive extra classes in Punjabi and participate in Gurmat activities.</p>
+              <a href="https://sikhaidglobal.com/events/Real-Means-Of-Langer" target="_blank" class="news-card-link">
+                Read More <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+          <div class="news-card">
+            <div class="news-card-img">
+              <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80" alt="Homes Built" />
+              <span class="news-date-badge">23 Aug 2024</span>
+            </div>
+            <div class="news-card-body">
+              <h5>Build-Up Shelter for Sikligar Community</h5>
+              <p>Houses were built for needy Sikligar families, providing safe and secure shelter for those living in extreme poverty.</p>
+              <a href="https://sikhaidglobal.com/events/Buit-up-Shelter-for-Sikligar" target="_blank" class="news-card-link">
+                Read More <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+          <div class="news-card">
+            <div class="news-card-img">
+              <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80" alt="School Visit" />
+              <span class="news-date-badge">26 Mar 2024</span>
+            </div>
+            <div class="news-card-body">
+              <h5>School Visiting 2024</h5>
+              <p>We visited schools including Gurukul, Sai Baba, New Gyandeep, Flying Future, Fussion School, and Vidhya Vihar to assess needs and deliver support.</p>
+              <a href="https://sikhaidglobal.com/events/School-Visiting-2024" target="_blank" class="news-card-link">
+                Read More <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DONATE CTA ── -->
+  <section class="donate-cta section-pad-sm">
+    <div class="container donate-cta-content">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8" data-aos="fade-right">
+          <h2>Your Donation Can Change a Life Today</h2>
+          <p>A single penny can make a difference. Join thousands of supporters helping us deliver education, clean water, and hope to those who need it most.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end" data-aos="fade-left">
+          <a href="https://sikhaidglobal.com/donation" target="_blank" class="btn-donate-cta">
+            <i class="fas fa-heart me-2"></i>Donate Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GET INVOLVED ── -->
+  <section class="section-pad bg-light-sag">
+    <div class="container">
+      <div class="text-center mb-5" data-aos="fade-up">
+        <span class="section-label">Join Us</span>
+        <h2 class="section-title">Get Involved</h2>
+        <div class="divider-bar"></div>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+          <div class="involve-card">
+            <div class="involve-icon"><i class="fas fa-hand-holding-dollar"></i></div>
+            <h4>Donate</h4>
+            <p>Make a one-time or recurring donation. Every penny goes directly to verified beneficiaries with full transparency.</p>
+            <a href="https://sikhaidglobal.com/donation" target="_blank" class="btn-sag-primary">Give Now</a>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+          <div class="involve-card">
+            <div class="involve-icon"><i class="fas fa-person-walking-luggage"></i></div>
+            <h4>Volunteer</h4>
+            <p>Join our global network of volunteers. Whether in the UK, India, USA or Canada, your skills can make a real difference on the ground.</p>
+            <a href="https://sikhaidglobal.com/signup" target="_blank" class="btn-sag-primary">Register</a>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="involve-card">
+            <div class="involve-icon"><i class="fas fa-building-columns"></i></div>
+            <h4>Partner With Us</h4>
+            <p>Are you an institution, school, or corporate? Partner with Sikh Aid Global to extend your social impact and reach underserved communities.</p>
+            <a href="https://sikhaidglobal.com/institutes" target="_blank" class="btn-sag-primary">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section class="contact-section section-pad" id="contact">
+    <div class="container">
+      <div class="text-center mb-5" data-aos="fade-up">
+        <span class="section-label">Reach Out</span>
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="divider-bar"></div>
+      </div>
+      <div class="row g-4">
+
+        <!-- Info card -->
+        <div class="col-lg-5" data-aos="fade-right">
+          <div class="contact-info-card">
+            <h3>Contact Information</h3>
+            <p class="subtitle">We'd love to hear from you. Reach out however is easiest.</p>
+
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
+              <div class="contact-item-text">
+                <h6>Email</h6>
+                <p><a href="mailto:sikhaidglobal@gmail.com">sikhaidglobal@gmail.com</a></p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fas fa-phone"></i></div>
+              <div class="contact-item-text">
+                <h6>Phone — UK</h6>
+                <p><a href="tel:+447723013160">+44 7723 013160</a></p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fas fa-phone"></i></div>
+              <div class="contact-item-text">
+                <h6>Phone — USA</h6>
+                <p><a href="tel:+15308441523">Deep Singh: +1 (530) 844-1523</a></p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fas fa-phone"></i></div>
+              <div class="contact-item-text">
+                <h6>Phone — Canada</h6>
+                <p>Sukhwinder Singh — contact via email</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fas fa-certificate"></i></div>
+              <div class="contact-item-text">
+                <h6>Registered Charity</h6>
+                <p>SC042137</p>
+              </div>
+            </div>
+
+            <div class="contact-socials">
+              <a href="https://web.facebook.com/sikh007" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="col-lg-7" data-aos="fade-left">
+          <div class="contact-form-card">
+            <h3>Send Us a Message</h3>
+            <p class="subtitle">Fill in the form and we'll get back to you as soon as possible.</p>
+
+            <form action="mailto:sikhaidglobal@gmail.com" method="post" enctype="text/plain">
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <div class="form-group-sag">
+                    <label class="form-label-sag">Your Name *</label>
+                    <input type="text" class="form-control-sag" placeholder="Harpreet Singh" required />
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group-sag">
+                    <label class="form-label-sag">Email *</label>
+                    <input type="email" class="form-control-sag" placeholder="you@example.com" required />
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group-sag">
+                    <label class="form-label-sag">Subject *</label>
+                    <input type="text" class="form-control-sag" placeholder="How can we help?" required />
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group-sag">
+                    <label class="form-label-sag">Message *</label>
+                    <textarea class="form-control-sag" rows="5" placeholder="Your message here..." required style="resize:vertical"></textarea>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn-sag-primary w-100" style="cursor:pointer;font-size:1rem;padding:14px">
+                    <i class="fas fa-paper-plane me-2"></i>Send Message
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row g-5">
+
+          <!-- Brand -->
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-brand">
+              <img src="https://sikhaidglobal.com/images/newLogo.png" alt="Sikh Aid Global" onerror="this.style.display='none'" />
+              <p>A non-profit organisation serving underprivileged communities through education, healthcare, and welfare since 2002. Guided by the Sikh principle of Seva — selfless service.</p>
+              <div class="footer-charity-badge">
+                <i class="fas fa-certificate"></i>
+                Charity Reg. No. SC042137
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="col-lg-2 col-md-6 col-6">
+            <h6 class="footer-heading">Quick Links</h6>
+            <ul class="footer-links">
+              <li><a href="#home"><i class="fas fa-chevron-right"></i>Home</a></li>
+              <li><a href="#about"><i class="fas fa-chevron-right"></i>About Us</a></li>
+              <li><a href="#programs"><i class="fas fa-chevron-right"></i>Programs</a></li>
+              <li><a href="#news"><i class="fas fa-chevron-right"></i>News &amp; Events</a></li>
+              <li><a href="https://news.sikhaidglobal.com/" target="_blank"><i class="fas fa-chevron-right"></i>Blog</a></li>
+              <li><a href="https://sikhaidglobal.com/institutes" target="_blank"><i class="fas fa-chevron-right"></i>Institutes</a></li>
+            </ul>
+          </div>
+
+          <!-- Support -->
+          <div class="col-lg-2 col-md-6 col-6">
+            <h6 class="footer-heading">Support</h6>
+            <ul class="footer-links">
+              <li><a href="https://sikhaidglobal.com/donation" target="_blank"><i class="fas fa-chevron-right"></i>Donate</a></li>
+              <li><a href="https://sikhaidglobal.com/signup" target="_blank"><i class="fas fa-chevron-right"></i>Volunteer</a></li>
+              <li><a href="https://sikhaidglobal.com/signup/donor" target="_blank"><i class="fas fa-chevron-right"></i>Become a Donor</a></li>
+              <li><a href="https://sikhaidglobal.com/our-team" target="_blank"><i class="fas fa-chevron-right"></i>Our Team</a></li>
+              <li><a href="#contact"><i class="fas fa-chevron-right"></i>Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact -->
+          <div class="col-lg-4 col-md-6">
+            <h6 class="footer-heading">Contact Us</h6>
+            <div class="footer-contact-item">
+              <i class="fas fa-envelope"></i>
+              <div><a href="mailto:sikhaidglobal@gmail.com">sikhaidglobal@gmail.com</a></div>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fas fa-phone"></i>
+              <div>
+                <a href="tel:+447723013160">UK: +44 7723 013160</a><br />
+                <a href="tel:+15308441523">USA: +1 (530) 844-1523</a>
+              </div>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fab fa-facebook-f"></i>
+              <div><a href="https://web.facebook.com/sikh007" target="_blank">facebook.com/sikh007</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <p>
+              &copy; 2025 Sikh Aid Global. All rights reserved. &nbsp;|&nbsp;
+              <a href="#">Terms of Use</a> &nbsp;|&nbsp;
+              <a href="#">Privacy Policy</a>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <div class="footer-socials">
+              <a href="https://web.facebook.com/sikh007" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── BACK TO TOP ── -->
+  <button id="backToTop" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- ── SCRIPTS ── -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script>
+    // ── AOS Init ──
+    AOS.init({ once: true, offset: 60, duration: 700, easing: 'ease-out-quad' });
+
+    // ── Navbar scroll shadow ──
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ── Active nav link on scroll ──
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.navbar-nav .nav-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px' });
+    sections.forEach(s => observer.observe(s));
+
+    // ── Back to top ──
+    const btt = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => btt.classList.toggle('visible', window.scrollY > 400));
+
+    // ── Smooth scroll for anchor links ──
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', e => {
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const offset = document.getElementById('mainNav').offsetHeight;
+          window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // ── Counter animation ──
+    function animateCounter(el) {
+      const target = +el.dataset.target;
+      const suffix = el.querySelector('span') ? el.querySelector('span').outerHTML : '';
+      const duration = 2000;
+      const step = target / (duration / 16);
+      let current = 0;
+      const tick = () => {
+        current = Math.min(current + step, target);
+        el.innerHTML = Math.floor(current).toLocaleString() + suffix;
+        if (current < target) requestAnimationFrame(tick);
+      };
+      tick();
+    }
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+    // ── Mobile nav auto-close ──
+    document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        const collapse = document.getElementById('navMenu');
+        if (collapse.classList.contains('show')) {
+          bootstrap.Collapse.getOrCreateInstance(collapse).hide();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
