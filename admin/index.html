@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAG Admin — Sikh Aid Global</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root { --navy:#00365B; --orange:#F44708; --orange2:#EE802F; --sw:260px; }
+    *,*::before,*::after{box-sizing:border-box;}
+    body{font-family:'Jost',sans-serif;background:#F0F2F5;margin:0;}
+
+    /* ── LOGIN ── */
+    #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--navy) 0%,#001f35 100%);}
+    .login-card{background:#fff;border-radius:20px;padding:48px 44px;width:100%;max-width:420px;box-shadow:0 24px 80px rgba(0,0,0,.35);}
+
+    /* ── LAYOUT ── */
+    #adminPanel{display:flex;min-height:100vh;}
+
+    /* ── SIDEBAR ── */
+    #sidebar{width:var(--sw);background:var(--navy);position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:1000;display:flex;flex-direction:column;transition:transform .3s;}
+    .sb-logo{padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:12px;}
+    .sb-logo img{height:40px;}
+    .sb-section{padding:18px 20px 6px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.38);}
+    .sb-link{display:flex;align-items:center;gap:12px;padding:10px 20px;color:rgba(255,255,255,.65);text-decoration:none;font-size:.88rem;font-weight:500;border-left:3px solid transparent;transition:all .2s;cursor:pointer;}
+    .sb-link:hover{color:#fff;background:rgba(255,255,255,.07);}
+    .sb-link.active{color:#fff;background:rgba(255,255,255,.1);border-left-color:var(--orange);}
+    .sb-link i{width:18px;text-align:center;}
+    .sb-badge{margin-left:auto;background:var(--orange);color:#fff;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:10px;min-width:20px;text-align:center;}
+    .sb-bottom{margin-top:auto;padding:12px 0;border-top:1px solid rgba(255,255,255,.08);}
+
+    /* ── MAIN ── */
+    #mainWrap{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh;}
+
+    /* ── TOPBAR ── */
+    .topbar{background:#fff;height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 12px rgba(0,0,0,.07);position:sticky;top:0;z-index:99;}
+    .topbar-title{font-size:1rem;font-weight:700;color:var(--navy);}
+    .admin-av{width:36px;height:36px;background:var(--navy);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;}
+
+    /* ── PAGE ── */
+    .page{padding:24px;flex:1;}
+    .view{display:none;}
+    .view.active{display:block;}
+
+    /* ── STAT CARDS ── */
+    .stat-card{background:#fff;border-radius:14px;padding:22px 24px;box-shadow:0 2px 12px rgba(0,0,0,.05);border-left:4px solid var(--orange);}
+    .stat-num{font-size:2rem;font-weight:800;color:var(--navy);line-height:1;}
+    .stat-label{font-size:.76rem;color:#9CA3AF;text-transform:uppercase;letter-spacing:.5px;margin-top:4px;}
+    .stat-icon{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+
+    /* ── CARD ── */
+    .card-sag{background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.05);overflow:hidden;}
+    .card-hdr{padding:18px 24px;border-bottom:1px solid #F3F4F6;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+    .card-hdr-title{font-size:.95rem;font-weight:700;color:var(--navy);margin:0;}
+
+    /* ── TABLE ── */
+    .table th{background:#F9FAFB;font-size:.73rem;text-transform:uppercase;letter-spacing:.5px;color:#6B7280;border:none;padding:11px 16px;font-weight:700;}
+    .table td{padding:13px 16px;vertical-align:middle;border-color:#F3F4F6;font-size:.88rem;}
+    .table tbody tr:hover{background:#FAFAFA;}
+
+    /* ── BADGES ── */
+    .s-badge{padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;display:inline-block;}
+    .b-pending{background:#FEF3C7;color:#92400E;}
+    .b-approved{background:#D1FAE5;color:#065F46;}
+    .b-rejected{background:#FEE2E2;color:#991B1B;}
+    .b-monthly{background:#EDE9FE;color:#5B21B6;}
+    .b-onetime{background:#DBEAFE;color:#1E40AF;}
+    .b-active{background:#D1FAE5;color:#065F46;}
+
+    /* ── BUTTONS ── */
+    .btn-sag{background:var(--orange);color:#fff;border:none;border-radius:7px;padding:8px 20px;font-family:'Jost';font-weight:600;font-size:.88rem;cursor:pointer;transition:background .2s;}
+    .btn-sag:hover{background:#d93d07;color:#fff;}
+
+    /* ── FORMS ── */
+    .form-card{background:#fff;border-radius:14px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.05);}
+    .fsec{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--orange);border-bottom:2px solid #F3F4F6;padding-bottom:8px;margin-bottom:18px;margin-top:4px;}
+    .form-control,.form-select{border:1.5px solid #E5E7EB;border-radius:8px;font-family:'Jost';font-size:.9rem;padding:10px 14px;transition:border-color .2s;}
+    .form-control:focus,.form-select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(244,71,8,.1);outline:none;}
+    .form-label{font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#374151;margin-bottom:5px;}
+
+    /* ── UPLOAD ── */
+    .upload-area{border:2px dashed #E5E7EB;border-radius:12px;padding:22px 16px;text-align:center;cursor:pointer;transition:all .2s;position:relative;}
+    .upload-area:hover{border-color:var(--orange);background:#FFF8F6;}
+    .upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+    .photo-circle{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid var(--orange);display:block;margin:0 auto 8px;}
+    .upload-progress{height:4px;background:#F3F4F6;border-radius:2px;overflow:hidden;margin-top:8px;display:none;}
+    .upload-progress-bar{height:100%;background:var(--orange);border-radius:2px;transition:width .3s;}
+
+    /* ── PROFILE CARD ── */
+    .profile-hero{background:var(--navy);border-radius:14px;padding:30px;text-align:center;color:#fff;}
+    .profile-hero img{width:96px;height:96px;border-radius:50%;border:4px solid var(--orange2);object-fit:cover;margin-bottom:14px;}
+    .profile-hero .initials{width:96px;height:96px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:800;color:#fff;margin:0 auto 14px;}
+    .profile-hero h4{color:#fff;font-size:1.2rem;margin-bottom:2px;}
+    .profile-hero .sub{color:rgba(255,255,255,.6);font-size:.83rem;}
+    .amount-box{background:rgba(255,255,255,.1);border-radius:10px;padding:14px;margin-top:18px;}
+    .amount-box .big{font-size:1.8rem;font-weight:800;color:var(--orange2);}
+    .amount-box .small{font-size:.73rem;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.5px;}
+    .detail-field{margin-bottom:14px;}
+    .detail-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.8px;color:#9CA3AF;margin-bottom:2px;}
+    .detail-value{font-size:.92rem;font-weight:600;color:#111827;}
+
+    /* ── MODAL ── */
+    .modal-header{background:var(--navy);color:#fff;}
+    .modal-header .btn-close{filter:invert(1);}
+    .modal-title{color:#fff;}
+
+    /* ── TOAST ── */
+    #toastZone{position:fixed;top:72px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;}
+    .toast-item{padding:12px 18px;border-radius:10px;font-size:.86rem;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 6px 24px rgba(0,0,0,.14);max-width:320px;animation:slideIn .3s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateX(40px);}to{opacity:1;transform:translateX(0);}}
+    .t-success{background:#D1FAE5;color:#065F46;}
+    .t-error{background:#FEE2E2;color:#991B1B;}
+    .t-info{background:#DBEAFE;color:#1E40AF;}
+
+    /* ── MISC ── */
+    .search-wrap{position:relative;}
+    .search-wrap input{padding-left:34px;width:210px;}
+    .search-wrap i{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:#9CA3AF;font-size:.82rem;}
+    .empty-state{text-align:center;padding:50px 20px;color:#9CA3AF;}
+    .empty-state i{font-size:2.6rem;margin-bottom:12px;display:block;color:#D1D5DB;}
+    .av{width:34px;height:34px;border-radius:50%;object-fit:cover;}
+    .av-text{width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:.76rem;flex-shrink:0;}
+    .event-card{background:#fff;border-radius:14px;padding:22px 24px;box-shadow:0 2px 12px rgba(0,0,0,.05);height:100%;}
+    .prog-bar{height:6px;background:#F3F4F6;border-radius:3px;overflow:hidden;}
+    .prog-fill{height:100%;background:var(--orange);border-radius:3px;}
+
+    @media(max-width:768px){
+      #sidebar{transform:translateX(-100%);}
+      #sidebar.open{transform:translateX(0);}
+      #mainWrap{margin-left:0;}
+      .login-card{padding:32px 24px;margin:20px;}
+    }
+  </style>
+</head>
+<body>
+
+<div id="toastZone"></div>
+
+<!-- ══════════════ LOGIN ══════════════ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="text-center mb-4">
+      <img src="https://sikhaidglobal.com/images/newLogo.png" alt="SAG" style="height:58px;margin-bottom:14px" onerror="this.style.display='none'">
+      <h4 style="color:var(--navy);font-weight:800;margin-bottom:4px">Admin Portal</h4>
+      <p style="color:#9CA3AF;font-size:.84rem;margin:0">Sikh Aid Global — Authorised Access Only</p>
+    </div>
+    <div id="loginErr" class="alert alert-danger py-2 d-none" style="font-size:.84rem"></div>
+    <div class="mb-3">
+      <label class="form-label">Email Address</label>
+      <input type="email" id="li_email" class="form-control" placeholder="admin@sikhaidglobal.com" autocomplete="email">
+    </div>
+    <div class="mb-4">
+      <label class="form-label">Password</label>
+      <input type="password" id="li_pass" class="form-control" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn-sag w-100 py-2 btn" onclick="doLogin()" id="loginBtn" style="font-size:.95rem">
+      Sign In <i class="fas fa-arrow-right ms-1"></i>
+    </button>
+    <div id="loginSpinner" class="text-center mt-3 d-none">
+      <div class="spinner-border spinner-border-sm text-secondary"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ ADMIN PANEL ══════════════ -->
+<div id="adminPanel" style="display:none">
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sb-logo">
+      <img src="https://sikhaidglobal.com/images/newLogo.png" alt="SAG" onerror="this.style.display='none'">
+      <div>
+        <div style="font-weight:800;font-size:.9rem;color:#fff">SAG Admin</div>
+        <div style="font-size:.68rem;color:rgba(255,255,255,.45)">Sikh Aid Global</div>
+      </div>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding-bottom:8px">
+      <div class="sb-section">Overview</div>
+      <a class="sb-link active" onclick="nav('dashboard',this)"><i class="fas fa-th-large"></i>Dashboard</a>
+
+      <div class="sb-section">Management</div>
+      <a class="sb-link" onclick="nav('students',this)"><i class="fas fa-user-graduate"></i>Students<span class="sb-badge" id="nb_s">0</span></a>
+      <a class="sb-link" onclick="nav('schools',this)"><i class="fas fa-school"></i>Schools &amp; Institutions</a>
+
+      <div class="sb-section">Funding</div>
+      <a class="sb-link" onclick="nav('requests',this)"><i class="fas fa-file-alt"></i>Donation Requests<span class="sb-badge" id="nb_r">0</span></a>
+      <a class="sb-link" onclick="nav('monthly',this)"><i class="fas fa-sync-alt"></i>Monthly Requests</a>
+      <a class="sb-link" onclick="nav('approvals',this)"><i class="fas fa-check-circle"></i>Approvals</a>
+
+      <div class="sb-section">Events</div>
+      <a class="sb-link" onclick="nav('events',this)"><i class="fas fa-calendar-alt"></i>Fundraising Events</a>
+    </div>
+    <div class="sb-bottom">
+      <a class="sb-link" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i>Sign Out</a>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div id="mainWrap">
+    <div class="topbar">
+      <div class="d-flex align-items-center gap-3">
+        <button class="btn btn-sm border-0 d-md-none" onclick="document.getElementById('sidebar').classList.toggle('open')">
+          <i class="fas fa-bars" style="color:var(--navy)"></i>
+        </button>
+        <span class="topbar-title" id="topTitle">Dashboard</span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <span style="font-size:.82rem;color:#6B7280" id="topEmail"></span>
+        <div class="admin-av" id="topAv">A</div>
+      </div>
+    </div>
+
+    <div class="page">
+
+      <!-- ══ DASHBOARD ══ -->
+      <div class="view active" id="view-dashboard">
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-xl-3">
+            <div class="stat-card">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="stat-icon" style="background:#FEF3C7;color:#D97706"><i class="fas fa-hourglass-half"></i></div>
+                <span class="s-badge b-pending">Pending</span>
+              </div>
+              <div class="stat-num" id="d_pending">—</div>
+              <div class="stat-label">Awaiting Review</div>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card" style="border-left-color:#10B981">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="stat-icon" style="background:#D1FAE5;color:#10B981"><i class="fas fa-check-circle"></i></div>
+                <span class="s-badge b-approved">Active</span>
+              </div>
+              <div class="stat-num" id="d_approved">—</div>
+              <div class="stat-label">Approved Students</div>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card" style="border-left-color:#8B5CF6">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="stat-icon" style="background:#EDE9FE;color:#8B5CF6"><i class="fas fa-sync-alt"></i></div>
+                <span class="s-badge b-monthly">Monthly</span>
+              </div>
+              <div class="stat-num" id="d_monthly">—</div>
+              <div class="stat-label">Monthly Fundings</div>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card" style="border-left-color:var(--navy)">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="stat-icon" style="background:#DBEAFE;color:var(--navy)"><i class="fas fa-school"></i></div>
+              </div>
+              <div class="stat-num" id="d_schools">—</div>
+              <div class="stat-label">Affiliated Schools</div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-lg-7">
+            <div class="card-sag">
+              <div class="card-hdr">
+                <h6 class="card-hdr-title">Recent Applications</h6>
+                <button class="btn-sag btn btn-sm" onclick="nav('students',null)">View All</button>
+              </div>
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead><tr><th>Student</th><th>Village</th><th>Amount</th><th>Status</th></tr></thead>
+                  <tbody id="d_recent"><tr><td colspan="4" class="text-center py-4 text-muted">Loading…</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="card-sag h-100">
+              <div class="card-hdr"><h6 class="card-hdr-title">Upcoming Events</h6></div>
+              <div class="p-3" id="d_events"><div class="text-center py-4 text-muted" style="font-size:.85rem">Loading…</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ STUDENTS ══ -->
+      <div class="view" id="view-students">
+        <div class="card-sag">
+          <div class="card-hdr">
+            <h6 class="card-hdr-title">Student Fund Applications</h6>
+            <div class="d-flex gap-2 flex-wrap">
+              <div class="search-wrap">
+                <i class="fas fa-search"></i>
+                <input class="form-control form-control-sm" id="s_q" placeholder="Search…" oninput="filterStudents()">
+              </div>
+              <select class="form-select form-select-sm" id="s_f" style="width:130px" onchange="filterStudents()">
+                <option value="">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+              <button class="btn-sag btn btn-sm" onclick="openForm()"><i class="fas fa-plus me-1"></i>New Application</button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead><tr><th>Student</th><th>Village / Tehsil</th><th>School / Board</th><th>Funding</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="studentsTbody"><tr><td colspan="7" class="text-center py-4 text-muted">Loading…</td></tr></tbody>
+            </table>
+          </div>
+          <div class="px-4 py-2 text-muted" style="font-size:.78rem" id="s_count"></div>
+        </div>
+      </div>
+
+      <!-- ══ STUDENT FORM ══ -->
+      <div class="view" id="view-student-form">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <button class="btn btn-sm btn-light" onclick="nav('students',null)"><i class="fas fa-arrow-left me-1"></i>Back</button>
+          <h5 class="mb-0 fw-bold" style="color:var(--navy)" id="sf_title">New Application</h5>
+        </div>
+        <form id="studentForm" onsubmit="saveStudent(event)">
+          <input type="hidden" id="sf_id">
+          <div class="row g-4">
+            <div class="col-lg-4">
+              <div class="form-card text-center mb-4">
+                <div class="fsec text-start">Profile Photo</div>
+                <div class="upload-area">
+                  <input type="file" id="sf_photoFile" accept="image/*" onchange="previewPhoto(this)">
+                  <img id="sf_photoPreview" class="photo-circle d-none">
+                  <div id="sf_photoPH">
+                    <i class="fas fa-camera fa-2x d-block mb-2" style="color:#D1D5DB"></i>
+                    <span style="font-size:.8rem;color:#9CA3AF">Click to upload photo</span>
+                  </div>
+                </div>
+                <div class="upload-progress" id="pp"><div class="upload-progress-bar" id="ppb" style="width:0"></div></div>
+              </div>
+              <div class="form-card">
+                <div class="fsec text-start">Report Card</div>
+                <div class="upload-area">
+                  <input type="file" id="sf_reportFile" accept="image/*,.pdf" onchange="document.getElementById('sf_reportLbl').textContent='✓ '+this.files[0].name">
+                  <i class="fas fa-file-alt fa-2x d-block mb-2" style="color:#D1D5DB"></i>
+                  <div id="sf_reportLbl" style="font-size:.8rem;color:#9CA3AF">Click to upload report card (PDF or image)</div>
+                </div>
+                <div class="upload-progress" id="rp"><div class="upload-progress-bar" id="rpb" style="width:0"></div></div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <div class="form-card">
+                <div class="fsec">Personal Information</div>
+                <div class="row g-3 mb-4">
+                  <div class="col-md-6"><label class="form-label">Full Name *</label><input type="text" class="form-control" id="sf_name" required placeholder="Gurpreet Singh"></div>
+                  <div class="col-md-6"><label class="form-label">Father's Name *</label><input type="text" class="form-control" id="sf_fatherName" required></div>
+                  <div class="col-md-6"><label class="form-label">Mother's Name *</label><input type="text" class="form-control" id="sf_motherName" required></div>
+                  <div class="col-md-6"><label class="form-label">Phone Number *</label><input type="tel" class="form-control" id="sf_phone" required placeholder="+91 98765 43210"></div>
+                </div>
+                <div class="fsec">Address</div>
+                <div class="row g-3 mb-4">
+                  <div class="col-md-4"><label class="form-label">Village *</label><input type="text" class="form-control" id="sf_village" required></div>
+                  <div class="col-md-4"><label class="form-label">Tehsil *</label><input type="text" class="form-control" id="sf_tehsil" required></div>
+                  <div class="col-md-4"><label class="form-label">Post Office *</label><input type="text" class="form-control" id="sf_postOffice" required></div>
+                </div>
+                <div class="fsec">Education Details</div>
+                <div class="row g-3 mb-4">
+                  <div class="col-md-6"><label class="form-label">School Name *</label><input type="text" class="form-control" id="sf_school" required></div>
+                  <div class="col-md-6">
+                    <label class="form-label">Board of Education *</label>
+                    <select class="form-select" id="sf_board" required>
+                      <option value="">Select Board</option>
+                      <option>Punjab School Education Board (PSEB)</option>
+                      <option>Central Board of Secondary Education (CBSE)</option>
+                      <option>ICSE</option>
+                      <option>Haryana Board (HBSE)</option>
+                      <option>Himachal Pradesh Board</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Grade / Class *</label>
+                    <select class="form-select" id="sf_grade" required>
+                      <option value="">Select</option>
+                      <option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option>
+                      <option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option>
+                      <option>Class 11</option><option>Class 12</option><option>Undergraduate</option><option>Postgraduate</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4"><label class="form-label">Last Year %</label><input type="text" class="form-control" id="sf_percentage" placeholder="e.g. 78%"></div>
+                  <div class="col-md-4"><label class="form-label">Academic Year</label><input type="text" class="form-control" id="sf_academicYear" placeholder="2024-25"></div>
+                </div>
+                <div class="fsec">Funding Details</div>
+                <div class="row g-3 mb-4">
+                  <div class="col-md-4"><label class="form-label">Amount Required (£) *</label><input type="number" class="form-control" id="sf_amount" required min="1"></div>
+                  <div class="col-md-4">
+                    <label class="form-label">Funding Type *</label>
+                    <select class="form-select" id="sf_fundingType" required>
+                      <option value="">Select</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="one-time">One-Time</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="sf_status">
+                      <option value="pending">Pending</option>
+                      <option value="approved">Approved</option>
+                      <option value="rejected">Rejected</option>
+                    </select>
+                  </div>
+                  <div class="col-12"><label class="form-label">Notes</label><textarea class="form-control" id="sf_notes" rows="3" placeholder="Family background, special circumstances…"></textarea></div>
+                </div>
+                <div class="d-flex gap-3">
+                  <button type="submit" class="btn-sag btn" id="sf_saveBtn"><i class="fas fa-save me-2"></i>Save Application</button>
+                  <button type="button" class="btn btn-light" onclick="nav('students',null)">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- ══ STUDENT DETAIL ══ -->
+      <div class="view" id="view-student-detail">
+        <div class="d-flex align-items-center gap-3 mb-4 flex-wrap">
+          <button class="btn btn-sm btn-light" onclick="nav('students',null)"><i class="fas fa-arrow-left me-1"></i>Back</button>
+          <h5 class="mb-0 fw-bold" style="color:var(--navy)" id="det_title">Profile</h5>
+          <div class="ms-auto d-flex gap-2">
+            <button class="btn btn-sm btn-outline-primary" id="det_editBtn"><i class="fas fa-edit me-1"></i>Edit</button>
+            <button class="btn-sag btn btn-sm" onclick="openShareModal()"><i class="fas fa-share me-1"></i>Share Report</button>
+          </div>
+        </div>
+        <div class="row g-4" id="det_body"></div>
+      </div>
+
+      <!-- ══ SCHOOLS ══ -->
+      <div class="view" id="view-schools">
+        <div class="card-sag">
+          <div class="card-hdr">
+            <h6 class="card-hdr-title">Schools &amp; Institutions</h6>
+            <div class="d-flex gap-2 flex-wrap">
+              <div class="search-wrap">
+                <i class="fas fa-search"></i>
+                <input class="form-control form-control-sm" id="sch_q" placeholder="Search…" oninput="renderSchools()">
+              </div>
+              <button class="btn-sag btn btn-sm" data-bs-toggle="modal" data-bs-target="#schoolModal" onclick="openSchoolModal()">
+                <i class="fas fa-plus me-1"></i>Add School
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead><tr><th>School</th><th>Location</th><th>Board</th><th>Principal</th><th>Students</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="schoolsTbody"><tr><td colspan="7" class="text-center py-4 text-muted">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ APPROVALS ══ -->
+      <div class="view" id="view-approvals">
+        <div class="card-sag">
+          <div class="card-hdr"><h6 class="card-hdr-title">Approved Funding</h6></div>
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead><tr><th>Student</th><th>Approved Date</th><th>Amount</th><th>Type</th><th>Months Funded</th><th>Total Paid</th><th>Actions</th></tr></thead>
+              <tbody id="approvalsTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ REQUESTS ══ -->
+      <div class="view" id="view-requests">
+        <ul class="nav nav-tabs mb-3">
+          <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab_pend">Pending Review</button></li>
+          <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab_ot">One-Time</button></li>
+          <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab_all">All Requests</button></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="tab_pend">
+            <div class="card-sag"><div class="table-responsive">
+              <table class="table mb-0">
+                <thead><tr><th>Student</th><th>Amount</th><th>Type</th><th>Applied</th><th>Actions</th></tr></thead>
+                <tbody id="pendTbody"></tbody>
+              </table>
+            </div></div>
+          </div>
+          <div class="tab-pane fade" id="tab_ot">
+            <div class="card-sag"><div class="table-responsive">
+              <table class="table mb-0">
+                <thead><tr><th>Student</th><th>Amount</th><th>Applied</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="otTbody"></tbody>
+              </table>
+            </div></div>
+          </div>
+          <div class="tab-pane fade" id="tab_all">
+            <div class="card-sag"><div class="table-responsive">
+              <table class="table mb-0">
+                <thead><tr><th>Student</th><th>Amount</th><th>Type</th><th>Status</th><th>Applied</th><th>Actions</th></tr></thead>
+                <tbody id="allTbody"></tbody>
+              </table>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ MONTHLY ══ -->
+      <div class="view" id="view-monthly">
+        <div class="card-sag">
+          <div class="card-hdr"><h6 class="card-hdr-title">Monthly Funding Tracker</h6></div>
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead><tr><th>Student</th><th>Monthly Amount</th><th>Approved Date</th><th>Months Funded</th><th>Total Paid</th><th>Actions</th></tr></thead>
+              <tbody id="monthlyTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ EVENTS ══ -->
+      <div class="view" id="view-events">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5 class="fw-bold mb-0" style="color:var(--navy)">Fundraising Events</h5>
+          <button class="btn-sag btn btn-sm" data-bs-toggle="modal" data-bs-target="#eventModal" onclick="openEventModal()">
+            <i class="fas fa-plus me-1"></i>Add Event
+          </button>
+        </div>
+        <div class="row g-4" id="eventsGrid"></div>
+      </div>
+
+    </div><!-- /page -->
+  </div><!-- /mainWrap -->
+</div><!-- /adminPanel -->
+
+<!-- ══════ MODALS ══════ -->
+
+<!-- SHARE -->
+<div class="modal fade" id="shareModal" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title"><i class="fas fa-share me-2"></i>Share Student Report</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <div id="shareInfo" class="p-3 rounded mb-3" style="background:#F9FAFB;font-size:.86rem;border-left:3px solid var(--orange)"></div>
+      <div class="mb-3">
+        <label class="form-label">Recipient Emails (comma-separated) *</label>
+        <input type="text" class="form-control" id="share_emails" placeholder="donor@email.com, volunteer@email.com">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Message</label>
+        <textarea class="form-control" id="share_msg" rows="6"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+      <button class="btn-sag btn" onclick="sendShare()"><i class="fas fa-envelope me-2"></i>Send Email</button>
+    </div>
+  </div></div>
+</div>
+
+<!-- SCHOOL -->
+<div class="modal fade" id="schoolModal" tabindex="-1">
+  <div class="modal-dialog modal-lg"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" id="schModalTitle">Add School</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <input type="hidden" id="sch_id">
+      <div class="row g-3">
+        <div class="col-md-8"><label class="form-label">School Name *</label><input type="text" class="form-control" id="sch_name"></div>
+        <div class="col-md-4"><label class="form-label">Type</label><select class="form-select" id="sch_type"><option value="government">Government</option><option value="private">Private</option><option value="ngo">NGO / Trust</option></select></div>
+        <div class="col-md-6"><label class="form-label">Village / Location</label><input type="text" class="form-control" id="sch_location"></div>
+        <div class="col-md-6"><label class="form-label">Tehsil / District</label><input type="text" class="form-control" id="sch_district"></div>
+        <div class="col-md-6"><label class="form-label">Board</label><input type="text" class="form-control" id="sch_board" placeholder="PSEB / CBSE"></div>
+        <div class="col-md-6"><label class="form-label">Principal Name</label><input type="text" class="form-control" id="sch_principal"></div>
+        <div class="col-md-6"><label class="form-label">Phone</label><input type="text" class="form-control" id="sch_phone"></div>
+        <div class="col-md-6"><label class="form-label">Email</label><input type="email" class="form-control" id="sch_email"></div>
+        <div class="col-md-6"><label class="form-label">Students Supported</label><input type="number" class="form-control" id="sch_students" value="0" min="0"></div>
+        <div class="col-md-6"><label class="form-label">Affiliated Since</label><input type="date" class="form-control" id="sch_since"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+      <button class="btn-sag btn" onclick="saveSchool()"><i class="fas fa-save me-1"></i>Save</button>
+    </div>
+  </div></div>
+</div>
+
+<!-- EVENT -->
+<div class="modal fade" id="eventModal" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" id="evModalTitle">Add Event</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <input type="hidden" id="ev_id">
+      <div class="row g-3">
+        <div class="col-12"><label class="form-label">Event Name *</label><input type="text" class="form-control" id="ev_name"></div>
+        <div class="col-md-6"><label class="form-label">Date *</label><input type="date" class="form-control" id="ev_date"></div>
+        <div class="col-md-6"><label class="form-label">Status</label><select class="form-select" id="ev_status"><option value="planned">Planned</option><option value="ongoing">Ongoing</option><option value="completed">Completed</option></select></div>
+        <div class="col-12"><label class="form-label">Location</label><input type="text" class="form-control" id="ev_location"></div>
+        <div class="col-md-6"><label class="form-label">Target Amount (£)</label><input type="number" class="form-control" id="ev_target" min="0"></div>
+        <div class="col-md-6"><label class="form-label">Amount Raised (£)</label><input type="number" class="form-control" id="ev_raised" min="0" value="0"></div>
+        <div class="col-12"><label class="form-label">Description</label><textarea class="form-control" id="ev_desc" rows="3"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+      <button class="btn-sag btn" onclick="saveEvent()">Save Event</button>
+    </div>
+  </div></div>
+</div>
+
+<!-- DELETE -->
+<div class="modal fade" id="delModal" tabindex="-1">
+  <div class="modal-dialog modal-sm"><div class="modal-content">
+    <div class="modal-header" style="background:#FEE2E2"><h5 class="modal-title" style="color:#991B1B"><i class="fas fa-exclamation-triangle me-2"></i>Delete?</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body"><p style="font-size:.88rem" id="delMsg">This cannot be undone.</p></div>
+    <div class="modal-footer">
+      <button class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
+      <button class="btn btn-danger btn-sm" id="delBtn">Delete</button>
+    </div>
+  </div></div>
+</div>
+
+<!-- Firebase compat SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// ══════════════════════════════════
+//  FIREBASE INIT
+// ══════════════════════════════════
+firebase.initializeApp({
+  apiKey: "AIzaSyBrwnnvO4Lm6tX-aeYf5xmhJWIp4JPCQTc",
+  authDomain: "sikh-aid-global.firebaseapp.com",
+  projectId: "sikh-aid-global",
+  storageBucket: "sikh-aid-global.firebasestorage.app",
+  messagingSenderId: "1051932848118",
+  appId: "1:1051932848118:web:7dd77fe18e04288557a1d7"
+});
+const auth    = firebase.auth();
+const db      = firebase.firestore();
+const storage = firebase.storage();
+const TS      = firebase.firestore.FieldValue.serverTimestamp;
+
+// ══════════════════════════════════
+//  STATE
+// ══════════════════════════════════
+let students = [], schools = [], events = [];
+let curStudentId = null;
+let unsubs = [];
+
+// ══════════════════════════════════
+//  AUTH
+// ══════════════════════════════════
+auth.onAuthStateChanged(user => {
+  if (user) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display  = 'flex';
+    document.getElementById('topEmail').textContent = user.email;
+    document.getElementById('topAv').textContent    = user.email[0].toUpperCase();
+    subscribe();
+  } else {
+    document.getElementById('adminPanel').style.display  = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+    unsubs.forEach(u => u());
+    unsubs = [];
+  }
+});
+
+async function doLogin() {
+  const email = document.getElementById('li_email').value.trim();
+  const pwd   = document.getElementById('li_pass').value;
+  const err   = document.getElementById('loginErr');
+  const btn   = document.getElementById('loginBtn');
+  err.classList.add('d-none');
+  btn.disabled = true;
+  document.getElementById('loginSpinner').classList.remove('d-none');
+  try {
+    await auth.signInWithEmailAndPassword(email, pwd);
+  } catch(e) {
+    err.textContent = 'Invalid email or password.';
+    err.classList.remove('d-none');
+    btn.disabled = false;
+    document.getElementById('loginSpinner').classList.add('d-none');
+  }
+}
+function doLogout() { auth.signOut(); }
+document.getElementById('li_pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+// ══════════════════════════════════
+//  REAL-TIME SUBSCRIPTIONS
+// ══════════════════════════════════
+function subscribe() {
+  unsubs.push(
+    db.collection('students').orderBy('createdAt','desc').onSnapshot(snap => {
+      students = snap.docs.map(d => ({id:d.id,...d.data()}));
+      onData();
+    }),
+    db.collection('schools').orderBy('name').onSnapshot(snap => {
+      schools = snap.docs.map(d => ({id:d.id,...d.data()}));
+      document.getElementById('d_schools').textContent = schools.length;
+      if (activeView() === 'schools') renderSchools();
+    }),
+    db.collection('events').orderBy('date').onSnapshot(snap => {
+      events = snap.docs.map(d => ({id:d.id,...d.data()}));
+      if (activeView() === 'events')    renderEvents();
+      if (activeView() === 'dashboard') renderDashboard();
+    })
+  );
+}
+function activeView() {
+  const el = document.querySelector('.view.active');
+  return el ? el.id.replace('view-','') : '';
+}
+function onData() {
+  // badges
+  document.getElementById('nb_s').textContent = students.length;
+  document.getElementById('nb_r').textContent = students.filter(s=>s.status==='pending').length;
+  // refresh active view
+  const v = activeView();
+  if (v === 'dashboard') renderDashboard();
+  if (v === 'students')  filterStudents();
+  if (v === 'approvals') renderApprovals();
+  if (v === 'requests')  renderRequests();
+  if (v === 'monthly')   renderMonthly();
+}
+
+// ══════════════════════════════════
+//  ROUTER
+// ══════════════════════════════════
+const viewTitles = {
+  dashboard:'Dashboard', students:'Students', 'student-form':'Student Application',
+  'student-detail':'Student Profile', schools:'Schools & Institutions',
+  approvals:'Approvals', requests:'Donation Requests', monthly:'Monthly Requests', events:'Fundraising Events'
+};
+function nav(name, linkEl) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-'+name)?.classList.add('active');
+  document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
+  if (linkEl) linkEl.classList.add('active');
+  document.getElementById('topTitle').textContent = viewTitles[name] || '';
+  if (name==='dashboard') renderDashboard();
+  if (name==='students')  filterStudents();
+  if (name==='schools')   renderSchools();
+  if (name==='approvals') renderApprovals();
+  if (name==='requests')  renderRequests();
+  if (name==='monthly')   renderMonthly();
+  if (name==='events')    renderEvents();
+}
+
+// ══════════════════════════════════
+//  DASHBOARD
+// ══════════════════════════════════
+function renderDashboard() {
+  document.getElementById('d_pending').textContent  = students.filter(s=>s.status==='pending').length;
+  document.getElementById('d_approved').textContent = students.filter(s=>s.status==='approved').length;
+  document.getElementById('d_monthly').textContent  = students.filter(s=>s.status==='approved'&&s.fundingType==='monthly').length;
+  document.getElementById('d_schools').textContent  = schools.length;
+
+  document.getElementById('d_recent').innerHTML = students.slice(0,5).map(s=>`<tr>
+    <td><div class="d-flex align-items-center gap-2">${avHTML(s)}<div><div style="font-weight:700">${s.name}</div><div style="font-size:.73rem;color:#9CA3AF">${s.grade||''}</div></div></div></td>
+    <td style="font-size:.84rem">${s.village||''}</td>
+    <td style="font-weight:700">£${s.amount||0}</td>
+    <td>${badge(s.status)}</td>
+  </tr>`).join('') || empty(4,'No applications yet');
+
+  document.getElementById('d_events').innerHTML = events.filter(e=>e.status!=='completed').slice(0,3).map(e=>`
+    <div class="mb-3 p-3 rounded" style="background:#F9FAFB;border-left:3px solid var(--orange)">
+      <div style="font-weight:700;font-size:.9rem">${e.name}</div>
+      <div style="font-size:.78rem;color:#6B7280"><i class="fas fa-calendar me-1"></i>${fd(e.date)} ${e.location?'<i class="fas fa-location-dot ms-2 me-1"></i>'+e.location:''}</div>
+      <div style="font-size:.8rem;font-weight:600;color:var(--orange);margin-top:4px">Target: £${Number(e.target||0).toLocaleString()}</div>
+    </div>`).join('') || '<div class="empty-state"><i class="fas fa-calendar-alt"></i><p style="font-size:.84rem">No upcoming events</p></div>';
+}
+
+// ══════════════════════════════════
+//  STUDENTS — LIST
+// ══════════════════════════════════
+function filterStudents() {
+  const q  = (document.getElementById('s_q')?.value||'').toLowerCase();
+  const sf = document.getElementById('s_f')?.value||'';
+  const list = students.filter(s=>(!q||[s.name,s.village,s.school].some(x=>(x||'').toLowerCase().includes(q)))&&(!sf||s.status===sf));
+  document.getElementById('studentsTbody').innerHTML = list.map(s=>`<tr>
+    <td><div class="d-flex align-items-center gap-2">${avHTML(s)}<div><div style="font-weight:700">${s.name}</div><div style="font-size:.73rem;color:#9CA3AF">${s.grade||''} &bull; ${fd(ts(s.createdAt))}</div></div></div></td>
+    <td style="font-size:.84rem">${s.village||''}<br><span style="color:#9CA3AF">${s.tehsil||''}</span></td>
+    <td style="font-size:.84rem">${s.school||''}<br><span style="color:#9CA3AF;font-size:.76rem">${(s.board||'').split('(')[0]}</span></td>
+    <td style="font-weight:700;color:var(--navy)">£${s.amount||0}</td>
+    <td>${typeBadge(s.fundingType)}</td>
+    <td>${badge(s.status)}</td>
+    <td><div class="d-flex gap-1">
+      <button class="btn btn-sm btn-outline-secondary" title="View" onclick="viewStudent('${s.id}')"><i class="fas fa-eye"></i></button>
+      <button class="btn btn-sm btn-outline-primary" title="Edit" onclick="openForm('${s.id}')"><i class="fas fa-edit"></i></button>
+      <button class="btn btn-sm btn-outline-danger" title="Delete" onclick="confirmDel('student','${s.id}','${esc(s.name)}')"><i class="fas fa-trash"></i></button>
+    </div></td>
+  </tr>`).join('') || `<tr><td colspan="7">${empty(7,'No students found')}</td></tr>`;
+  document.getElementById('s_count').textContent = `Showing ${list.length} of ${students.length} records`;
+}
+
+// ══════════════════════════════════
+//  STUDENTS — FORM
+// ══════════════════════════════════
+function openForm(id=null) {
+  curStudentId = id;
+  document.getElementById('sf_id').value    = id||'';
+  document.getElementById('sf_title').textContent = id ? 'Edit Application' : 'New Application';
+  document.getElementById('studentForm').reset();
+  document.getElementById('sf_photoPreview').classList.add('d-none');
+  document.getElementById('sf_photoPH').style.display = '';
+  document.getElementById('sf_reportLbl').textContent = 'Click to upload report card (PDF or image)';
+  if (id) {
+    const s = students.find(x=>x.id===id);
+    if (!s) return;
+    ['name','fatherName','motherName','phone','village','tehsil','postOffice','school','board','grade','percentage','academicYear','amount','fundingType','status','notes']
+      .forEach(k=>{ const el=document.getElementById('sf_'+k); if(el) el.value=s[k]||''; });
+    if (s.photoUrl) {
+      const img = document.getElementById('sf_photoPreview');
+      img.src = s.photoUrl; img.classList.remove('d-none');
+      document.getElementById('sf_photoPH').style.display = 'none';
+    }
+    if (s.reportCardName) document.getElementById('sf_reportLbl').textContent = '✓ '+s.reportCardName;
+  }
+  nav('student-form',null);
+}
+
+function previewPhoto(input) {
+  if (!input.files[0]) return;
+  const r = new FileReader();
+  r.onload = e => {
+    const img = document.getElementById('sf_photoPreview');
+    img.src = e.target.result; img.classList.remove('d-none');
+    document.getElementById('sf_photoPH').style.display = 'none';
+  };
+  r.readAsDataURL(input.files[0]);
+}
+
+async function uploadFile(file, path, barId, wrapId) {
+  const ref  = storage.ref(path);
+  const task = ref.put(file);
+  document.getElementById(wrapId).style.display = 'block';
+  return new Promise((res,rej) => task.on('state_changed',
+    snap => { document.getElementById(barId).style.width = (snap.bytesTransferred/snap.totalBytes*100)+'%'; },
+    rej,
+    async () => { document.getElementById(wrapId).style.display='none'; res(await ref.getDownloadURL()); }
+  ));
+}
+
+async function saveStudent(e) {
+  e.preventDefault();
+  const btn = document.getElementById('sf_saveBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving…';
+  try {
+    const id  = document.getElementById('sf_id').value;
+    const old = id ? students.find(s=>s.id===id) : null;
+
+    let photoUrl = old?.photoUrl||'';
+    const pf = document.getElementById('sf_photoFile').files[0];
+    if (pf) photoUrl = await uploadFile(pf,`photos/${Date.now()}_${pf.name}`,'ppb','pp');
+
+    let reportCardUrl=old?.reportCardUrl||'', reportCardName=old?.reportCardName||'';
+    const rf = document.getElementById('sf_reportFile').files[0];
+    if (rf) { reportCardUrl = await uploadFile(rf,`reports/${Date.now()}_${rf.name}`,'rpb','rp'); reportCardName=rf.name; }
+
+    const status = document.getElementById('sf_status').value;
+    const data = {
+      name:document.getElementById('sf_name').value, fatherName:document.getElementById('sf_fatherName').value,
+      motherName:document.getElementById('sf_motherName').value, phone:document.getElementById('sf_phone').value,
+      village:document.getElementById('sf_village').value, tehsil:document.getElementById('sf_tehsil').value,
+      postOffice:document.getElementById('sf_postOffice').value, school:document.getElementById('sf_school').value,
+      board:document.getElementById('sf_board').value, grade:document.getElementById('sf_grade').value,
+      percentage:document.getElementById('sf_percentage').value, academicYear:document.getElementById('sf_academicYear').value,
+      amount:+document.getElementById('sf_amount').value, fundingType:document.getElementById('sf_fundingType').value,
+      status, notes:document.getElementById('sf_notes').value,
+      photoUrl, reportCardUrl, reportCardName, updatedAt:TS(),
+    };
+    if (status==='approved' && !old?.approvedAt) { data.approvedAt=TS(); data.monthsFunded=old?.monthsFunded||0; }
+    if (id) await db.collection('students').doc(id).update(data);
+    else { data.createdAt=TS(); data.monthsFunded=0; await db.collection('students').add(data); }
+    toast(id?'Application updated!':'Application saved!');
+    nav('students',null);
+  } catch(err) { toast('Error: '+err.message,'error'); }
+  finally { btn.disabled=false; btn.innerHTML='<i class="fas fa-save me-2"></i>Save Application'; }
+}
+
+// ══════════════════════════════════
+//  STUDENT DETAIL
+// ══════════════════════════════════
+function viewStudent(id) {
+  const s = students.find(x=>x.id===id);
+  if (!s) return;
+  curStudentId = id;
+  document.getElementById('det_title').textContent = s.name;
+  document.getElementById('det_editBtn').onclick = () => openForm(id);
+  document.getElementById('det_body').innerHTML = `
+    <div class="col-lg-4">
+      <div class="profile-hero mb-4">
+        ${s.photoUrl?`<img src="${s.photoUrl}">`:`<div class="initials">${(s.name||'?')[0]}</div>`}
+        <h4>${s.name}</h4><div class="sub">${s.grade||''} &bull; ${s.school||''}</div>
+        <div class="mt-3">${badge(s.status)}</div>
+        <div class="amount-box"><div class="big">£${s.amount||0}</div><div class="small">${s.fundingType==='monthly'?'Per Month':'One-Time'}</div></div>
+      </div>
+      ${s.reportCardUrl?`<div class="form-card text-center"><i class="fas fa-file-alt fa-2x d-block mb-2" style="color:var(--orange)"></i>
+        <div style="font-weight:700;font-size:.9rem">Report Card</div>
+        <div style="font-size:.78rem;color:#6B7280;margin-bottom:10px">${s.reportCardName||''}</div>
+        <a href="${s.reportCardUrl}" target="_blank" class="btn-sag btn btn-sm">View Report</a></div>`:''}
+    </div>
+    <div class="col-lg-8"><div class="form-card">
+      <div class="fsec">Personal Information</div>
+      <div class="row g-3 mb-4">${df("Father's Name",s.fatherName)}${df("Mother's Name",s.motherName)}${df("Phone",s.phone)}</div>
+      <div class="fsec">Address</div>
+      <div class="row g-3 mb-4">${df("Village",s.village)}${df("Tehsil",s.tehsil)}${df("Post Office",s.postOffice)}</div>
+      <div class="fsec">Education</div>
+      <div class="row g-3 mb-4">${df("School",s.school)}${df("Board",s.board)}${df("Grade",s.grade)}${df("Last Year %",s.percentage||'—')}${df("Academic Year",s.academicYear||'—')}</div>
+      <div class="fsec">Funding</div>
+      <div class="row g-3 mb-4">${df("Amount","£"+(s.amount||0))}${df("Type",s.fundingType==='monthly'?'Monthly':'One-Time')}${df("Applied",fd(ts(s.createdAt)))}${s.approvedAt?df("Approved",fd(ts(s.approvedAt))):''}${s.monthsFunded?df("Months Funded",s.monthsFunded):''}</div>
+      ${s.notes?`<div class="fsec">Notes</div><p style="font-size:.9rem;color:#374151">${s.notes}</p>`:''}
+    </div></div>`;
+  nav('student-detail',null);
+}
+function df(label,value) {
+  return `<div class="col-md-4"><div class="detail-field"><div class="detail-label">${label}</div><div class="detail-value">${value||'—'}</div></div></div>`;
+}
+
+// ══════════════════════════════════
+//  SCHOOLS
+// ══════════════════════════════════
+function renderSchools() {
+  const q = (document.getElementById('sch_q')?.value||'').toLowerCase();
+  const list = schools.filter(s=>!q||(s.name||'').toLowerCase().includes(q)||(s.location||'').toLowerCase().includes(q));
+  document.getElementById('schoolsTbody').innerHTML = list.map(s=>`<tr>
+    <td><div style="font-weight:700">${s.name}</div><div style="font-size:.74rem;color:#9CA3AF;text-transform:capitalize">${s.type||''}</div></td>
+    <td style="font-size:.85rem">${s.location||''}<br><span style="color:#9CA3AF">${s.district||''}</span></td>
+    <td style="font-size:.84rem">${s.board||'—'}</td>
+    <td style="font-size:.84rem">${s.principal||'—'}</td>
+    <td style="font-weight:700;color:var(--navy)">${s.students||0}</td>
+    <td><span class="s-badge b-active">Active</span></td>
+    <td><div class="d-flex gap-1">
+      <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#schoolModal" onclick="openSchoolModal('${s.id}')"><i class="fas fa-edit"></i></button>
+      <button class="btn btn-sm btn-outline-danger" onclick="confirmDel('school','${s.id}','${esc(s.name)}')"><i class="fas fa-trash"></i></button>
+    </div></td>
+  </tr>`).join('') || `<tr><td colspan="7">${empty(7,'No schools added yet')}</td></tr>`;
+}
+function openSchoolModal(id=null) {
+  document.getElementById('sch_id').value = id||'';
+  document.getElementById('schModalTitle').textContent = id ? 'Edit School' : 'Add School / Institution';
+  ['name','type','location','district','board','principal','phone','email','students','since'].forEach(k=>{
+    const el=document.getElementById('sch_'+k); if(el) el.value='';
+  });
+  if (id) {
+    const s=schools.find(x=>x.id===id);
+    if (s) ['name','type','location','district','board','principal','phone','email','students','since'].forEach(k=>{
+      const el=document.getElementById('sch_'+k); if(el) el.value=s[k]||'';
+    });
+  }
+}
+async function saveSchool() {
+  const id = document.getElementById('sch_id').value;
+  const data={
+    name:document.getElementById('sch_name').value, type:document.getElementById('sch_type').value,
+    location:document.getElementById('sch_location').value, district:document.getElementById('sch_district').value,
+    board:document.getElementById('sch_board').value, principal:document.getElementById('sch_principal').value,
+    phone:document.getElementById('sch_phone').value, email:document.getElementById('sch_email').value,
+    students:+document.getElementById('sch_students').value||0, since:document.getElementById('sch_since').value,
+    updatedAt:TS(),
+  };
+  try {
+    if (id) await db.collection('schools').doc(id).update(data);
+    else { data.createdAt=TS(); await db.collection('schools').add(data); }
+    bootstrap.Modal.getInstance(document.getElementById('schoolModal')).hide();
+    toast('School saved!');
+  } catch(e){toast('Error: '+e.message,'error');}
+}
+
+// ══════════════════════════════════
+//  APPROVALS
+// ══════════════════════════════════
+function renderApprovals() {
+  const list = students.filter(s=>s.status==='approved');
+  document.getElementById('approvalsTbody').innerHTML = list.map(s=>`<tr>
+    <td><div class="d-flex align-items-center gap-2">${avHTML(s)}<div style="font-weight:700">${s.name}</div></div></td>
+    <td style="font-size:.85rem">${fd(ts(s.approvedAt))}</td>
+    <td style="font-weight:700">£${s.amount||0}</td>
+    <td>${typeBadge(s.fundingType)}</td>
+    <td style="font-weight:600;text-align:center">${s.monthsFunded||0}</td>
+    <td style="font-weight:700;color:var(--orange)">£${(s.amount||0)*(s.fundingType==='monthly'?(s.monthsFunded||0):1)}</td>
+    <td>
+      <button class="btn btn-sm btn-outline-secondary me-1" onclick="viewStudent('${s.id}')"><i class="fas fa-eye"></i></button>
+      ${s.fundingType==='monthly'?`<button class="btn btn-sm btn-success" onclick="addMonth('${s.id}')"><i class="fas fa-plus me-1"></i>Month</button>`:''}
+    </td>
+  </tr>`).join('') || `<tr><td colspan="7">${empty(7,'No approvals yet')}</td></tr>`;
+}
+
+// ══════════════════════════════════
+//  REQUESTS
+// ══════════════════════════════════
+function renderRequests() {
+  const ab = s=>`
+    <button class="btn btn-sm btn-outline-secondary me-1" onclick="viewStudent('${s.id}')"><i class="fas fa-eye"></i></button>
+    ${s.status==='pending'?`
+      <button class="btn btn-sm btn-success me-1" onclick="approveStudent('${s.id}')"><i class="fas fa-check me-1"></i>Approve</button>
+      <button class="btn btn-sm btn-danger" onclick="rejectStudent('${s.id}')"><i class="fas fa-times me-1"></i>Reject</button>`:''}`;
+
+  document.getElementById('pendTbody').innerHTML = students.filter(s=>s.status==='pending').map(s=>`<tr>
+    <td><div class="d-flex align-items-center gap-2">${avHTML(s)}<div style="font-weight:700">${s.name}</div></div></td>
+    <td style="font-weight:700">£${s.amount}</td><td>${typeBadge(s.fundingType)}</td>
+    <td style="font-size:.84rem">${fd(ts(s.createdAt))}</td><td>${ab(s)}</td>
+  </tr>`).join('') || `<tr><td colspan="5">${empty(5,'No pending requests')}</td></tr>`;
+
+  document.getElementById('otTbody').innerHTML = students.filter(s=>s.fundingType==='one-time').map(s=>`<tr>
+    <td><div class="d-flex align-items-center gap-2">${avHTML(s)}<div style="font-weight:700">${s.name}</div></div></td>
+    <td style="font-weight:700">£${s.amount}</td>
+    <td style="font-size:.84rem">${fd(ts(s.createdAt))}</td><td>${badge(s.status)}</td><td>${ab(s)}</td>
+  </tr>`).join('') || `<tr><td colspan="5">${empty(5,'No one-time requests')}</td></tr>`;
+
+  document.getElementById('allTbody').innerHTML = students.map(s=>`<tr>
+    <td><div class="d-flex align-items-center gap-2">${avHTML(s)}<div style="font-weight:700">${s.name}</div></div></td>
+    <td style="font-weight:700">£${s.amount}</td><td>${typeBadge(s.fundingType)}</td>
+    <td>${badge(s.status)}</td><td style="font-size:.84rem">${fd(ts(s.createdAt))}</td><td>${ab(s)}</td>
+  </tr>`).join('') || `<tr><td colspan="6">${empty(6,'No requests found')}</td></tr>`;
+}
+
+async function approveStudent(id) {
+  try { await db.collection('students').doc(id).update({status:'approved',approvedAt:TS()}); toast('Student approved!'); }
+  catch(e) { toast('Error: '+e.message,'error'); }
+}
+async function rejectStudent(id) {
+  try { await db.collection('students').doc(id).update({status:'rejected'}); toast('Application rejected.','error'); }
+  catch(e) { toast('Error: '+e.message,'error'); }
+}
+
+// ══════════════════════════════════
+//  MONTHLY
+// ══════════════════════════════════
+function renderMonthly() {
+  const list = students.filter(s=>s.fundingType==='monthly'&&s.status==='approved');
+  document.getElementById('monthlyTbody').innerHTML = list.map(s=>`<tr>
+    <td><div class="d-flex align-items-center gap-2">${avHTML(s)}<div><div style="font-weight:700">${s.name}</div><div style="font-size:.74rem;color:#9CA3AF">${s.village||''}</div></div></div></td>
+    <td style="font-weight:700;color:var(--navy)">£${s.amount}/mo</td>
+    <td style="font-size:.84rem">${fd(ts(s.approvedAt))}</td>
+    <td style="font-weight:700;text-align:center">${s.monthsFunded||0}</td>
+    <td style="font-weight:700;color:var(--orange)">£${(s.amount||0)*(s.monthsFunded||0)}</td>
+    <td>
+      <button class="btn btn-sm btn-success me-1" onclick="addMonth('${s.id}')"><i class="fas fa-plus me-1"></i>Record Month</button>
+      <button class="btn btn-sm btn-outline-secondary" onclick="viewStudent('${s.id}')"><i class="fas fa-eye"></i></button>
+    </td>
+  </tr>`).join('') || `<tr><td colspan="6">${empty(6,'No active monthly fundings')}</td></tr>`;
+}
+async function addMonth(id) {
+  const s = students.find(x=>x.id===id);
+  try { await db.collection('students').doc(id).update({monthsFunded:(s?.monthsFunded||0)+1}); toast('Monthly payment recorded!'); }
+  catch(e) { toast('Error: '+e.message,'error'); }
+}
+
+// ══════════════════════════════════
+//  EVENTS
+// ══════════════════════════════════
+function renderEvents() {
+  const c={planned:'#6366F1',ongoing:'#F59E0B',completed:'#10B981'};
+  document.getElementById('eventsGrid').innerHTML = events.map(e=>{
+    const pct=e.target>0?Math.min(100,Math.round((e.raised||0)/e.target*100)):0;
+    return `<div class="col-md-6 col-xl-4"><div class="event-card">
+      <div class="d-flex justify-content-between align-items-start mb-3">
+        <span class="s-badge" style="background:${c[e.status]||'#6B7280'}20;color:${c[e.status]||'#6B7280'}">${e.status||'—'}</span>
+        <div class="d-flex gap-1">
+          <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#eventModal" onclick="openEventModal('${e.id}')"><i class="fas fa-edit"></i></button>
+          <button class="btn btn-sm btn-outline-danger" onclick="confirmDel('event','${e.id}','${esc(e.name)}')"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+      <h5 style="color:var(--navy);font-weight:800;margin-bottom:4px">${e.name}</h5>
+      <div style="font-size:.8rem;color:#6B7280;margin-bottom:8px">
+        <i class="fas fa-calendar me-1"></i>${fd(e.date)}
+        ${e.location?`<i class="fas fa-location-dot ms-2 me-1"></i>${e.location}`:''}
+      </div>
+      <p style="font-size:.84rem;color:#6B7280;margin-bottom:16px">${e.desc||''}</p>
+      <div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:6px">
+        <span style="font-weight:700">£${Number(e.raised||0).toLocaleString()} raised</span>
+        <span style="color:#9CA3AF">Target: £${Number(e.target||0).toLocaleString()}</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <div style="font-size:.73rem;color:#9CA3AF;margin-top:4px;text-align:right">${pct}% of target</div>
+    </div></div>`;
+  }).join('') || '<div class="col-12"><div class="empty-state"><i class="fas fa-calendar-alt"></i><p>No events yet</p></div></div>';
+}
+function openEventModal(id=null) {
+  document.getElementById('ev_id').value = id||'';
+  document.getElementById('evModalTitle').textContent = id ? 'Edit Event' : 'Add Event';
+  ['name','date','status','location','target','raised','desc'].forEach(k=>{const el=document.getElementById('ev_'+k);if(el)el.value='';});
+  if (id) {
+    const ev=events.find(x=>x.id===id);
+    if(ev){
+      document.getElementById('ev_name').value=ev.name||''; document.getElementById('ev_date').value=ev.date||'';
+      document.getElementById('ev_status').value=ev.status||'planned'; document.getElementById('ev_location').value=ev.location||'';
+      document.getElementById('ev_target').value=ev.target||''; document.getElementById('ev_raised').value=ev.raised||0;
+      document.getElementById('ev_desc').value=ev.desc||'';
+    }
+  }
+}
+async function saveEvent() {
+  const id=document.getElementById('ev_id').value;
+  const data={
+    name:document.getElementById('ev_name').value, date:document.getElementById('ev_date').value,
+    status:document.getElementById('ev_status').value, location:document.getElementById('ev_location').value,
+    target:+document.getElementById('ev_target').value||0, raised:+document.getElementById('ev_raised').value||0,
+    desc:document.getElementById('ev_desc').value, updatedAt:TS(),
+  };
+  try {
+    if(id) await db.collection('events').doc(id).update(data);
+    else { data.createdAt=TS(); await db.collection('events').add(data); }
+    bootstrap.Modal.getInstance(document.getElementById('eventModal')).hide();
+    toast('Event saved!');
+  } catch(e){toast('Error: '+e.message,'error');}
+}
+
+// ══════════════════════════════════
+//  SHARE REPORT
+// ══════════════════════════════════
+function openShareModal() {
+  const s = students.find(x=>x.id===curStudentId);
+  if (!s) return;
+  document.getElementById('shareInfo').innerHTML =
+    `<strong>${s.name}</strong> &bull; ${s.grade||''} &bull; ${s.village||''}<br>
+     Funding: <strong>£${s.amount} ${s.fundingType==='monthly'?'/ month':'(one-time)'}</strong> &bull; Status: ${s.status}`;
+  document.getElementById('share_emails').value = '';
+  document.getElementById('share_msg').value =
+`Dear Donor / Volunteer,
+
+Please find below the profile of ${s.name}, a student seeking educational funding from Sikh Aid Global.
+
+Student Name  : ${s.name}
+Father's Name : ${s.fatherName||'—'}
+Mother's Name : ${s.motherName||'—'}
+Village       : ${s.village||'—'}, ${s.tehsil||'—'}
+School        : ${s.school||'—'}
+Grade         : ${s.grade||'—'}
+Board         : ${s.board||'—'}
+Phone         : ${s.phone||'—'}
+Funding Req   : £${s.amount} ${s.fundingType==='monthly'?'per month (Monthly)':'(One-Time)'}
+Status        : ${s.status}
+${s.notes?'\nNotes: '+s.notes:''}
+${s.reportCardUrl?'\nReport Card: '+s.reportCardUrl:''}
+
+Thank you for your continued support.
+
+Sikh Aid Global
+sikhaidglobal@gmail.com | +44 7723 013160 | Charity Reg. SC042137`;
+  new bootstrap.Modal(document.getElementById('shareModal')).show();
+}
+function sendShare() {
+  const emails = document.getElementById('share_emails').value.trim();
+  const msg    = document.getElementById('share_msg').value;
+  const s      = students.find(x=>x.id===curStudentId);
+  if (!emails) { toast('Please enter at least one email.','error'); return; }
+  const to  = emails.split(',').map(e=>e.trim()).filter(Boolean).join(',');
+  const sub = encodeURIComponent(`Student Fund Report — ${s?.name||''} | Sikh Aid Global`);
+  window.open(`mailto:${to}?subject=${sub}&body=${encodeURIComponent(msg)}`);
+  bootstrap.Modal.getInstance(document.getElementById('shareModal')).hide();
+  toast('Email client opened!');
+}
+
+// ══════════════════════════════════
+//  DELETE
+// ══════════════════════════════════
+function confirmDel(type, id, name) {
+  const labels={student:'student application',school:'school',event:'event'};
+  document.getElementById('delMsg').textContent = `Delete ${labels[type]||'record'} "${name}"? This cannot be undone.`;
+  document.getElementById('delBtn').onclick = async () => {
+    try {
+      const col = type==='student'?'students':type==='school'?'schools':'events';
+      await db.collection(col).doc(id).delete();
+      bootstrap.Modal.getInstance(document.getElementById('delModal')).hide();
+      toast('Deleted.','error');
+    } catch(e){toast('Error: '+e.message,'error');}
+  };
+  new bootstrap.Modal(document.getElementById('delModal')).show();
+}
+
+// ══════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════
+function badge(status) {
+  const m={pending:'b-pending',approved:'b-approved',rejected:'b-rejected'};
+  return `<span class="s-badge ${m[status]||''}">${status||'—'}</span>`;
+}
+function typeBadge(t) {
+  return t==='monthly'?'<span class="s-badge b-monthly">Monthly</span>':'<span class="s-badge b-onetime">One-Time</span>';
+}
+function avHTML(s) {
+  return s.photoUrl?`<img src="${s.photoUrl}" class="av">`:`<div class="av-text">${(s.name||'?')[0].toUpperCase()}</div>`;
+}
+function fd(d) {
+  if (!d) return '—';
+  try { return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}); } catch{return '—';}
+}
+function ts(v) {
+  if (!v) return null;
+  if (v?.toDate) return v.toDate();
+  return v;
+}
+function esc(s) { return (s||'').replace(/'/g,"\\'"); }
+function empty(cols, msg) {
+  return `<div class="empty-state" style="padding:40px 20px"><i class="fas fa-folder-open"></i><p style="font-size:.84rem">${msg}</p></div>`;
+}
+function toast(msg, type='success') {
+  const icons={success:'check-circle',error:'exclamation-circle',info:'info-circle'};
+  const clss={success:'t-success',error:'t-error',info:'t-info'};
+  const el = document.createElement('div');
+  el.className = `toast-item ${clss[type]||'t-info'}`;
+  el.innerHTML = `<i class="fas fa-${icons[type]||'info-circle'}"></i>${msg}`;
+  document.getElementById('toastZone').appendChild(el);
+  setTimeout(()=>el.remove(), 3500);
+}
+</script>
+</body>
+</html>
