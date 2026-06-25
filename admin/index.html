@@ -191,6 +191,9 @@
 
       <div class="sb-section">Events</div>
       <a class="sb-link" onclick="nav('events',this)"><i class="fas fa-calendar-alt"></i>Fundraising Events</a>
+
+      <div class="sb-section">Donor Relations</div>
+      <a class="sb-link" onclick="nav('matching',this)"><i class="fas fa-handshake"></i>Donor Matching</a>
     </div>
     <div class="sb-bottom">
       <a class="sb-link" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i>Sign Out</a>
@@ -297,13 +300,14 @@
                 <option value="approved">Approved</option>
                 <option value="rejected">Rejected</option>
               </select>
+              <button class="btn btn-outline-secondary btn-sm" id="s_shareSelectedBtn" onclick="openShareModal()"><i class="fas fa-share me-1"></i>Share Selected<span class="badge bg-secondary ms-1" id="s_selCount" style="display:none">0</span></button>
               <button class="btn-sag btn btn-sm" onclick="openForm()"><i class="fas fa-plus me-1"></i>New Application</button>
             </div>
           </div>
           <div class="table-responsive">
             <table class="table mb-0">
-              <thead><tr><th>Student</th><th>Village / Tehsil</th><th>School / Board</th><th>Funding</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead>
-              <tbody id="studentsTbody"><tr><td colspan="7" class="text-center py-4 text-muted">Loading…</td></tr></tbody>
+              <thead><tr><th><input type="checkbox" class="form-check-input" id="s_selectAll" onchange="toggleSelectAllStudents(this)"></th><th>Student</th><th>Village / Tehsil</th><th>School / Board</th><th>Funding</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="studentsTbody"><tr><td colspan="8" class="text-center py-4 text-muted">Loading…</td></tr></tbody>
             </table>
           </div>
           <div class="px-4 py-2 text-muted" style="font-size:.78rem" id="s_count"></div>
@@ -524,6 +528,77 @@
         <div class="row g-4" id="eventsGrid"></div>
       </div>
 
+      <!-- ══ DONOR MATCHING ══ -->
+      <div class="view" id="view-matching">
+        <ul class="nav nav-tabs mb-3">
+          <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab_donors">Donors</button></li>
+          <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab_receiving">Receiving Parties</button></li>
+          <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab_matches">Matches</button></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="tab_donors">
+            <div class="card-sag">
+              <div class="card-hdr">
+                <h6 class="card-hdr-title">Donors</h6>
+                <div class="d-flex gap-2 flex-wrap">
+                  <div class="search-wrap">
+                    <i class="fas fa-search"></i>
+                    <input class="form-control form-control-sm" id="don_q" placeholder="Search…" oninput="renderDonors()">
+                  </div>
+                  <button class="btn-sag btn btn-sm" data-bs-toggle="modal" data-bs-target="#donorModal" onclick="openDonorModal()">
+                    <i class="fas fa-plus me-1"></i>Add Donor
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Notes</th><th>Actions</th></tr></thead>
+                  <tbody id="donorsTbody"><tr><td colspan="5" class="text-center py-4 text-muted">Loading…</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="tab_receiving">
+            <div class="card-sag">
+              <div class="card-hdr">
+                <h6 class="card-hdr-title">Receiving Parties</h6>
+                <div class="d-flex gap-2 flex-wrap">
+                  <div class="search-wrap">
+                    <i class="fas fa-search"></i>
+                    <input class="form-control form-control-sm" id="rcv_q" placeholder="Search…" oninput="renderReceivingParties()">
+                  </div>
+                  <button class="btn-sag btn btn-sm" data-bs-toggle="modal" data-bs-target="#receivingModal" onclick="openReceivingModal()">
+                    <i class="fas fa-plus me-1"></i>Add Receiving Party
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead><tr><th>Name</th><th>Type</th><th>Email</th><th>Phone</th><th>Actions</th></tr></thead>
+                  <tbody id="receivingTbody"><tr><td colspan="5" class="text-center py-4 text-muted">Loading…</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="tab_matches">
+            <div class="card-sag">
+              <div class="card-hdr">
+                <h6 class="card-hdr-title">Donor &mdash; Receiving Party &mdash; Student Matches</h6>
+                <button class="btn-sag btn btn-sm" data-bs-toggle="modal" data-bs-target="#matchModal" onclick="openMatchModal()">
+                  <i class="fas fa-plus me-1"></i>Add Match
+                </button>
+              </div>
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead><tr><th>Donor</th><th>Receiving Party</th><th>Student(s)</th><th>Amount</th><th>Created</th><th>Actions</th></tr></thead>
+                  <tbody id="matchesTbody"><tr><td colspan="6" class="text-center py-4 text-muted">Loading…</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div><!-- /page -->
   </div><!-- /mainWrap -->
 </div><!-- /adminPanel -->
@@ -601,6 +676,75 @@
   </div></div>
 </div>
 
+<!-- DONOR -->
+<div class="modal fade" id="donorModal" tabindex="-1">
+  <div class="modal-dialog modal-lg"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" id="donModalTitle">Add Donor</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <input type="hidden" id="don_id">
+      <input type="hidden" id="don_portalToken">
+      <div class="row g-3">
+        <div class="col-md-6"><label class="form-label">Donor Name *</label><input type="text" class="form-control" id="don_name"></div>
+        <div class="col-md-6"><label class="form-label">Email *</label><input type="email" class="form-control" id="don_email"></div>
+        <div class="col-md-6"><label class="form-label">Phone</label><input type="text" class="form-control" id="don_phone"></div>
+        <div class="col-12"><label class="form-label">Notes</label><textarea class="form-control" id="don_notes" rows="3"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+      <button class="btn-sag btn" onclick="saveDonor()"><i class="fas fa-save me-1"></i>Save</button>
+    </div>
+  </div></div>
+</div>
+
+<!-- RECEIVING PARTY -->
+<div class="modal fade" id="receivingModal" tabindex="-1">
+  <div class="modal-dialog modal-lg"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" id="rcvModalTitle">Add Receiving Party</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <input type="hidden" id="rcv_id">
+      <div class="row g-3">
+        <div class="col-md-8"><label class="form-label">Name *</label><input type="text" class="form-control" id="rcv_name"></div>
+        <div class="col-md-4"><label class="form-label">Type</label><select class="form-select" id="rcv_type"><option value="institute">Institute</option><option value="ngo">NGO / Trust</option><option value="individual">Individual</option><option value="other">Other</option></select></div>
+        <div class="col-md-6"><label class="form-label">Email</label><input type="email" class="form-control" id="rcv_email"></div>
+        <div class="col-md-6"><label class="form-label">Phone</label><input type="text" class="form-control" id="rcv_phone"></div>
+        <div class="col-12"><label class="form-label">Notes</label><textarea class="form-control" id="rcv_notes" rows="3"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+      <button class="btn-sag btn" onclick="saveReceivingParty()"><i class="fas fa-save me-1"></i>Save</button>
+    </div>
+  </div></div>
+</div>
+
+<!-- MATCH -->
+<div class="modal fade" id="matchModal" tabindex="-1">
+  <div class="modal-dialog modal-lg"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" id="matchModalTitle">Add Match</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <input type="hidden" id="match_id">
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Donor *</label>
+          <select class="form-select" id="match_donorId"><option value="">Select Donor</option></select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Receiving Party *</label>
+          <select class="form-select" id="match_receivingPartyId"><option value="">Select Receiving Party</option></select>
+        </div>
+        <div class="col-md-6"><label class="form-label">Amount Contributed (£) *</label><input type="number" class="form-control" id="match_amount" min="0"></div>
+      </div>
+      <label class="form-label">Benefitted Student(s) *</label>
+      <div id="match_studentPicker" class="border rounded p-2" style="max-height:240px;overflow-y:auto"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+      <button class="btn-sag btn" onclick="saveMatch()"><i class="fas fa-save me-1"></i>Save Match</button>
+    </div>
+  </div></div>
+</div>
+
 <!-- DELETE -->
 <div class="modal fade" id="delModal" tabindex="-1">
   <div class="modal-dialog modal-sm"><div class="modal-content">
@@ -641,7 +785,10 @@ const TS      = firebase.firestore.FieldValue.serverTimestamp;
 //  STATE
 // ══════════════════════════════════
 let students = [], schools = [], events = [];
+let donors = [], receivingParties = [], matches = [];
 let curStudentId = null;
+let selectedStudentIds = new Set();
+let curShareStudentIds = [];
 let unsubs = [];
 
 // ══════════════════════════════════
@@ -700,6 +847,18 @@ function subscribe() {
       events = snap.docs.map(d => ({id:d.id,...d.data()}));
       if (activeView() === 'events')    renderEvents();
       if (activeView() === 'dashboard') renderDashboard();
+    }),
+    db.collection('donors').orderBy('name').onSnapshot(snap => {
+      donors = snap.docs.map(d => ({id:d.id,...d.data()}));
+      if (activeView() === 'matching') { renderDonors(); renderMatches(); }
+    }),
+    db.collection('receivingParties').orderBy('name').onSnapshot(snap => {
+      receivingParties = snap.docs.map(d => ({id:d.id,...d.data()}));
+      if (activeView() === 'matching') { renderReceivingParties(); renderMatches(); }
+    }),
+    db.collection('matches').orderBy('createdAt','desc').onSnapshot(snap => {
+      matches = snap.docs.map(d => ({id:d.id,...d.data()}));
+      if (activeView() === 'matching') renderMatches();
     })
   );
 }
@@ -726,7 +885,8 @@ function onData() {
 const viewTitles = {
   dashboard:'Dashboard', students:'Students', 'student-form':'Student Application',
   'student-detail':'Student Profile', schools:'Schools & Institutions',
-  approvals:'Approvals', requests:'Donation Requests', monthly:'Monthly Requests', events:'Fundraising Events'
+  approvals:'Approvals', requests:'Donation Requests', monthly:'Monthly Requests', events:'Fundraising Events',
+  matching:'Donor Matching'
 };
 function nav(name, linkEl) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -741,6 +901,7 @@ function nav(name, linkEl) {
   if (name==='requests')  renderRequests();
   if (name==='monthly')   renderMonthly();
   if (name==='events')    renderEvents();
+  if (name==='matching')  { renderDonors(); renderReceivingParties(); renderMatches(); }
 }
 
 // ══════════════════════════════════
@@ -775,6 +936,7 @@ function filterStudents() {
   const sf = document.getElementById('s_f')?.value||'';
   const list = students.filter(s=>(!q||[s.name,s.village,s.school].some(x=>(x||'').toLowerCase().includes(q)))&&(!sf||s.status===sf));
   document.getElementById('studentsTbody').innerHTML = list.map(s=>`<tr>
+    <td><input type="checkbox" class="form-check-input s-row-chk" data-id="${s.id}" ${selectedStudentIds.has(s.id)?'checked':''} onchange="toggleStudentSelect('${s.id}',this.checked)"></td>
     <td><div class="d-flex align-items-center gap-2">${avHTML(s)}<div><div style="font-weight:700">${s.name}</div><div style="font-size:.73rem;color:#9CA3AF">${s.grade||''} &bull; ${fd(ts(s.createdAt))}</div></div></div></td>
     <td style="font-size:.84rem">${s.village||''}<br><span style="color:#9CA3AF">${s.tehsil||''}</span></td>
     <td style="font-size:.84rem">${s.school||''}<br><span style="color:#9CA3AF;font-size:.76rem">${(s.board||'').split('(')[0]}</span></td>
@@ -786,8 +948,25 @@ function filterStudents() {
       <button class="btn btn-sm btn-outline-primary" title="Edit" onclick="openForm('${s.id}')"><i class="fas fa-edit"></i></button>
       <button class="btn btn-sm btn-outline-danger" title="Delete" onclick="confirmDel('student','${s.id}','${esc(s.name)}')"><i class="fas fa-trash"></i></button>
     </div></td>
-  </tr>`).join('') || `<tr><td colspan="7">${empty(7,'No students found')}</td></tr>`;
+  </tr>`).join('') || `<tr><td colspan="8">${empty(8,'No students found')}</td></tr>`;
   document.getElementById('s_count').textContent = `Showing ${list.length} of ${students.length} records`;
+  updateShareSelectedBtn();
+}
+function toggleStudentSelect(id, checked) {
+  if (checked) selectedStudentIds.add(id); else selectedStudentIds.delete(id);
+  updateShareSelectedBtn();
+}
+function toggleSelectAllStudents(cb) {
+  document.querySelectorAll('#studentsTbody .s-row-chk').forEach(chk=>{
+    chk.checked = cb.checked;
+    if (cb.checked) selectedStudentIds.add(chk.dataset.id); else selectedStudentIds.delete(chk.dataset.id);
+  });
+  updateShareSelectedBtn();
+}
+function updateShareSelectedBtn() {
+  const n = selectedStudentIds.size;
+  const badge = document.getElementById('s_selCount');
+  if (badge) { badge.textContent = n; badge.style.display = n ? '' : 'none'; }
 }
 
 // ══════════════════════════════════
@@ -913,6 +1092,36 @@ function viewStudent(id) {
 }
 function df(label,value) {
   return `<div class="col-md-4"><div class="detail-field"><div class="detail-label">${label}</div><div class="detail-value">${value||'—'}</div></div></div>`;
+}
+function buildReportText(studentIds) {
+  const list = studentIds.map(id=>students.find(x=>x.id===id)).filter(Boolean);
+  const total = list.reduce((sum,s)=>sum+(+s.amount||0),0);
+  const summary = list.length>1 ? `Dashboard Summary: ${list.length} students • Total Funding Requested: £${total}\n` : '';
+  const blocks = list.map(s=>
+`Student Name  : ${s.name}
+Father's Name : ${s.fatherName||'—'}
+Mother's Name : ${s.motherName||'—'}
+Village       : ${s.village||'—'}, ${s.tehsil||'—'}
+School        : ${s.school||'—'}
+Grade         : ${s.grade||'—'}
+Board         : ${s.board||'—'}
+Phone         : ${s.phone||'—'}
+Funding Req   : £${s.amount} ${s.fundingType==='monthly'?'per month (Monthly)':'(One-Time)'}
+Status        : ${s.status}
+${s.notes?'Notes: '+s.notes:''}
+${s.reportCardUrl?'Report Card: '+s.reportCardUrl:''}`.trim()
+  ).join('\n\n---\n\n');
+
+  return `Dear Donor / Volunteer,
+
+Please find below the ${list.length>1?'profiles':'profile'} of ${list.length>1?list.length+' students':(list[0]?.name||'a student')} seeking educational funding from Sikh Aid Global.
+${summary?'\n'+summary:''}
+${blocks}
+
+Thank you for your continued support.
+
+Sikh Aid Global
+info@sikhaidglobal.org | +44 7723 013160 | Charity Reg. SC042137`;
 }
 
 // ══════════════════════════════════
@@ -1106,46 +1315,265 @@ async function saveEvent() {
 }
 
 // ══════════════════════════════════
+//  DONORS
+// ══════════════════════════════════
+function renderDonors() {
+  const q = (document.getElementById('don_q')?.value||'').toLowerCase();
+  const list = donors.filter(d=>!q||(d.name||'').toLowerCase().includes(q)||(d.email||'').toLowerCase().includes(q));
+  document.getElementById('donorsTbody').innerHTML = list.map(d=>`<tr>
+    <td style="font-weight:700">${d.name||''}</td>
+    <td style="font-size:.84rem">${d.email||'—'}</td>
+    <td style="font-size:.84rem">${d.phone||'—'}</td>
+    <td style="font-size:.82rem;color:#6B7280">${d.notes||'—'}</td>
+    <td><div class="d-flex gap-1">
+      <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#donorModal" onclick="openDonorModal('${d.id}')"><i class="fas fa-edit"></i></button>
+      <button class="btn btn-sm btn-outline-danger" onclick="confirmDel('donor','${d.id}','${esc(d.name)}')"><i class="fas fa-trash"></i></button>
+    </div></td>
+  </tr>`).join('') || `<tr><td colspan="5">${empty(5,'No donors added yet')}</td></tr>`;
+}
+function openDonorModal(id=null) {
+  document.getElementById('don_id').value = id||'';
+  document.getElementById('don_portalToken').value = '';
+  document.getElementById('donModalTitle').textContent = id ? 'Edit Donor' : 'Add Donor';
+  ['name','email','phone','notes'].forEach(k=>{ const el=document.getElementById('don_'+k); if(el) el.value=''; });
+  if (id) {
+    const d = donors.find(x=>x.id===id);
+    if (d) {
+      ['name','email','phone','notes'].forEach(k=>{ const el=document.getElementById('don_'+k); if(el) el.value=d[k]||''; });
+      document.getElementById('don_portalToken').value = d.portalToken||'';
+    }
+  }
+}
+async function saveDonor() {
+  const id = document.getElementById('don_id').value;
+  const data = {
+    name:document.getElementById('don_name').value, email:document.getElementById('don_email').value,
+    phone:document.getElementById('don_phone').value, notes:document.getElementById('don_notes').value,
+    updatedAt:TS(),
+  };
+  try {
+    if (id) {
+      await db.collection('donors').doc(id).update(data);
+    } else {
+      data.portalToken = crypto.randomUUID();
+      data.createdAt = TS();
+      await db.collection('donors').add(data);
+    }
+    bootstrap.Modal.getInstance(document.getElementById('donorModal')).hide();
+    toast('Donor saved!');
+  } catch(e){ toast('Error: '+e.message,'error'); }
+}
+
+// ══════════════════════════════════
+//  RECEIVING PARTIES
+// ══════════════════════════════════
+function renderReceivingParties() {
+  const q = (document.getElementById('rcv_q')?.value||'').toLowerCase();
+  const list = receivingParties.filter(r=>!q||(r.name||'').toLowerCase().includes(q));
+  document.getElementById('receivingTbody').innerHTML = list.map(r=>`<tr>
+    <td style="font-weight:700">${r.name||''}</td>
+    <td style="font-size:.84rem;text-transform:capitalize">${r.type||'—'}</td>
+    <td style="font-size:.84rem">${r.email||'—'}</td>
+    <td style="font-size:.84rem">${r.phone||'—'}</td>
+    <td><div class="d-flex gap-1">
+      <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#receivingModal" onclick="openReceivingModal('${r.id}')"><i class="fas fa-edit"></i></button>
+      <button class="btn btn-sm btn-outline-danger" onclick="confirmDel('receiving','${r.id}','${esc(r.name)}')"><i class="fas fa-trash"></i></button>
+    </div></td>
+  </tr>`).join('') || `<tr><td colspan="5">${empty(5,'No receiving parties added yet')}</td></tr>`;
+}
+function openReceivingModal(id=null) {
+  document.getElementById('rcv_id').value = id||'';
+  document.getElementById('rcvModalTitle').textContent = id ? 'Edit Receiving Party' : 'Add Receiving Party';
+  ['name','type','email','phone','notes'].forEach(k=>{ const el=document.getElementById('rcv_'+k); if(el) el.value=''; });
+  if (id) {
+    const r = receivingParties.find(x=>x.id===id);
+    if (r) ['name','type','email','phone','notes'].forEach(k=>{ const el=document.getElementById('rcv_'+k); if(el) el.value=r[k]||''; });
+  }
+}
+async function saveReceivingParty() {
+  const id = document.getElementById('rcv_id').value;
+  const data = {
+    name:document.getElementById('rcv_name').value, type:document.getElementById('rcv_type').value,
+    email:document.getElementById('rcv_email').value, phone:document.getElementById('rcv_phone').value,
+    notes:document.getElementById('rcv_notes').value, updatedAt:TS(),
+  };
+  try {
+    if (id) await db.collection('receivingParties').doc(id).update(data);
+    else { data.createdAt=TS(); await db.collection('receivingParties').add(data); }
+    bootstrap.Modal.getInstance(document.getElementById('receivingModal')).hide();
+    toast('Receiving party saved!');
+  } catch(e){ toast('Error: '+e.message,'error'); }
+}
+
+// ══════════════════════════════════
+//  MATCHES
+// ══════════════════════════════════
+function populateMatchSelects(curDonorId, curReceivingPartyId) {
+  const donSel = document.getElementById('match_donorId');
+  const rcvSel = document.getElementById('match_receivingPartyId');
+  donSel.innerHTML = '<option value="">Select Donor</option>' + donors.map(d=>`<option value="${d.id}">${d.name}</option>`).join('');
+  rcvSel.innerHTML = '<option value="">Select Receiving Party</option>' + receivingParties.map(r=>`<option value="${r.id}">${r.name}</option>`).join('');
+  donSel.value = curDonorId || '';
+  rcvSel.value = curReceivingPartyId || '';
+}
+function renderMatchStudentPicker(selectedIds=[]) {
+  const sel = new Set(selectedIds);
+  document.getElementById('match_studentPicker').innerHTML = students.map(s=>`
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="${s.id}" id="ms_${s.id}" ${sel.has(s.id)?'checked':''} onchange="onMatchStudentToggle()">
+      <label class="form-check-label" for="ms_${s.id}" style="font-size:.86rem">${s.name} <span style="color:#9CA3AF">&bull; ${s.grade||''} &bull; £${s.amount||0}</span></label>
+    </div>`).join('') || '<div class="text-muted" style="font-size:.84rem">No students available</div>';
+}
+function onMatchStudentToggle() {
+  const checked = [...document.querySelectorAll('#match_studentPicker input:checked')].map(i=>i.value);
+  if (checked.length === 1) {
+    const s = students.find(x=>x.id===checked[0]);
+    const amtEl = document.getElementById('match_amount');
+    if (s && !amtEl.value) amtEl.value = s.amount||0;
+  }
+}
+function renderMatches() {
+  document.getElementById('matchesTbody').innerHTML = matches.map(m=>{
+    const d   = donors.find(x=>x.id===m.donorId);
+    const r   = receivingParties.find(x=>x.id===m.receivingPartyId);
+    const sts = (m.studentIds||[]).map(id=>students.find(x=>x.id===id)?.name).filter(Boolean).join(', ');
+    return `<tr>
+      <td style="font-weight:700">${d?.name||'—'}</td>
+      <td style="font-size:.84rem">${r?.name||'—'}</td>
+      <td style="font-size:.84rem">${sts||'—'}</td>
+      <td style="font-weight:700;color:var(--navy)">£${m.amount||0}</td>
+      <td style="font-size:.84rem">${fd(ts(m.createdAt))}</td>
+      <td><div class="d-flex gap-1">
+        <button class="btn btn-sm btn-outline-secondary" title="Notify Donor" onclick="notifyDonor('${m.id}')"><i class="fas fa-envelope"></i></button>
+        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#matchModal" onclick="openMatchModal('${m.id}')"><i class="fas fa-edit"></i></button>
+        <button class="btn btn-sm btn-outline-danger" onclick="confirmDel('match','${m.id}','match')"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>`;
+  }).join('') || `<tr><td colspan="6">${empty(6,'No matches yet')}</td></tr>`;
+}
+function openMatchModal(id=null) {
+  document.getElementById('match_id').value = id||'';
+  document.getElementById('matchModalTitle').textContent = id ? 'Edit Match' : 'Add Match';
+  document.getElementById('match_amount').value = '';
+  if (id) {
+    const m = matches.find(x=>x.id===id);
+    if (m) {
+      populateMatchSelects(m.donorId, m.receivingPartyId);
+      renderMatchStudentPicker(m.studentIds||[]);
+      document.getElementById('match_amount').value = m.amount||0;
+      return;
+    }
+  }
+  populateMatchSelects(null, null);
+  renderMatchStudentPicker([]);
+}
+async function saveMatch() {
+  const id = document.getElementById('match_id').value;
+  const donorId = document.getElementById('match_donorId').value;
+  const receivingPartyId = document.getElementById('match_receivingPartyId').value;
+  const studentIds = [...document.querySelectorAll('#match_studentPicker input:checked')].map(i=>i.value);
+  const amount = +document.getElementById('match_amount').value||0;
+  if (!donorId || !receivingPartyId || !studentIds.length) {
+    toast('Please select a donor, receiving party, and at least one student.','error');
+    return;
+  }
+  const data = { donorId, receivingPartyId, studentIds, amount, updatedAt:TS() };
+  try {
+    if (id) await db.collection('matches').doc(id).update(data);
+    else { data.createdAt=TS(); await db.collection('matches').add(data); }
+    bootstrap.Modal.getInstance(document.getElementById('matchModal')).hide();
+    toast('Match saved!');
+    await syncDonorPortal(donorId);
+  } catch(e){ toast('Error: '+e.message,'error'); }
+}
+
+// ══════════════════════════════════
+//  DONOR PORTAL SYNC
+// ══════════════════════════════════
+async function syncDonorPortal(donorId, excludeMatchId=null) {
+  const d = donors.find(x=>x.id===donorId);
+  if (!d || !d.portalToken) return;
+  const myMatches = matches.filter(m=>m.donorId===donorId && m.id!==excludeMatchId);
+  const items = [];
+  myMatches.forEach(m=>{
+    const r = receivingParties.find(x=>x.id===m.receivingPartyId);
+    (m.studentIds||[]).forEach(sid=>{
+      const s = students.find(x=>x.id===sid);
+      if (!s) return;
+      items.push({
+        studentName: s.name||'', grade: s.grade||'', school: s.school||'',
+        receivingParty: r?.name||'', amount: m.amount||0, fundingType: s.fundingType||'',
+        matchedAt: m.createdAt||null,
+      });
+    });
+  });
+  try {
+    await db.collection('donorPortal').doc(d.portalToken).set({
+      donorName: d.name||'', items, updatedAt: TS(),
+    });
+  } catch(e){ toast('Error syncing donor portal: '+e.message,'error'); }
+}
+function notifyDonor(matchId) {
+  const m = matches.find(x=>x.id===matchId);
+  if (!m) return;
+  const d = donors.find(x=>x.id===m.donorId);
+  if (!d || !d.email) { toast('This donor has no email on file.','error'); return; }
+  const portalUrl = `https://sikhaidglobal.com/donor.html?t=${d.portalToken}`;
+  const sub = encodeURIComponent('You\'ve Been Matched — Sikh Aid Global');
+  const body =
+`Dear ${d.name},
+
+Thank you for your generous support. You have been matched to a student/institute through Sikh Aid Global.
+
+You can view your personal donor dashboard — showing which student(s), institute, and donation amount — at the link below:
+
+${portalUrl}
+
+Thank you for making a difference in a child's education.
+
+Warm regards,
+Sikh Aid Global
+info@sikhaidglobal.org`;
+  window.open(`mailto:${d.email}?subject=${sub}&body=${encodeURIComponent(body)}`);
+  toast('Email client opened!');
+}
+
+// ══════════════════════════════════
 //  SHARE REPORT
 // ══════════════════════════════════
-function openShareModal() {
-  const s = students.find(x=>x.id===curStudentId);
-  if (!s) return;
-  document.getElementById('shareInfo').innerHTML =
-    `<strong>${s.name}</strong> &bull; ${s.grade||''} &bull; ${s.village||''}<br>
-     Funding: <strong>£${s.amount} ${s.fundingType==='monthly'?'/ month':'(one-time)'}</strong> &bull; Status: ${s.status}`;
+function openShareModal(studentIds=null) {
+  let ids;
+  if (Array.isArray(studentIds) && studentIds.length) {
+    ids = studentIds;
+  } else if (activeView()==='students') {
+    if (!selectedStudentIds.size) { toast('Please select at least one student to share.','error'); return; }
+    ids = [...selectedStudentIds];
+  } else if (curStudentId) {
+    ids = [curStudentId];
+  } else {
+    toast('No student selected.','error');
+    return;
+  }
+  const list = ids.map(id=>students.find(x=>x.id===id)).filter(Boolean);
+  if (!list.length) { toast('No student selected.','error'); return; }
+  curShareStudentIds = ids;
+
+  document.getElementById('shareInfo').innerHTML = list.length===1
+    ? `<strong>${list[0].name}</strong> &bull; ${list[0].grade||''} &bull; ${list[0].village||''}<br>
+       Funding: <strong>£${list[0].amount} ${list[0].fundingType==='monthly'?'/ month':'(one-time)'}</strong> &bull; Status: ${list[0].status}`
+    : `<strong>${list.length} students selected</strong><br>Total Funding Requested: <strong>£${list.reduce((sum,s)=>sum+(+s.amount||0),0)}</strong>`;
   document.getElementById('share_emails').value = '';
-  document.getElementById('share_msg').value =
-`Dear Donor / Volunteer,
-
-Please find below the profile of ${s.name}, a student seeking educational funding from Sikh Aid Global.
-
-Student Name  : ${s.name}
-Father's Name : ${s.fatherName||'—'}
-Mother's Name : ${s.motherName||'—'}
-Village       : ${s.village||'—'}, ${s.tehsil||'—'}
-School        : ${s.school||'—'}
-Grade         : ${s.grade||'—'}
-Board         : ${s.board||'—'}
-Phone         : ${s.phone||'—'}
-Funding Req   : £${s.amount} ${s.fundingType==='monthly'?'per month (Monthly)':'(One-Time)'}
-Status        : ${s.status}
-${s.notes?'\nNotes: '+s.notes:''}
-${s.reportCardUrl?'\nReport Card: '+s.reportCardUrl:''}
-
-Thank you for your continued support.
-
-Sikh Aid Global
-sikhaidglobal@gmail.com | +44 7723 013160 | Charity Reg. SC042137`;
+  document.getElementById('share_msg').value = buildReportText(ids);
   new bootstrap.Modal(document.getElementById('shareModal')).show();
 }
 function sendShare() {
   const emails = document.getElementById('share_emails').value.trim();
   const msg    = document.getElementById('share_msg').value;
-  const s      = students.find(x=>x.id===curStudentId);
   if (!emails) { toast('Please enter at least one email.','error'); return; }
-  const to  = emails.split(',').map(e=>e.trim()).filter(Boolean).join(',');
-  const sub = encodeURIComponent(`Student Fund Report — ${s?.name||''} | Sikh Aid Global`);
+  const to   = emails.split(',').map(e=>e.trim()).filter(Boolean).join(',');
+  const list = curShareStudentIds.map(id=>students.find(x=>x.id===id)).filter(Boolean);
+  const label = list.length===1 ? (list[0]?.name||'') : `${list.length} Students`;
+  const sub  = encodeURIComponent(`Student Fund Report — ${label} | Sikh Aid Global`);
   window.open(`mailto:${to}?subject=${sub}&body=${encodeURIComponent(msg)}`);
   bootstrap.Modal.getInstance(document.getElementById('shareModal')).hide();
   toast('Email client opened!');
@@ -1154,13 +1582,22 @@ function sendShare() {
 // ══════════════════════════════════
 //  DELETE
 // ══════════════════════════════════
+const DEL_TYPES = {
+  student:   { col:'students',         label:'student application' },
+  school:    { col:'schools',           label:'school' },
+  event:     { col:'events',            label:'event' },
+  donor:     { col:'donors',            label:'donor' },
+  receiving: { col:'receivingParties',  label:'receiving party' },
+  match:     { col:'matches',           label:'match' },
+};
 function confirmDel(type, id, name) {
-  const labels={student:'student application',school:'school',event:'event'};
-  document.getElementById('delMsg').textContent = `Delete ${labels[type]||'record'} "${name}"? This cannot be undone.`;
+  const info = DEL_TYPES[type] || { col:null, label:'record' };
+  document.getElementById('delMsg').textContent = `Delete ${info.label} "${name}"? This cannot be undone.`;
   document.getElementById('delBtn').onclick = async () => {
     try {
-      const col = type==='student'?'students':type==='school'?'schools':'events';
-      await db.collection(col).doc(id).delete();
+      const donorIdToSync = type==='match' ? matches.find(m=>m.id===id)?.donorId : null;
+      await db.collection(info.col).doc(id).delete();
+      if (donorIdToSync) await syncDonorPortal(donorIdToSync, id);
       bootstrap.Modal.getInstance(document.getElementById('delModal')).hide();
       toast('Deleted.','error');
     } catch(e){toast('Error: '+e.message,'error');}
