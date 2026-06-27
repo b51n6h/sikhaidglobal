@@ -1252,86 +1252,8 @@
         </a>
       </div>
 
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
-          <div class="news-card">
-            <div class="news-card-img">
-              <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80" alt="25th Anniversary Celebration" />
-              <span class="news-date-badge">Coming Soon</span>
-            </div>
-            <div class="news-card-body">
-              <h5>🎉 25th Anniversary Celebration</h5>
-              <p>Marking 25 years of Sikh Aid Global! Join us for a special celebration as we honor our journey of service and impact since 2002.</p>
-              <a href="https://sikhaidglobal.com/events" target="_blank" class="news-card-link">
-                Learn More <i class="fas fa-arrow-right"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-          <div class="news-card">
-            <div class="news-card-img">
-              <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80" alt="Gala Night" />
-              <span class="news-date-badge">28 Sep 2025</span>
-            </div>
-            <div class="news-card-body">
-              <h5>Gala Night Event — Normandy Hotel</h5>
-              <p>A spectacular evening of fun, laughter, and entertainment for all ages with dinner, kids corner, face painting, and a mini zoo.</p>
-              <a href="https://sikhaidglobal.com/events/Gala-Night-Event" target="_blank" class="news-card-link">
-                Read More <i class="fas fa-arrow-right"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-          <div class="news-card">
-            <div class="news-card-img">
-              <img src="https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=600&q=80" alt="Punjabi Classes" />
-              <span class="news-date-badge">23 Aug 2024</span>
-            </div>
-            <div class="news-card-body">
-              <h5>Gurmat Camp &amp; Punjabi Classes</h5>
-              <p>In addition to the core academic curriculum, children receive extra classes in Punjabi and participate in Gurmat activities.</p>
-              <a href="https://sikhaidglobal.com/events/Real-Means-Of-Langer" target="_blank" class="news-card-link">
-                Read More <i class="fas fa-arrow-right"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-          <div class="news-card">
-            <div class="news-card-img">
-              <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80" alt="Homes Built" />
-              <span class="news-date-badge">23 Aug 2024</span>
-            </div>
-            <div class="news-card-body">
-              <h5>Build-Up Shelter for Sikligar Community</h5>
-              <p>Houses were built for needy Sikligar families, providing safe and secure shelter for those living in extreme poverty.</p>
-              <a href="https://sikhaidglobal.com/events/Buit-up-Shelter-for-Sikligar" target="_blank" class="news-card-link">
-                Read More <i class="fas fa-arrow-right"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-          <div class="news-card">
-            <div class="news-card-img">
-              <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80" alt="School Visit" />
-              <span class="news-date-badge">26 Mar 2024</span>
-            </div>
-            <div class="news-card-body">
-              <h5>School Visiting 2024</h5>
-              <p>We visited schools including Gurukul, Sai Baba, New Gyandeep, Flying Future, Fussion School, and Vidhya Vihar to assess needs and deliver support.</p>
-              <a href="https://sikhaidglobal.com/events/School-Visiting-2024" target="_blank" class="news-card-link">
-                Read More <i class="fas fa-arrow-right"></i>
-              </a>
-            </div>
-          </div>
-        </div>
+      <div class="row g-4" id="eventsGrid">
+        <!-- Events loaded dynamically from Firestore -->
       </div>
     </div>
   </section>
@@ -1594,10 +1516,74 @@
     <i class="fas fa-chevron-up"></i>
   </button>
 
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
   <!-- ── SCRIPTS ── -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script>
+    // ── FIREBASE INIT ──
+    firebase.initializeApp({
+      apiKey: "AIzaSyBrwnnvO4Lm6tX-aeYf5xmhJWIp4JPCQTc",
+      authDomain: "sikh-aid-global.firebaseapp.com",
+      projectId: "sikh-aid-global",
+      storageBucket: "sikh-aid-global.firebasestorage.app",
+      messagingSenderId: "1051932848118",
+      appId: "1:1051932848118:web:7dd77fe18e04288557a1d7"
+    });
+    const db = firebase.firestore();
+
+    // ── LOAD EVENTS FROM FIRESTORE ──
+    function loadAndRenderEvents() {
+      db.collection('events').orderBy('date','desc').onSnapshot(snap => {
+        const events = snap.docs.map(d => ({id:d.id,...d.data()}));
+        renderEventsOnPage(events);
+      }, err => {
+        console.log('Events load error:', err);
+        renderEventsOnPage([]);
+      });
+    }
+
+    function renderEventsOnPage(events) {
+      const grid = document.getElementById('eventsGrid');
+      if (!events || events.length === 0) {
+        grid.innerHTML = `<div class="col-12"><div class="empty-state"><i class="fas fa-calendar-alt"></i><p>Events coming soon. Check back!</p></div></div>`;
+        return;
+      }
+      grid.innerHTML = events.slice(0,4).map((e,i) => `
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="${i*100}">
+          <div class="news-card">
+            ${e.imageUrl?`<div class="news-card-img"><img src="${e.imageUrl}" alt="${e.name}" style="width:100%;height:200px;object-fit:cover;border-radius:8px 8px 0 0"><span class="news-date-badge">${formatDate(e.date)}</span></div>`:`<div class="news-card-img"><img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80" alt="${e.name}"><span class="news-date-badge">${formatDate(e.date)}</span></div>`}
+            <div class="news-card-body">
+              <h5>${e.name}</h5>
+              <p>${(e.desc||'').substring(0,80)}${(e.desc||'').length>80?'...':''}</p>
+              <a href="https://sikhaidglobal.com/events" class="news-card-link">
+                View Details <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      AOS.refresh();
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '—';
+      try {
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+      } catch {
+        return dateStr;
+      }
+    }
+
+    // Load events when page loads
+    document.addEventListener('DOMContentLoaded', loadAndRenderEvents);
+  </script>
 
   <script>
     // ── AOS Init ──
