@@ -1288,7 +1288,7 @@ function renderEvents() {
       </div>
       <h5 style="color:var(--navy);font-weight:800;margin-bottom:6px;font-size:.95rem">${e.name}</h5>
       <div style="font-size:.8rem;color:#6B7280;margin-bottom:10px;line-height:1.5">
-        <div><i class="fas fa-calendar me-1"></i>${fd(e.date)}${e.time?` at ${e.time}':''}</div>
+        <div><i class="fas fa-calendar me-1"></i>${fd(e.date)}${e.time?` at ${e.time}`:''}</div>
         ${e.location?`<div><i class="fas fa-location-dot me-1"></i>${e.location}</div>`:''}
       </div>
       <p style="font-size:.82rem;color:#6B7280;margin-bottom:12px;line-height:1.4">${shortDesc}</p>
