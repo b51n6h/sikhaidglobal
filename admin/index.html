@@ -655,33 +655,23 @@
 
 <!-- EVENT -->
 <div class="modal fade" id="eventModal" tabindex="-1">
-  <div class="modal-dialog modal-lg"><div class="modal-content">
+  <div class="modal-dialog"><div class="modal-content">
     <div class="modal-header"><h5 class="modal-title" id="evModalTitle">Add Event</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
-    <div class="modal-body" style="max-height:70vh;overflow-y:auto">
+    <div class="modal-body">
       <input type="hidden" id="ev_id">
       <div class="row g-3">
-        <div class="col-12"><label class="form-label">Event Name *</label><input type="text" class="form-control" id="ev_name" placeholder="e.g. Gala Night Event"></div>
+        <div class="col-12"><label class="form-label">Event Name *</label><input type="text" class="form-control" id="ev_name"></div>
         <div class="col-md-6"><label class="form-label">Date *</label><input type="date" class="form-control" id="ev_date"></div>
-        <div class="col-md-6"><label class="form-label">Time</label><input type="time" class="form-control" id="ev_time"></div>
         <div class="col-md-6"><label class="form-label">Status</label><select class="form-select" id="ev_status"><option value="planned">Planned</option><option value="ongoing">Ongoing</option><option value="completed">Completed</option></select></div>
-        <div class="col-md-6"><label class="form-label">Category</label><select class="form-select" id="ev_category"><option value="">Select Category</option><option value="fundraising">Fundraising</option><option value="awareness">Awareness</option><option value="community">Community</option><option value="educational">Educational</option><option value="celebration">Celebration</option></select></div>
-        <div class="col-12"><label class="form-label">Location / Venue</label><input type="text" class="form-control" id="ev_location" placeholder="e.g. Normandy Hotel, London"></div>
-        <div class="col-12"><label class="form-label">Full Address</label><input type="text" class="form-control" id="ev_address" placeholder="Full address for attendees"></div>
-        <div class="col-md-6"><label class="form-label">Event Image</label><input type="file" class="form-control" id="ev_imageFile" accept="image/*" onchange="document.getElementById('ev_imageLbl').textContent='✓ '+this.files[0].name"></div>
-        <div class="col-md-6"><div style="font-size:.8rem;color:#6B7280;margin-top:32px" id="ev_imageLbl">Click to upload event image</div></div>
-        <div class="col-12"><label class="form-label">Description *</label><textarea class="form-control" id="ev_desc" rows="4" placeholder="Event details, agenda, what to expect, etc."></textarea></div>
-        <div class="col-md-4"><label class="form-label">Expected Attendees</label><input type="number" class="form-control" id="ev_attendees" min="0" placeholder="0"></div>
-        <div class="col-md-4"><label class="form-label">Target Amount (£)</label><input type="number" class="form-control" id="ev_target" min="0" placeholder="0"></div>
-        <div class="col-md-4"><label class="form-label">Amount Raised (£)</label><input type="number" class="form-control" id="ev_raised" min="0" value="0"></div>
-        <div class="col-md-6"><label class="form-label">Ticket Price (£)</label><input type="number" class="form-control" id="ev_ticketPrice" min="0" step="0.01" placeholder="0.00"></div>
-        <div class="col-md-6"><label class="form-label">Tickets Available</label><input type="number" class="form-control" id="ev_ticketsAvailable" min="0" placeholder="Unlimited if blank"></div>
-        <div class="col-md-6"><label class="form-label">Registration Link</label><input type="url" class="form-control" id="ev_regLink" placeholder="https://..."></div>
-        <div class="col-md-6"><label class="form-label">Contact Email</label><input type="email" class="form-control" id="ev_contactEmail"></div>
+        <div class="col-12"><label class="form-label">Location</label><input type="text" class="form-control" id="ev_location"></div>
+        <div class="col-md-6"><label class="form-label">Target Amount (£)</label><input type="number" class="form-control" id="ev_target" min="0"></div>
+        <div class="col-md-6"><label class="form-label">Amount Raised (£)</label><input type="number" class="form-control" id="ev_raised" min="0" value="0"></div>
+        <div class="col-12"><label class="form-label">Description</label><textarea class="form-control" id="ev_desc" rows="3"></textarea></div>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-      <button class="btn-sag btn" onclick="saveEvent()"><i class="fas fa-save me-1"></i>Save Event</button>
+      <button class="btn-sag btn" onclick="saveEvent()">Save Event</button>
     </div>
   </div></div>
 </div>
@@ -1271,68 +1261,50 @@ function renderEvents() {
   const c={planned:'#6366F1',ongoing:'#F59E0B',completed:'#10B981'};
   document.getElementById('eventsGrid').innerHTML = events.map(e=>{
     const pct=e.target>0?Math.min(100,Math.round((e.raised||0)/e.target*100)):0;
-    const shortDesc = (e.desc||'').substring(0,100)+(e.desc?.length>100?'...':'');
     return `<div class="col-md-6 col-xl-4"><div class="event-card">
-      ${e.imageUrl?`<div style="width:100%;height:180px;overflow:hidden;border-radius:10px 10px 0 0;margin:-22px -24px 16px;background:#f0f0f0">
-        <img src="${e.imageUrl}" style="width:100%;height:100%;object-fit:cover">
-      </div>`:''}
-      <div class="d-flex justify-content-between align-items-start mb-2">
-        <div class="d-flex gap-1" style="flex-wrap:wrap">
-          <span class="s-badge" style="background:${c[e.status]||'#6B7280'}20;color:${c[e.status]||'#6B7280'};font-size:.65rem">${e.status||'—'}</span>
-          ${e.category?`<span class="s-badge" style="background:#E5E7EB;color:#374151;font-size:.65rem">${e.category}</span>`:''}
-        </div>
+      <div class="d-flex justify-content-between align-items-start mb-3">
+        <span class="s-badge" style="background:${c[e.status]||'#6B7280'}20;color:${c[e.status]||'#6B7280'}">${e.status||'—'}</span>
         <div class="d-flex gap-1">
           <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#eventModal" onclick="openEventModal('${e.id}')"><i class="fas fa-edit"></i></button>
           <button class="btn btn-sm btn-outline-danger" onclick="confirmDel('event','${e.id}','${esc(e.name)}')"><i class="fas fa-trash"></i></button>
         </div>
       </div>
-      <h5 style="color:var(--navy);font-weight:800;margin-bottom:6px;font-size:.95rem">${e.name}</h5>
-      <div style="font-size:.8rem;color:#6B7280;margin-bottom:10px;line-height:1.5">
-        <div><i class="fas fa-calendar me-1"></i>${fd(e.date)}${e.time?` at ${e.time}`:''}</div>
-        ${e.location?`<div><i class="fas fa-location-dot me-1"></i>${e.location}</div>`:''}
+      <h5 style="color:var(--navy);font-weight:800;margin-bottom:4px">${e.name}</h5>
+      <div style="font-size:.8rem;color:#6B7280;margin-bottom:8px">
+        <i class="fas fa-calendar me-1"></i>${fd(e.date)}
+        ${e.location?`<i class="fas fa-location-dot ms-2 me-1"></i>${e.location}`:''}
       </div>
-      <p style="font-size:.82rem;color:#6B7280;margin-bottom:12px;line-height:1.4">${shortDesc}</p>
-      ${e.target>0?`<div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:6px">
+      <p style="font-size:.84rem;color:#6B7280;margin-bottom:16px">${e.desc||''}</p>
+      <div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:6px">
         <span style="font-weight:700">£${Number(e.raised||0).toLocaleString()} raised</span>
         <span style="color:#9CA3AF">Target: £${Number(e.target||0).toLocaleString()}</span>
       </div>
       <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
-      <div style="font-size:.7rem;color:#9CA3AF;margin-top:4px;text-align:right">${pct}% funded</div>`:''}
-      ${e.attendees?`<div style="font-size:.8rem;color:#6B7280;margin-top:8px"><i class="fas fa-users me-1"></i>${e.attendees} expected attendees</div>`:''}
+      <div style="font-size:.73rem;color:#9CA3AF;margin-top:4px;text-align:right">${pct}% of target</div>
     </div></div>`;
   }).join('') || '<div class="col-12"><div class="empty-state"><i class="fas fa-calendar-alt"></i><p>No events yet</p></div></div>';
 }
 function openEventModal(id=null) {
   document.getElementById('ev_id').value = id||'';
   document.getElementById('evModalTitle').textContent = id ? 'Edit Event' : 'Add Event';
-  const fields=['name','date','time','status','category','location','address','desc','attendees','target','raised','ticketPrice','ticketsAvailable','regLink','contactEmail'];
-  fields.forEach(k=>{const el=document.getElementById('ev_'+k);if(el)el.value='';});
-  document.getElementById('ev_imageLbl').textContent='Click to upload event image';
+  ['name','date','status','location','target','raised','desc'].forEach(k=>{const el=document.getElementById('ev_'+k);if(el)el.value='';});
   if (id) {
     const ev=events.find(x=>x.id===id);
     if(ev){
-      fields.forEach(k=>{const el=document.getElementById('ev_'+k);if(el)el.value=ev[k]||'';});
-      if(ev.imageUrl) document.getElementById('ev_imageLbl').textContent='✓ Image uploaded';
+      document.getElementById('ev_name').value=ev.name||''; document.getElementById('ev_date').value=ev.date||'';
+      document.getElementById('ev_status').value=ev.status||'planned'; document.getElementById('ev_location').value=ev.location||'';
+      document.getElementById('ev_target').value=ev.target||''; document.getElementById('ev_raised').value=ev.raised||0;
+      document.getElementById('ev_desc').value=ev.desc||'';
     }
   }
 }
 async function saveEvent() {
   const id=document.getElementById('ev_id').value;
-  let imageUrl = events.find(e=>e.id===id)?.imageUrl||'';
-  const imgFile = document.getElementById('ev_imageFile').files[0];
-  if(imgFile) {
-    imageUrl = await uploadFile(imgFile,`events/${Date.now()}_${imgFile.name}`,'ppb','pp');
-  }
   const data={
     name:document.getElementById('ev_name').value, date:document.getElementById('ev_date').value,
-    time:document.getElementById('ev_time').value, status:document.getElementById('ev_status').value,
-    category:document.getElementById('ev_category').value, location:document.getElementById('ev_location').value,
-    address:document.getElementById('ev_address').value, desc:document.getElementById('ev_desc').value,
-    attendees:+document.getElementById('ev_attendees').value||0, target:+document.getElementById('ev_target').value||0,
-    raised:+document.getElementById('ev_raised').value||0, ticketPrice:+document.getElementById('ev_ticketPrice').value||0,
-    ticketsAvailable:document.getElementById('ev_ticketsAvailable').value,
-    regLink:document.getElementById('ev_regLink').value, contactEmail:document.getElementById('ev_contactEmail').value,
-    imageUrl, updatedAt:TS(),
+    status:document.getElementById('ev_status').value, location:document.getElementById('ev_location').value,
+    target:+document.getElementById('ev_target').value||0, raised:+document.getElementById('ev_raised').value||0,
+    desc:document.getElementById('ev_desc').value, updatedAt:TS(),
   };
   try {
     if(id) await db.collection('events').doc(id).update(data);
