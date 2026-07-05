@@ -2,17 +2,31 @@ const functions = require('firebase-functions');
 const nodemailer = require('nodemailer');
 const cors = require('cors')({origin: true});
 
-// Email configuration
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER || 'your-email@gmail.com',
-    pass: process.env.EMAIL_PASSWORD || 'your-app-password',
-  },
-});
+// Email configuration - mail.sikhaidglobal.org (SSL/TLS on port 465)
+const getTransporter = () => {
+  return nodemailer.createTransport({
+    host: 'mail.sikhaidglobal.org',
+    port: 465,
+    secure: true,
+    auth: {
+      user: functions.config().email?.user || 'info@sikhaidglobal.org',
+      pass: functions.config().email?.password || 'your-password',
+    },
+  });
+};
 
 // Contact Form Email
 exports.sendContactEmail = functions.https.onRequest((req, res) => {
+  // Handle CORS
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).send('OK');
+    return;
+  }
+
   cors(req, res, async () => {
     if (req.method !== 'POST') {
       return res.status(405).json({success: false, error: 'Method not allowed'});
@@ -27,7 +41,7 @@ exports.sendContactEmail = functions.https.onRequest((req, res) => {
 
     try {
       // Send email to info@sikhaidglobal.org
-      await transporter.sendMail({
+      await getTransporter().sendMail({
         from: process.env.EMAIL_USER,
         to: 'info@sikhaidglobal.org',
         subject: `New Contact Form: ${subject}`,
@@ -42,7 +56,7 @@ exports.sendContactEmail = functions.https.onRequest((req, res) => {
       });
 
       // Send confirmation email to user
-      await transporter.sendMail({
+      await getTransporter().sendMail({
         from: process.env.EMAIL_USER,
         to: email,
         subject: 'We received your message - Sikh Aid Global',
@@ -65,6 +79,16 @@ exports.sendContactEmail = functions.https.onRequest((req, res) => {
 
 // Donor Registration Email
 exports.sendDonorEmail = functions.https.onRequest((req, res) => {
+  // Handle CORS
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).send('OK');
+    return;
+  }
+
   cors(req, res, async () => {
     if (req.method !== 'POST') {
       return res.status(405).json({success: false, error: 'Method not allowed'});
@@ -77,7 +101,7 @@ exports.sendDonorEmail = functions.https.onRequest((req, res) => {
     }
 
     try {
-      await transporter.sendMail({
+      await getTransporter().sendMail({
         from: process.env.EMAIL_USER,
         to: 'info@sikhaidglobal.org',
         subject: `New Donor Registration - ${name}`,
@@ -101,6 +125,16 @@ exports.sendDonorEmail = functions.https.onRequest((req, res) => {
 
 // Volunteer Registration Email
 exports.sendVolunteerEmail = functions.https.onRequest((req, res) => {
+  // Handle CORS
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).send('OK');
+    return;
+  }
+
   cors(req, res, async () => {
     if (req.method !== 'POST') {
       return res.status(405).json({success: false, error: 'Method not allowed'});
@@ -113,7 +147,7 @@ exports.sendVolunteerEmail = functions.https.onRequest((req, res) => {
     }
 
     try {
-      await transporter.sendMail({
+      await getTransporter().sendMail({
         from: process.env.EMAIL_USER,
         to: 'info@sikhaidglobal.org',
         subject: `New Volunteer Registration - ${name}`,

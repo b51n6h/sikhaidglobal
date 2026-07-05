@@ -296,20 +296,14 @@ async function handleDonorSubmit(e) {
 
   try {
     // Send to Firebase Cloud Function
-    const response = await fetch('https://us-central1-sikh-aid-global.cloudfunctions.net/sendEmail', {
+    const response = await fetch('https://us-central1-sikh-aid-global.cloudfunctions.net/sendDonorEmail', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        to: 'info@sikhaidglobal.org',
-        subject: `New Donor Registration - ${name}`,
-        html: `
-          <h2>New Donor Registration</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-          <p><strong>Country:</strong> ${country}</p>
-          <p><strong>Registration Date:</strong> ${new Date().toLocaleDateString()}</p>
-        `
+        name: name,
+        email: email,
+        phone: phone,
+        country: country
       })
     });
 
@@ -336,20 +330,14 @@ async function handleVolunteerSubmit(e) {
 
   try {
     // Send to Firebase Cloud Function
-    const response = await fetch('https://us-central1-sikh-aid-global.cloudfunctions.net/sendEmail', {
+    const response = await fetch('https://us-central1-sikh-aid-global.cloudfunctions.net/sendVolunteerEmail', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        to: 'info@sikhaidglobal.org',
-        subject: `New Volunteer Registration - ${name}`,
-        html: `
-          <h2>New Volunteer Registration</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-          <p><strong>Skills/Expertise:</strong> ${skills || 'Not provided'}</p>
-          <p><strong>Registration Date:</strong> ${new Date().toLocaleDateString()}</p>
-        `
+        name: name,
+        email: email,
+        phone: phone,
+        skills: skills
       })
     });
 

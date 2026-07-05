@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     try {
       // Send to Firebase Cloud Function
-      const response = await fetch('https://us-central1-sikhaidglobal-33c5a.cloudfunctions.net/sendContactEmail', {
+      const response = await fetch('https://us-central1-sikh-aid-global.cloudfunctions.net/sendContactEmail', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
