@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found - Sikh Aid Global</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&family=Raleway:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Modular CSS Files -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+
+  <style>
+    .error-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .error-content {
+      max-width: 600px;
+    }
+
+    .error-code {
+      font-size: 8rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 20px rgba(0,0,0,.3);
+    }
+
+    .error-icon {
+      font-size: 5rem;
+      margin-bottom: 30px;
+      color: var(--orange);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .error-title {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      font-weight: 800;
+    }
+
+    .error-description {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      opacity: .95;
+      line-height: 1.8;
+    }
+
+    .error-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .error-btn {
+      display: inline-block;
+      padding: 12px 32px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: all .3s ease;
+    }
+
+    .error-btn-primary {
+      background: var(--orange);
+      color: #fff;
+    }
+
+    .error-btn-primary:hover {
+      background: #fff;
+      color: var(--navy);
+      transform: translateY(-2px);
+    }
+
+    .error-btn-secondary {
+      background: transparent;
+      color: #fff;
+      border: 2px solid #fff;
+    }
+
+    .error-btn-secondary:hover {
+      background: #fff;
+      color: var(--navy);
+      transform: translateY(-2px);
+    }
+
+    .error-suggestions {
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255,255,255,.2);
+    }
+
+    .error-suggestions h3 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .error-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      text-align: left;
+    }
+
+    .error-link {
+      padding: 12px 16px;
+      background: rgba(255,255,255,.1);
+      border-radius: 8px;
+      text-decoration: none;
+      color: #fff;
+      transition: all .3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .error-link:hover {
+      background: rgba(255,255,255,.2);
+      transform: translateX(4px);
+    }
+
+    .error-link i {
+      color: var(--orange);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container-lg">
+      <a class="navbar-brand" href="index.html">
+        <div class="brand-name">Sikh Aid Global</div>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+          <li class="nav-item"><a class="nav-link" href="donation.html">Donate</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin/index.html">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 404 Error -->
+  <div class="error-container">
+    <div class="error-content">
+      <div class="error-icon">
+        <i class="fas fa-map-location-dot"></i>
+      </div>
+      <div class="error-code">404</div>
+      <h1 class="error-title">Page Not Found</h1>
+      <p class="error-description">
+        Sorry, the page you're looking for doesn't exist or has been moved.
+        Let's help you get back on track!
+      </p>
+
+      <div class="error-actions">
+        <a href="index.html" class="error-btn error-btn-primary">
+          <i class="fas fa-home"></i> Go to Home
+        </a>
+        <a href="javascript:history.back()" class="error-btn error-btn-secondary">
+          <i class="fas fa-arrow-left"></i> Go Back
+        </a>
+      </div>
+
+      <div class="error-suggestions">
+        <h3><i class="fas fa-compass"></i> Explore Our Pages</h3>
+        <div class="error-links">
+          <a href="index.html" class="error-link">
+            <i class="fas fa-home"></i> Homepage
+          </a>
+          <a href="events.html" class="error-link">
+            <i class="fas fa-calendar"></i> Events
+          </a>
+          <a href="donation.html" class="error-link">
+            <i class="fas fa-heart"></i> Donate
+          </a>
+          <a href="index.html#about" class="error-link">
+            <i class="fas fa-info-circle"></i> About Us
+          </a>
+          <a href="index.html#programs" class="error-link">
+            <i class="fas fa-briefcase"></i> Programs
+          </a>
+          <a href="index.html#contact" class="error-link">
+            <i class="fas fa-envelope"></i> Contact
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="margin-top: 60px;">
+    <div class="container-lg">
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="text-orange">Sikh Aid Global</h5>
+          <p>Supporting education, skills, and welfare across communities worldwide.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p><strong>Contact:</strong> info@sikhaidglobal.org</p>
+          <p><strong>Website:</strong> <a href="https://sikhaidglobal.org">sikhaidglobal.org</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/common.js"></script>
+</body>
+</html>
