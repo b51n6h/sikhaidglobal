@@ -1395,30 +1395,30 @@
             <h3>Send Us a Message</h3>
             <p class="subtitle">Fill in the form and we'll get back to you as soon as possible.</p>
 
-            <form action="mailto:info@sikhaidglobal.org" method="post" enctype="text/plain">
+            <form id="contact-form">
               <div class="row g-3">
                 <div class="col-sm-6">
                   <div class="form-group-sag">
                     <label class="form-label-sag">Your Name *</label>
-                    <input type="text" class="form-control-sag" placeholder="Harpreet Singh" required />
+                    <input type="text" class="form-control-sag" name="name" placeholder="Harpreet Singh" required />
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group-sag">
                     <label class="form-label-sag">Email *</label>
-                    <input type="email" class="form-control-sag" placeholder="you@example.com" required />
+                    <input type="email" class="form-control-sag" name="email" placeholder="you@example.com" required />
                   </div>
                 </div>
                 <div class="col-12">
                   <div class="form-group-sag">
                     <label class="form-label-sag">Subject *</label>
-                    <input type="text" class="form-control-sag" placeholder="How can we help?" required />
+                    <input type="text" class="form-control-sag" name="subject" placeholder="How can we help?" required />
                   </div>
                 </div>
                 <div class="col-12">
                   <div class="form-group-sag">
                     <label class="form-label-sag">Message *</label>
-                    <textarea class="form-control-sag" rows="5" placeholder="Your message here..." required style="resize:vertical"></textarea>
+                    <textarea class="form-control-sag" name="message" rows="5" placeholder="Your message here..." required style="resize:vertical"></textarea>
                   </div>
                 </div>
                 <div class="col-12">
@@ -1537,6 +1537,7 @@
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="js/modal-forms.js"></script>
+  <script src="js/contact-form.js"></script>
   <script src="js/common.js"></script>
 
   <script>
