@@ -1,0 +1,37 @@
+/* Footer Styles */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,.75);
+  font-family: var(--font-primary);
+  padding: 60px 0 30px;
+  margin-top: 60px;
+}
+
+footer h5 {
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+footer p {
+  font-size: .9rem;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+footer a {
+  color: rgba(255,255,255,.75);
+  transition: all .25s ease;
+}
+
+footer a:hover {
+  color: var(--orange);
+}
+
+.footer-divider {
+  height: 1px;
+  background: rgba(255,255,255,.15);
+  margin: 30px 0;
+}

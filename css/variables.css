@@ -1,0 +1,14 @@
+/* Color Variables */
+:root {
+  --navy:    #00365B;
+  --orange:  #F44708;
+  --orange2: #EE802F;
+  --cream:   #F7EDDB;
+  --light:   #F5F7FA;
+  --dark:    #111827;
+  --gray:    #6B7280;
+  --white:   #FFFFFF;
+  --font-primary:   'Jost', sans-serif;
+  --font-heading:   'Raleway', sans-serif;
+  --font-body:      'Lato', sans-serif;
+}

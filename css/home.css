@@ -1,0 +1,609 @@
+/* Homepage Specific Styles */
+
+/* Announcement Bar */
+.announcement-bar {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange2) 100%);
+  color: #fff;
+  font-family: var(--font-primary);
+  font-size: .92rem;
+  font-weight: 500;
+  padding: 14px 0;
+  text-align: center;
+}
+
+.announcement-bar strong {
+  font-weight: 700;
+}
+
+.announcement-bar a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--navy);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://sikhaidglobal.org/assets/images/WhatsApp%20Image%202026-07-01%20at%2016.53.02.jpeg');
+  background-size: cover;
+  background-position: center;
+  opacity: .22;
+}
+
+.hero-pattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(238,128,47,.18) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(244,71,8,.12) 0%, transparent 50%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 120px 0 80px;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(244,71,8,.15);
+  color: var(--orange);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: var(--font-primary);
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .5px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  font-weight: 800;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: rgba(255,255,255,.9);
+  line-height: 1.6;
+  margin-bottom: 32px;
+  max-width: 600px;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 60px;
+}
+
+.hero-image-col {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-card-stack {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.hero-main-img {
+  border-radius: 16px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.45);
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-floating-badge {
+  position: absolute;
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px 20px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.25);
+  z-index: 3;
+  font-family: var(--font-primary);
+}
+
+.hero-floating-badge.top-left {
+  top: -20px;
+  left: -30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-image: url('https://sikhaidglobal.org/assets/images/WhatsApp%20Image%202026-07-01%20at%2016.53.55.jpeg');
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,.3);
+}
+
+.hero-floating-badge.bottom-right {
+  bottom: 30px;
+  right: -30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badge-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--orange);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.badge-text-big {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1;
+}
+
+.badge-text-small {
+  font-size: .72rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.hero-stat-bar {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0;
+  box-shadow: 0 16px 60px rgba(0,0,0,.15);
+  margin-top: 60px;
+}
+
+.hero-stat-item {
+  padding: 0 32px;
+  text-align: center;
+  border-right: 1px solid var(--light);
+}
+
+.hero-stat-item:last-child {
+  border-right: none;
+}
+
+.hero-stat-num {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--orange);
+  font-family: var(--font-heading);
+}
+
+.hero-stat-label {
+  font-size: .85rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-top: 4px;
+}
+
+/* About Section */
+.about-section {
+  background: var(--white);
+}
+
+.about-img-wrap {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.about-img-wrap img {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.about-years-badge {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  background: var(--orange);
+  color: #fff;
+  border-radius: 12px;
+  padding: 18px 22px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(244,71,8,.4);
+}
+
+.about-years-badge .num {
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.about-years-badge .label {
+  font-family: var(--font-primary);
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.about-feature {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.about-feature-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--cream);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--orange);
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.about-feature-text h5 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.about-feature-text p {
+  font-size: .88rem;
+  color: var(--gray);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Programs Section */
+.programs-section {
+  background: var(--light);
+}
+
+.program-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,.07);
+  transition: transform .3s ease, box-shadow .3s ease;
+  height: 100%;
+}
+
+.program-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 48px rgba(0,0,0,.13);
+}
+
+.program-card-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.program-card-img img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+
+.program-card:hover .program-card-img img {
+  transform: scale(1.06);
+}
+
+.program-card-icon {
+  position: absolute;
+  bottom: -22px;
+  left: 28px;
+  width: 50px;
+  height: 50px;
+  background: var(--orange);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 16px rgba(244,71,8,.4);
+}
+
+.program-card-body {
+  padding: 36px 28px 28px;
+}
+
+.program-card-body h4 {
+  color: var(--navy);
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.program-card-body p {
+  color: var(--gray);
+  font-size: .9rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.program-card-link {
+  color: var(--orange);
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: .88rem;
+  letter-spacing: .5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.program-card-link:hover {
+  color: var(--navy);
+  gap: 10px;
+}
+
+/* Mission Quote Section */
+.mission-section {
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+
+.mission-section::before {
+  content: '\201C';
+  position: absolute;
+  top: -60px;
+  left: 40px;
+  font-size: 20rem;
+  color: rgba(255,255,255,.04);
+  font-family: serif;
+  line-height: 1;
+}
+
+.mission-section blockquote {
+  font-family: var(--font-heading);
+  font-size: clamp(1.3rem, 2.5vw, 1.85rem);
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.6;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.mission-section blockquote cite {
+  display: block;
+  font-size: .9rem;
+  color: var(--orange2);
+  font-style: normal;
+  font-family: var(--font-primary);
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+.mission-charity {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 50px;
+  padding: 8px 20px;
+  color: rgba(255,255,255,.75);
+  font-family: var(--font-primary);
+  font-size: .82rem;
+  margin-top: 32px;
+}
+
+.mission-charity i {
+  color: var(--orange);
+}
+
+/* Impact Section */
+.impact-section {
+  background: var(--cream);
+}
+
+.impact-card {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.impact-icon {
+  width: 70px;
+  height: 70px;
+  background: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--orange);
+  font-size: 1.8rem;
+  margin: 0 auto 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.1);
+}
+
+.impact-num {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1;
+}
+
+.impact-num span {
+  color: var(--orange);
+}
+
+.impact-label {
+  font-family: var(--font-primary);
+  font-size: .88rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 8px;
+}
+
+/* News & Events Section */
+.news-section {
+  background: var(--white);
+}
+
+.news-card {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,.07);
+  background: #fff;
+  transition: transform .3s ease, box-shadow .3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 40px rgba(0,0,0,.13);
+}
+
+.news-card-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.news-card-img img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+
+.news-card:hover .news-card-img img {
+  transform: scale(1.05);
+}
+
+.news-date-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--orange);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-family: var(--font-primary);
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+.news-card-body {
+  padding: 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-card-body h5 {
+  color: var(--navy);
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  flex-grow: 1;
+}
+
+.news-card-body p {
+  color: var(--gray);
+  font-size: .88rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.news-card-link {
+  color: var(--orange);
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: .88rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.news-card-link:hover {
+  color: var(--navy);
+  gap: 10px;
+}
+
+/* Contact Section */
+.contact-section {
+  background: var(--light);
+}
+
+.contact-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.07);
+}
+
+.contact-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--cream);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--orange);
+  font-size: 1.5rem;
+  margin: 0 auto 20px;
+}
+
+.contact-card h5 {
+  color: var(--navy);
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.contact-card p {
+  color: var(--gray);
+  font-size: .9rem;
+  margin: 0;
+}
+
+.contact-card a {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.contact-card a:hover {
+  color: var(--navy);
+}

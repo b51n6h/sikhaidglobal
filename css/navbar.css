@@ -1,0 +1,129 @@
+/* Navbar Styles */
+.navbar {
+  background: #fff;
+  box-shadow: 0 2px 20px rgba(0,0,0,.08);
+  padding: 0;
+  transition: all .35s ease;
+}
+
+.navbar.scrolled {
+  box-shadow: 0 4px 30px rgba(0,0,0,.14);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.navbar-brand img {
+  height: 52px;
+  width: auto;
+}
+
+.navbar-brand .brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar-brand .brand-name {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.1;
+}
+
+.navbar-brand .brand-sub {
+  font-family: var(--font-primary);
+  font-size: .7rem;
+  color: var(--orange);
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.navbar-nav .nav-link {
+  font-family: var(--font-primary);
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--navy) !important;
+  padding: 24px 16px !important;
+  position: relative;
+  letter-spacing: .3px;
+}
+
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+  right: 16px;
+  height: 3px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transition: transform .25s ease;
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+  transform: scaleX(1);
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--orange) !important;
+}
+
+.btn-donate-nav {
+  font-family: var(--font-primary);
+  font-size: .9rem;
+  font-weight: 700;
+  background: var(--orange);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.btn-donate-nav:hover {
+  background: var(--navy);
+  transform: translateY(-2px);
+}
+
+/* Top Bar */
+.top-bar {
+  background: var(--navy);
+  color: rgba(255,255,255,.85);
+  font-family: var(--font-primary);
+  font-size: .82rem;
+  padding: 8px 0;
+}
+
+.top-bar a {
+  color: rgba(255,255,255,.85);
+}
+
+.top-bar a:hover {
+  color: var(--orange2);
+}
+
+.top-bar .social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  font-size: .75rem;
+  margin-left: 6px;
+  transition: all .25s;
+}
+
+.top-bar .social-links a:hover {
+  background: var(--orange);
+}

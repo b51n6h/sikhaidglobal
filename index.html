@@ -22,6 +22,14 @@
   <!-- Swiper -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
+  <!-- Modular CSS Files for Reuse -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+
   <style>
     /* ── VARIABLES ── */
     :root {
@@ -943,7 +951,7 @@
     <div class="container">
       <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
         <div class="d-flex align-items-center gap-3 flex-wrap">
-          <a href="mailto:sikhaidglobal@gmail.com"><i class="fa fa-envelope me-1"></i>sikhaidglobal@gmail.com</a>
+          <a href="mailto:info@sikhaidglobal.org"><i class="fa fa-envelope me-1"></i>info@sikhaidglobal.org</a>
           <span class="d-none d-md-inline opacity-50">|</span>
           <a href="tel:+447723013160" class="d-none d-md-inline"><i class="fa fa-phone me-1"></i>+44 7723 013160</a>
         </div>
@@ -962,7 +970,7 @@
   <nav class="navbar navbar-expand-lg sticky-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="#">
-        <img src="https://sikhaidglobal.com/images/newLogo.png" alt="Sikh Aid Global Logo" onerror="this.style.display='none'" />
+        <img src="https://sikhaidglobal.org/assets/images/logo.png" alt="Sikh Aid Global Logo" onerror="this.style.display='none'" />
         <div class="brand-text">
           <span class="brand-name">Sikh Aid Global</span>
           <span class="brand-sub">Educate. Empower. Uplift.</span>
@@ -976,10 +984,10 @@
           <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#programs">Programs</a></li>
+          <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
           <li class="nav-item"><a class="nav-link" href="#impact">Impact</a></li>
-          <li class="nav-item"><a class="nav-link" href="#news">News &amp; Events</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-          <li class="nav-item"><a class="nav-link btn-donate-nav" href="https://sikhaidglobal.com/donation" target="_blank"><i class="fas fa-heart me-1"></i>Donate</a></li>
+          <li class="nav-item"><a class="nav-link btn-donate-nav" href="donation.html"><i class="fas fa-heart me-1"></i>Donate</a></li>
         </ul>
       </div>
     </div>
@@ -990,7 +998,7 @@
     <div class="container">
       <i class="fas fa-star me-2"></i>
       <strong>🎉 25th Anniversary Celebration</strong> — Marking 25 years of Sikh Aid Global since 2002! Join us as we celebrate our journey of service and impact.
-      <a href="https://sikhaidglobal.com/events" target="_blank" class="ms-2">Details Coming Soon &rarr;</a>
+      <a href="events.html" class="ms-2">View More Events &rarr;</a>
     </div>
   </div>
 
@@ -1015,7 +1023,7 @@
             Sikh Aid Global is a non-profit organisation dedicated to serving underprivileged communities through education, clean water, healthcare, and welfare programmes across India and beyond.
           </p>
           <div class="hero-cta">
-            <a href="https://sikhaidglobal.com/donation" target="_blank" class="btn-sag-primary">
+            <a href="donation.html" class="btn-sag-primary">
               <i class="fas fa-heart me-2"></i>Donate Now
             </a>
             <a href="#about" class="btn-sag-outline">Learn More</a>
@@ -1168,7 +1176,7 @@
             <div class="program-card-body">
               <h4>Skills Training</h4>
               <p>We organise skill development workshops covering vocational skills through to digital literacy, equipping participants with tools to achieve economic independence.</p>
-              <a href="https://sikhaidglobal.com/project/training" target="_blank" class="program-card-link">
+              <a href="index.html#programs" class="program-card-link">
                 Learn More <i class="fas fa-arrow-right"></i>
               </a>
             </div>
@@ -1184,7 +1192,7 @@
             <div class="program-card-body">
               <h4>Education</h4>
               <p>Education is a superpower that transforms our planet. By giving the next generation access to quality schooling, we unlock their potential and our collective future.</p>
-              <a href="https://sikhaidglobal.com/project/education" target="_blank" class="program-card-link">
+              <a href="index.html#programs" class="program-card-link">
                 Learn More <i class="fas fa-arrow-right"></i>
               </a>
             </div>
@@ -1200,7 +1208,7 @@
             <div class="program-card-body">
               <h4>Welfare Aid</h4>
               <p>Our welfare activities extend to community development projects — housing for Sikligar families, clean water access, healthcare support, and women's empowerment.</p>
-              <a href="https://sikhaidglobal.com/project/welfare_aid" target="_blank" class="program-card-link">
+              <a href="index.html#programs" class="program-card-link">
                 Learn More <i class="fas fa-arrow-right"></i>
               </a>
             </div>
@@ -1260,7 +1268,7 @@
           <h2 class="section-title mb-0">News &amp; Events</h2>
           <div class="divider-bar left mt-3"></div>
         </div>
-        <a href="https://sikhaidglobal.com/events" target="_blank" class="btn-sag-primary">
+        <a href="events.html" class="btn-sag-primary">
           View All <i class="fas fa-arrow-right ms-1"></i>
         </a>
       </div>
@@ -1280,7 +1288,7 @@
           <p>A single penny can make a difference. Join thousands of supporters helping us deliver education, clean water, and hope to those who need it most.</p>
         </div>
         <div class="col-lg-4 text-lg-end" data-aos="fade-left">
-          <a href="https://sikhaidglobal.com/donation" target="_blank" class="btn-donate-cta">
+          <a href="donation.html" class="btn-donate-cta">
             <i class="fas fa-heart me-2"></i>Donate Now
           </a>
         </div>
@@ -1302,7 +1310,7 @@
             <div class="involve-icon"><i class="fas fa-hand-holding-dollar"></i></div>
             <h4>Donate</h4>
             <p>Make a one-time or recurring donation. Every penny goes directly to verified beneficiaries with full transparency.</p>
-            <a href="https://sikhaidglobal.com/donation" target="_blank" class="btn-sag-primary">Give Now</a>
+            <a href="donation.html" class="btn-sag-primary">Give Now</a>
           </div>
         </div>
         <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
@@ -1310,7 +1318,7 @@
             <div class="involve-icon"><i class="fas fa-person-walking-luggage"></i></div>
             <h4>Volunteer</h4>
             <p>Join our global network of volunteers. Whether in the UK, India, USA or Canada, your skills can make a real difference on the ground.</p>
-            <a href="https://sikhaidglobal.com/signup" target="_blank" class="btn-sag-primary">Register</a>
+            <a href="https://sikhaidglobal.org/signup" target="_blank" class="btn-sag-primary">Register</a>
           </div>
         </div>
         <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
@@ -1318,7 +1326,7 @@
             <div class="involve-icon"><i class="fas fa-building-columns"></i></div>
             <h4>Partner With Us</h4>
             <p>Are you an institution, school, or corporate? Partner with Sikh Aid Global to extend your social impact and reach underserved communities.</p>
-            <a href="https://sikhaidglobal.com/institutes" target="_blank" class="btn-sag-primary">Learn More</a>
+            <a href="https://sikhaidglobal.org/institutes" target="_blank" class="btn-sag-primary">Learn More</a>
           </div>
         </div>
       </div>
@@ -1345,7 +1353,7 @@
               <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
               <div class="contact-item-text">
                 <h6>Email</h6>
-                <p><a href="mailto:sikhaidglobal@gmail.com">sikhaidglobal@gmail.com</a></p>
+                <p><a href="mailto:info@sikhaidglobal.org">info@sikhaidglobal.org</a></p>
               </div>
             </div>
 
@@ -1396,7 +1404,7 @@
             <h3>Send Us a Message</h3>
             <p class="subtitle">Fill in the form and we'll get back to you as soon as possible.</p>
 
-            <form action="mailto:sikhaidglobal@gmail.com" method="post" enctype="text/plain">
+            <form action="mailto:info@sikhaidglobal.org" method="post" enctype="text/plain">
               <div class="row g-3">
                 <div class="col-sm-6">
                   <div class="form-group-sag">
@@ -1444,7 +1452,7 @@
           <!-- Brand -->
           <div class="col-lg-4 col-md-6">
             <div class="footer-brand">
-              <img src="https://sikhaidglobal.com/images/newLogo.png" alt="Sikh Aid Global" onerror="this.style.display='none'" />
+              <img src="https://sikhaidglobal.org/assets/images/logo.png" alt="Sikh Aid Global" onerror="this.style.display='none'" />
               <p>A non-profit organisation serving underprivileged communities through education, healthcare, and welfare since 2002. Guided by the Sikh principle of Seva — selfless service.</p>
               <div class="footer-charity-badge">
                 <i class="fas fa-certificate"></i>
@@ -1461,8 +1469,8 @@
               <li><a href="#about"><i class="fas fa-chevron-right"></i>About Us</a></li>
               <li><a href="#programs"><i class="fas fa-chevron-right"></i>Programs</a></li>
               <li><a href="#news"><i class="fas fa-chevron-right"></i>News &amp; Events</a></li>
-              <li><a href="https://news.sikhaidglobal.com/" target="_blank"><i class="fas fa-chevron-right"></i>Blog</a></li>
-              <li><a href="https://sikhaidglobal.com/institutes" target="_blank"><i class="fas fa-chevron-right"></i>Institutes</a></li>
+              <li><a href="https://sikhaidglobal.org/blog" target="_blank"><i class="fas fa-chevron-right"></i>Blog</a></li>
+              <li><a href="https://sikhaidglobal.org/institutes" target="_blank"><i class="fas fa-chevron-right"></i>Institutes</a></li>
             </ul>
           </div>
 
@@ -1470,10 +1478,10 @@
           <div class="col-lg-2 col-md-6 col-6">
             <h6 class="footer-heading">Support</h6>
             <ul class="footer-links">
-              <li><a href="https://sikhaidglobal.com/donation" target="_blank"><i class="fas fa-chevron-right"></i>Donate</a></li>
-              <li><a href="https://sikhaidglobal.com/signup" target="_blank"><i class="fas fa-chevron-right"></i>Volunteer</a></li>
-              <li><a href="https://sikhaidglobal.com/signup/donor" target="_blank"><i class="fas fa-chevron-right"></i>Become a Donor</a></li>
-              <li><a href="https://sikhaidglobal.com/our-team" target="_blank"><i class="fas fa-chevron-right"></i>Our Team</a></li>
+              <li><a href="donation.html"><i class="fas fa-chevron-right"></i>Donate</a></li>
+              <li><a href="https://sikhaidglobal.org/volunteer" target="_blank"><i class="fas fa-chevron-right"></i>Volunteer</a></li>
+              <li><a href="donation.html"><i class="fas fa-chevron-right"></i>Become a Donor</a></li>
+              <li><a href="https://sikhaidglobal.org/about" target="_blank"><i class="fas fa-chevron-right"></i>Our Team</a></li>
               <li><a href="#contact"><i class="fas fa-chevron-right"></i>Contact</a></li>
             </ul>
           </div>
@@ -1483,7 +1491,7 @@
             <h6 class="footer-heading">Contact Us</h6>
             <div class="footer-contact-item">
               <i class="fas fa-envelope"></i>
-              <div><a href="mailto:sikhaidglobal@gmail.com">sikhaidglobal@gmail.com</a></div>
+              <div><a href="mailto:info@sikhaidglobal.org">info@sikhaidglobal.org</a></div>
             </div>
             <div class="footer-contact-item">
               <i class="fas fa-phone"></i>
@@ -1574,7 +1582,7 @@
             <div class="news-card-body">
               <h5>${e.name}</h5>
               <p>${(e.desc||'').substring(0,80)}${(e.desc||'').length>80?'...':''}</p>
-              <a href="https://sikhaidglobal.com/events" class="news-card-link">
+              <a href="events.html" class="news-card-link">
                 View Details <i class="fas fa-arrow-right"></i>
               </a>
             </div>

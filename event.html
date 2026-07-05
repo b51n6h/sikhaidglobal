@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Details - Sikh Aid Global</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&family=Raleway:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Modular CSS Files -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+
+  <style>
+    .event-detail-hero {
+      background: var(--navy);
+      color: #fff;
+      padding: 80px 0;
+    }
+
+    .event-detail-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      margin-bottom: 20px;
+    }
+
+    .event-detail-meta {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      font-size: .95rem;
+    }
+
+    .event-detail-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .event-detail-meta-item i {
+      color: var(--orange);
+      font-size: 1.2rem;
+    }
+
+    .event-main-image {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin: 40px 0;
+    }
+
+    .event-content {
+      background: #fff;
+      padding: 40px 0;
+    }
+
+    .event-description {
+      color: var(--dark);
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .event-section {
+      margin-bottom: 40px;
+    }
+
+    .event-section-title {
+      font-size: 1.5rem;
+      color: var(--navy);
+      margin-bottom: 20px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .event-section-title i {
+      color: var(--orange);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform .3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(244, 71, 8, .9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .3s ease;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-overlay i {
+      color: #fff;
+      font-size: 2rem;
+    }
+
+    .documents-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .documents-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: var(--light);
+      margin-bottom: 12px;
+      border-radius: 8px;
+      transition: all .3s ease;
+    }
+
+    .documents-list li:hover {
+      background: var(--cream);
+      transform: translateX(8px);
+    }
+
+    .documents-list i {
+      color: var(--orange);
+      font-size: 1.3rem;
+      min-width: 20px;
+    }
+
+    .documents-list a {
+      color: var(--navy);
+      font-weight: 600;
+      flex-grow: 1;
+    }
+
+    .documents-list a:hover {
+      color: var(--orange);
+    }
+
+    .download-btn {
+      background: transparent;
+      border: 1px solid var(--light);
+      color: var(--navy);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: .8rem;
+      transition: all .3s ease;
+    }
+
+    .download-btn:hover {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--gray);
+    }
+
+    .empty-state i {
+      font-size: 2.5rem;
+      color: var(--light);
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container-lg">
+      <a class="navbar-brand" href="index.html">
+        <div class="brand-name">Sikh Aid Global</div>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="events.html">Events</a></li>
+          <li class="nav-item"><a class="nav-link" href="donation.html">Donate</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin/index.html">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Event Hero -->
+  <section class="event-detail-hero">
+    <div class="container-lg">
+      <a href="events.html" class="btn btn-link" style="color: rgba(255,255,255,.7); text-decoration: none;">
+        <i class="fas fa-arrow-left"></i> Back to Events
+      </a>
+      <h1 id="eventTitle">Loading...</h1>
+      <div class="event-detail-meta">
+        <div class="event-detail-meta-item">
+          <i class="fas fa-calendar"></i>
+          <span id="eventDate">-</span>
+        </div>
+        <div class="event-detail-meta-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span id="eventLocation">-</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Event Content -->
+  <section class="event-content">
+    <div class="container-lg">
+      <img id="eventImage" src="" alt="Event" class="event-main-image" style="display:none;" />
+
+      <div class="event-description" id="eventDescription">
+        Loading event details...
+      </div>
+
+      <!-- Photos Gallery -->
+      <div class="event-section">
+        <h2 class="event-section-title">
+          <i class="fas fa-images"></i> Photos
+        </h2>
+        <div id="photosGallery" class="gallery-grid">
+          <div class="empty-state">
+            <i class="fas fa-image"></i>
+            <p>No photos available for this event yet.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Documents Section -->
+      <div class="event-section">
+        <h2 class="event-section-title">
+          <i class="fas fa-file-pdf"></i> Documents
+        </h2>
+        <ul id="documentsList" class="documents-list">
+          <div class="empty-state">
+            <i class="fas fa-file"></i>
+            <p>No documents available for this event yet.</p>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container-lg">
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="text-orange">Sikh Aid Global</h5>
+          <p>Supporting education, skills, and welfare across communities worldwide.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p><strong>Contact:</strong> info@sikhaidglobal.org</p>
+          <p><strong>Website:</strong> <a href="https://sikhaidglobal.org">sikhaidglobal.org</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/common.js"></script>
+
+  <script>
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBrwnnvO4Lm6tX-aeYf5xmhJWIp4JPCQTc",
+      authDomain: "sikh-aid-global.firebaseapp.com",
+      projectId: "sikh-aid-global",
+      storageBucket: "sikh-aid-global.firebasestorage.app",
+      messagingSenderId: "1051932848118",
+      appId: "1:1051932848118:web:7dd77fe18e04288557a1d7"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Get event ID from URL
+    const params = new URLSearchParams(window.location.search);
+    const eventId = params.get('id');
+
+    // Load event details
+    async function loadEventDetails() {
+      if (!eventId) {
+        document.body.innerHTML = '<div class="container-lg mt-5"><h2>Event not found</h2></div>';
+        return;
+      }
+
+      try {
+        const doc = await db.collection('events').doc(eventId).get();
+
+        if (!doc.exists) {
+          document.body.innerHTML = '<div class="container-lg mt-5"><h2>Event not found</h2></div>';
+          return;
+        }
+
+        const event = doc.data();
+
+        // Update title and meta
+        document.getElementById('eventTitle').textContent = event.title;
+        document.getElementById('eventDescription').textContent = event.description || '';
+        document.getElementById('eventLocation').textContent = event.location || 'TBA';
+
+        if (event.date) {
+          const eventDate = new Date(event.date.seconds * 1000);
+          document.getElementById('eventDate').textContent = eventDate.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+        }
+
+        // Display main image
+        if (event.image) {
+          const imgEl = document.getElementById('eventImage');
+          imgEl.src = event.image;
+          imgEl.style.display = 'block';
+        }
+
+        // Load photos from sikhaidglobal.org/assets/images/
+        loadPhotos(event.photos || []);
+
+        // Load documents
+        loadDocuments(event.documents || []);
+
+      } catch (error) {
+        console.error('Error loading event:', error);
+        alert('Error loading event details');
+      }
+    }
+
+    // Load photos
+    function loadPhotos(photos) {
+      const gallery = document.getElementById('photosGallery');
+
+      if (!photos || photos.length === 0) {
+        gallery.innerHTML = `
+          <div class="empty-state" style="grid-column: 1/-1;">
+            <i class="fas fa-image"></i>
+            <p>No photos available for this event yet.</p>
+          </div>
+        `;
+        return;
+      }
+
+      gallery.innerHTML = '';
+      photos.forEach(photoUrl => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        item.innerHTML = `
+          <img src="${photoUrl}" alt="Event photo" />
+          <div class="gallery-overlay">
+            <i class="fas fa-expand"></i>
+          </div>
+        `;
+        item.style.cursor = 'pointer';
+        item.onclick = () => window.open(photoUrl, '_blank');
+        gallery.appendChild(item);
+      });
+    }
+
+    // Load documents
+    function loadDocuments(documents) {
+      const docsList = document.getElementById('documentsList');
+
+      if (!documents || documents.length === 0) {
+        docsList.innerHTML = `
+          <div class="empty-state" style="width: 100%;">
+            <i class="fas fa-file"></i>
+            <p>No documents available for this event yet.</p>
+          </div>
+        `;
+        return;
+      }
+
+      docsList.innerHTML = '';
+      documents.forEach(doc => {
+        const li = document.createElement('li');
+        const fileName = doc.split('/').pop();
+        li.innerHTML = `
+          <i class="fas fa-file-pdf"></i>
+          <a href="${doc}" target="_blank">${fileName}</a>
+          <button class="download-btn" onclick="window.open('${doc}', '_blank')">
+            <i class="fas fa-download"></i> Download
+          </button>
+        `;
+        docsList.appendChild(li);
+      });
+    }
+
+    // Load on page load
+    document.addEventListener('DOMContentLoaded', loadEventDetails);
+  </script>
+</body>
+</html>

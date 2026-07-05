@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donate to Sikh Aid Global</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&family=Raleway:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- Modular CSS Files -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+
+  <style>
+    /* Donation Page Specific Styles */
+    .donation-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%);
+      color: #fff;
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+
+    .donation-hero h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .donation-hero p {
+      font-size: 1.2rem;
+      opacity: .95;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .donation-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      margin: 60px 0;
+    }
+
+    .donation-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 30px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+      transition: transform .3s ease, box-shadow .3s ease;
+      text-align: center;
+    }
+
+    .donation-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(0,0,0,.13);
+    }
+
+    .donation-card-icon {
+      width: 70px;
+      height: 70px;
+      background: var(--cream);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--orange);
+      font-size: 2rem;
+      margin: 0 auto 20px;
+    }
+
+    .donation-card h3 {
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: 15px;
+    }
+
+    .donation-card .region {
+      background: var(--cream);
+      color: var(--navy);
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: .85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .donation-card p {
+      color: var(--gray);
+      font-size: .95rem;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .donation-details {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: left;
+      font-family: monospace;
+      font-size: .85rem;
+      color: var(--navy);
+    }
+
+    .donation-details strong {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .qr-code-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .qr-code-container img {
+      max-width: 200px;
+      border-radius: 8px;
+      border: 2px solid var(--light);
+    }
+
+    .donation-impact {
+      background: var(--cream);
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .impact-item h4 {
+      font-size: 2rem;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+
+    .impact-item p {
+      color: var(--gray);
+      font-size: .95rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container-lg">
+      <a class="navbar-brand" href="index.html">
+        <div class="brand-name">Sikh Aid Global</div>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+          <li class="nav-item"><a class="nav-link active" href="donation.html">Donate</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin/index.html">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="donation-hero">
+    <div class="container-lg">
+      <h1>Support Our Mission</h1>
+      <p>Your generous donation helps us educate, empower, and uplift communities across the UK, USA, and India.</p>
+    </div>
+  </section>
+
+  <!-- Donation Methods -->
+  <section class="section-pad">
+    <div class="container-lg">
+      <div style="text-align: center; margin-bottom: 60px;">
+        <span class="section-label">Make Your Impact</span>
+        <h2 class="section-title">Choose Your Donation Method</h2>
+      </div>
+
+      <div class="donation-options">
+        <!-- USA - Zelle -->
+        <div class="donation-card" data-aos="fade-up">
+          <div class="donation-card-icon"><i class="fas fa-dollar-sign"></i></div>
+          <h3>United States</h3>
+          <span class="region">🇺🇸 USA</span>
+          <p>Donate via Zelle with our QR code or bank details.</p>
+
+          <div class="donation-details">
+            <strong>Zelle QR Code:</strong>
+            <em>Scan to donate instantly</em>
+          </div>
+          <div class="qr-code-container">
+            <img src="https://sikhaidglobal.org/assets/images/zelle-qr.png" alt="Zelle QR Code" onerror="this.style.display='none'" />
+          </div>
+
+          <button class="btn btn-sag-primary w-100" onclick="showToast('Zelle details: See above or contact info@sikhaidglobal.org')">
+            <i class="fas fa-mobile-alt"></i> Donate via Zelle
+          </button>
+        </div>
+
+        <!-- Canada - Bank Transfer -->
+        <div class="donation-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="donation-card-icon"><i class="fas fa-leaf"></i></div>
+          <h3>Canada</h3>
+          <span class="region">🇨🇦 CANADA</span>
+          <p>Donate via bank transfer. Contact us for latest details.</p>
+
+          <div class="donation-details">
+            <strong>Bank Transfer:</strong>
+            Contact: info@sikhaidglobal.org<br>
+            for current account details
+          </div>
+
+          <button class="btn btn-sag-primary w-100" onclick="window.location.href='mailto:info@sikhaidglobal.org?subject=Canada Donation Details'">
+            <i class="fas fa-envelope"></i> Request Account Details
+          </button>
+        </div>
+
+        <!-- UK - Bank & PayPal -->
+        <div class="donation-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="donation-card-icon"><i class="fas fa-pound-sign"></i></div>
+          <h3>United Kingdom</h3>
+          <span class="region">🇬🇧 UK</span>
+          <p>Donate via bank transfer or PayPal.</p>
+
+          <div class="donation-details">
+            <strong>Bank Transfer:</strong>
+            Contact: info@sikhaidglobal.org<br>
+            for current account details
+          </div>
+
+          <button class="btn btn-sag-primary w-100" onclick="window.location.href='mailto:info@sikhaidglobal.org?subject=UK Donation Details'">
+            <i class="fas fa-university"></i> Bank Transfer Details
+          </button>
+        </div>
+
+        <!-- PayPal Global -->
+        <div class="donation-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="donation-card-icon"><i class="fab fa-paypal"></i></div>
+          <h3>PayPal Global</h3>
+          <span class="region">🌍 WORLDWIDE</span>
+          <p>Donate securely via PayPal from anywhere in the world.</p>
+
+          <button class="btn btn-sag-primary w-100" onclick="window.location.href='https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID'">
+            <i class="fab fa-paypal"></i> Donate via PayPal
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Section -->
+  <section class="donation-impact">
+    <div class="container-lg">
+      <span class="section-label">Your Generosity</span>
+      <h2 class="section-title">Your Donation Impact</h2>
+
+      <div class="impact-grid">
+        <div class="impact-item" data-aos="fade-up">
+          <h4>$25</h4>
+          <p>Feeds a child for a week</p>
+        </div>
+        <div class="impact-item" data-aos="fade-up" data-aos-delay="100">
+          <h4>$100</h4>
+          <p>Provides school supplies</p>
+        </div>
+        <div class="impact-item" data-aos="fade-up" data-aos-delay="200">
+          <h4>$500</h4>
+          <p>Skills training program</p>
+        </div>
+        <div class="impact-item" data-aos="fade-up" data-aos-delay="300">
+          <h4>$1000+</h4>
+          <p>Community support</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container-lg">
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="text-orange">Sikh Aid Global</h5>
+          <p>Supporting education, skills, and welfare across communities worldwide.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p><strong>Contact:</strong> info@sikhaidglobal.org</p>
+          <p><strong>Website:</strong> <a href="https://sikhaidglobal.org">sikhaidglobal.org</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    function showToast(message, type = 'info') {
+      const toast = document.createElement('div');
+      toast.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+      toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; width: 90%; max-width: 400px;';
+      toast.setAttribute('role', 'alert');
+      toast.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 5000);
+    }
+  </script>
+</body>
+</html>

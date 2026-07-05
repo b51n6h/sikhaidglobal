@@ -1,0 +1,39 @@
+/* Button Styles */
+.btn-sag-primary {
+  background: var(--orange);
+  color: #fff;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: .95rem;
+  letter-spacing: .5px;
+  padding: 12px 32px;
+  border-radius: 4px;
+  border: 2px solid var(--orange);
+  transition: all .3s ease;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.btn-sag-primary:hover {
+  background: transparent;
+  color: var(--orange);
+}
+
+.btn-sag-outline {
+  background: transparent;
+  color: #fff;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: .95rem;
+  padding: 12px 32px;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  transition: all .3s ease;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.btn-sag-outline:hover {
+  background: #fff;
+  color: var(--navy);
+}
