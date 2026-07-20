@@ -1,0 +1,16 @@
+PLACEHOLDER — REPLACE THIS ENTIRE FILE CONTENT WITH THE REAL CONTENT FROM STRIPE
+
+To enable Apple Pay on your donation pages:
+
+1. Log in to your Stripe Dashboard.
+2. Go to Settings → Payment methods → Apple Pay.
+3. Click "Add domain" and enter: sikhaidglobal.com
+4. Stripe will show you the content for this file.
+5. Replace everything in this file with that content and commit/push.
+
+GitHub Pages will then serve this file at:
+https://sikhaidglobal.com/.well-known/apple-developer-merchantid-domain-association
+
+Apple's servers fetch that URL to verify domain ownership before showing the Apple Pay button.
+
+DO NOT delete this file — it must exist at this exact path for Apple Pay to work.
