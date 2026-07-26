@@ -12,99 +12,35 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  <!-- Modular CSS Files -->
   <link rel="stylesheet" href="css/variables.css" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/navbar.css" />
   <link rel="stylesheet" href="css/buttons.css" />
   <link rel="stylesheet" href="css/footer.css" />
+  <link rel="icon" type="image/png" href="https://sikhaidglobal.org/assets/images/favicon-32x32.png">
 
   <style>
-    :root {
-      --navy: #00365B;
-      --orange: #F44708;
-      --cream: #F7EDDB;
-      --gray: #6B7280;
-    }
-
+    :root { --navy: #00365B; --orange: #F44708; --cream: #F7EDDB; --light: #F5F7FA; --gray: #6B7280; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Lato', sans-serif; color: var(--dark); }
-
-    .donation-hero {
-      background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%);
-      color: #fff;
-      padding: 120px 0 80px;
-      text-align: center;
-    }
-
-    .country-header {
-      background: var(--cream);
-      padding: 40px 0;
-      text-align: center;
-      margin: 40px 0;
-    }
-
-    .contact-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 40px;
-      box-shadow: 0 4px 20px rgba(0,0,0,.08);
-      margin: 40px 0;
-    }
-
-    .contact-card h3 {
-      color: var(--navy);
-      margin-bottom: 30px;
-    }
-
-    .person-contact {
-      margin: 30px 0;
-      padding: 20px;
-      background: var(--cream);
-      border-radius: 8px;
-    }
-
-    .person-name {
-      font-weight: 700;
-      color: var(--navy);
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-    }
-
-    .btn-sag-primary {
-      background: var(--orange);
-      color: #fff;
-      padding: 12px 32px;
-      border-radius: 4px;
-      border: 2px solid var(--orange);
-      font-weight: 600;
-      font-size: .95rem;
-      display: inline-block;
-      cursor: pointer;
-      transition: all .3s ease;
-      text-decoration: none;
-    }
-
-    .btn-sag-primary:hover {
-      background: transparent;
-      color: var(--orange);
-    }
+    .donation-hero { background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%); color: #fff; padding: 120px 0 80px; text-align: center; }
+    .country-header { background: var(--cream); padding: 40px 0; text-align: center; margin: 40px 0; }
+    .contact-card { background: #fff; border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,.08); margin: 40px 0; }
+    .contact-card h3 { color: var(--navy); margin-bottom: 30px; }
+    .person-contact { margin: 20px 0; padding: 20px; background: var(--cream); border-radius: 8px; }
+    .person-name { font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .payment-section { background: var(--light); padding: 30px; border-radius: 12px; margin: 20px 0; }
   </style>
-<link rel="icon" type="image/png" href="https://sikhaidglobal.org/assets/images/favicon-32x32.png">
-  </head>
+</head>
 <body>
 
-  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container-lg">
       <a class="navbar-brand" href="index.html">
-        <img src="https://sikhaidglobal.org/assets/images/sikhaidglobalLogo.png" alt="Logo" onerror="this.style.display='none'" style="height: 50px;" />
+        <img src="https://sikhaidglobal.org/assets/images/sikhaidglobalLogo.png" alt="Logo" style="height: 50px;" />
       </a>
     </div>
   </nav>
 
-  <!-- Hero -->
   <section class="donation-hero">
     <div class="container-lg">
       <h1>Support Our Mission</h1>
@@ -112,100 +48,73 @@
     </div>
   </section>
 
-  <!-- Country Header -->
   <section class="country-header">
     <div class="container-lg">
       <div style="font-size: 4rem; margin: 20px 0;">🇨🇦</div>
       <h2 style="color: var(--navy); font-size: 2rem; margin: 0;">Canada</h2>
-      <p style="margin: 20px 0 0; font-size: 1.1rem;">Donate via Bank Transfer</p>
+      <p style="margin: 20px 0 0; font-size: 1.1rem;">Donate via E-Transfer</p>
     </div>
   </section>
 
-  <!-- Contact Section -->
   <section style="padding: 60px 0;">
     <div class="container-lg">
+      <!-- Payment Details -->
       <div class="contact-card">
-        <h3>Meet Your Canada Representatives</h3>
+        <h3>💳 E-Transfer Payment Details</h3>
+        
+        <div class="payment-section">
+          <strong style="color: var(--navy); display: block; margin-bottom: 10px;">Send E-Transfer to:</strong>
+          <div style="font-size: 1.1rem; color: var(--orange); margin-bottom: 20px;">
+            <a href="mailto:sikhaidcanada@gmail.com" style="color: var(--orange); font-weight: 700;">sikhaidcanada@gmail.com</a>
+          </div>
+          
+          <div style="border-top: 1px solid var(--gray); padding-top: 20px; margin-top: 20px;">
+            <div style="margin-bottom: 15px;">
+              <strong style="color: var(--navy);">Account Name:</strong> Sikh Aid Global
+            </div>
+            <div style="margin-bottom: 15px;">
+              <strong style="color: var(--navy);">Bank:</strong> Vancity Credit Union
+            </div>
+          </div>
+        </div>
+
+        <h4 style="color: var(--navy); margin-top: 30px; margin-bottom: 20px;">Contact Representatives</h4>
         
         <div class="person-contact">
           <div class="person-name">Daljit Singh Rattan</div>
-          <div style="color: var(--gray); margin: 10px 0;">
-            <div><a href="tel:+16042301666" style="color: var(--orange); font-weight: 600;">+1 (604) 230-1666</a></div>
-            <div style="margin-top: 10px; font-size: .9rem;">British Columbia</div>
-          </div>
+          <a href="tel:+16042301666" style="color: var(--orange); font-weight: 600;">+1 (604) 230-1666</a>
         </div>
 
         <div class="person-contact">
           <div class="person-name">Sheenu Singh</div>
-          <div style="color: var(--gray); margin: 10px 0;">
-            <div><a href="tel:+17789871772" style="color: var(--orange); font-weight: 600;">+1 (778) 987-1772</a></div>
-            <div style="margin-top: 10px; font-size: .9rem;">British Columbia</div>
-          </div>
+          <a href="tel:+17789871772" style="color: var(--orange); font-weight: 600;">+1 (778) 987-1772</a>
         </div>
 
         <div style="margin-top: 30px; padding: 20px; background: var(--cream); border-radius: 8px;">
           <strong style="color: var(--navy);">Email:</strong><br>
-          <a href="mailto:canada@sikhaidglobal.org" style="color: var(--orange);">canada@sikhaidglobal.org</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Donation Method -->
-  <section style="padding: 60px 0; text-align: center;">
-    <div class="container-lg">
-      <span class="section-label" style="color: var(--orange); font-weight: 700; text-transform: uppercase; margin-bottom: 10px; display: block;">Make Your Impact</span>
-      <h2 style="color: var(--navy); font-size: 2rem; margin-bottom: 40px;">Bank Transfer</h2>
-
-      <div class="contact-card">
-        <h4 style="color: var(--navy); margin-bottom: 20px;">💳 Bank Transfer Details</h4>
-        <p>Contact one of our representatives above for current bank account details and transfer instructions.</p>
-        <div style="margin: 30px 0;">
-          <a href="tel:+16042301666" class="btn-sag-primary">
-            <i class="fas fa-phone"></i> Call Daljit
-          </a>
-          <span style="margin: 0 10px; color: var(--gray);">or</span>
-          <a href="tel:+17789871772" class="btn-sag-primary">
-            <i class="fas fa-phone"></i> Call Sheenu
-          </a>
+          <a href="mailto:sikhaidcanada@gmail.com" style="color: var(--orange);">sikhaidcanada@gmail.com</a>
         </div>
       </div>
 
       <!-- Impact Section -->
-      <div style="background: var(--cream); padding: 40px; border-radius: 12px; margin-top: 40px;">
+      <div style="background: var(--cream); padding: 40px; border-radius: 12px; margin-top: 40px; text-align: center;">
         <h3 style="color: var(--navy); margin-bottom: 30px;">Your Donation Impact</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
-          <div>
-            <h4 style="color: var(--orange); font-size: 1.8rem;">$25</h4>
-            <p style="color: var(--gray);">Feeds a child for a week</p>
-          </div>
-          <div>
-            <h4 style="color: var(--orange); font-size: 1.8rem;">$100</h4>
-            <p style="color: var(--gray);">Provides school supplies</p>
-          </div>
-          <div>
-            <h4 style="color: var(--orange); font-size: 1.8rem;">$500</h4>
-            <p style="color: var(--gray);">Skills training program</p>
-          </div>
-          <div>
-            <h4 style="color: var(--orange); font-size: 1.8rem;">$1000+</h4>
-            <p style="color: var(--gray);">Community support</p>
-          </div>
+          <div><h4 style="color: var(--orange); font-size: 1.8rem;">$25</h4><p style="color: var(--gray);">Feeds a child for a week</p></div>
+          <div><h4 style="color: var(--orange); font-size: 1.8rem;">$100</h4><p style="color: var(--gray);">Provides school supplies</p></div>
+          <div><h4 style="color: var(--orange); font-size: 1.8rem;">$500</h4><p style="color: var(--gray);">Skills training program</p></div>
+          <div><h4 style="color: var(--orange); font-size: 1.8rem;">$1000+</h4><p style="color: var(--gray);">Community support</p></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Back Link -->
   <section style="padding: 40px 0; text-align: center;">
     <div class="container-lg">
-      <a href="donation.html" style="color: var(--orange); font-weight: 600; font-size: 1.05rem;">
-        ← Back to All Countries
-      </a>
+      <a href="donation.html" style="color: var(--orange); font-weight: 600; font-size: 1.05rem;">← Back to All Countries</a>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer style="background: var(--navy); color: #fff; padding: 40px 0;">
     <div class="container-lg">
       <p style="text-align: center; margin: 0; opacity: .8;">&copy; 2025 Sikh Aid Global. All rights reserved.</p>

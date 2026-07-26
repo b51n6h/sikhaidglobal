@@ -17,24 +17,26 @@
   <link rel="stylesheet" href="css/navbar.css" />
   <link rel="stylesheet" href="css/buttons.css" />
   <link rel="stylesheet" href="css/footer.css" />
+  <link rel="icon" type="image/png" href="https://sikhaidglobal.org/assets/images/favicon-32x32.png">
 
   <style>
-    :root { --navy: #00365B; --orange: #F44708; --cream: #F7EDDB; --gray: #6B7280; }
+    :root { --navy: #00365B; --orange: #F44708; --cream: #F7EDDB; --light: #F5F7FA; --gray: #6B7280; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     .donation-hero { background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%); color: #fff; padding: 120px 0 80px; text-align: center; }
     .country-header { background: var(--cream); padding: 40px 0; text-align: center; margin: 40px 0; }
     .contact-card { background: #fff; border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,.08); margin: 40px 0; }
-    .btn-sag-primary { background: var(--orange); color: #fff; padding: 12px 32px; border-radius: 4px; border: 2px solid var(--orange); font-weight: 600; display: inline-block; cursor: pointer; text-decoration: none; }
-    .btn-sag-primary:hover { background: transparent; color: var(--orange); }
+    .contact-card h3 { color: var(--navy); margin-bottom: 30px; }
+    .person-contact { margin: 20px 0; padding: 20px; background: var(--cream); border-radius: 8px; }
+    .person-name { font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .payment-section { background: var(--light); padding: 30px; border-radius: 12px; margin: 20px 0; }
   </style>
-<link rel="icon" type="image/png" href="https://sikhaidglobal.org/assets/images/favicon-32x32.png">
-  </head>
+</head>
 <body>
 
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container-lg">
       <a class="navbar-brand" href="index.html">
-        <img src="https://sikhaidglobal.org/assets/images/sikhaidglobalLogo.png" alt="Logo" onerror="this.style.display='none'" style="height: 50px;" />
+        <img src="https://sikhaidglobal.org/assets/images/sikhaidglobalLogo.png" alt="Logo" style="height: 50px;" />
       </a>
     </div>
   </nav>
@@ -50,43 +52,51 @@
     <div class="container-lg">
       <div style="font-size: 4rem; margin: 20px 0;">🇬🇧</div>
       <h2 style="color: var(--navy); font-size: 2rem; margin: 0;">United Kingdom</h2>
-      <p style="margin: 20px 0 0; font-size: 1.1rem;">Bank Transfer & PayPal</p>
+      <p style="margin: 20px 0 0; font-size: 1.1rem;">Bank Transfer</p>
     </div>
   </section>
 
   <section style="padding: 60px 0;">
     <div class="container-lg">
+      <!-- Payment Details -->
       <div class="contact-card">
-        <h3 style="color: var(--navy); margin-bottom: 20px;">Contact Information</h3>
-        <div style="margin: 20px 0;">
-          <div style="font-weight: 700; color: var(--navy);">Scotland</div>
-          <div style="color: var(--gray); margin-top: 10px;">
-            <div><a href="mailto:scotland@sikhaidglobal.org" style="color: var(--orange); font-weight: 600;">scotland@sikhaidglobal.org</a></div>
-            <div><a href="tel:+447723013160" style="color: var(--orange); font-weight: 600;">+44 7723 013160</a></div>
+        <h3>🏦 Bank Transfer Details</h3>
+        
+        <div class="payment-section">
+          <div style="margin-bottom: 20px;">
+            <strong style="color: var(--navy);">Account Name:</strong> Sikh Aid Scotland
+          </div>
+          <div style="margin-bottom: 20px;">
+            <strong style="color: var(--navy);">Account Number:</strong> 00703341
+          </div>
+          <div style="margin-bottom: 20px;">
+            <strong style="color: var(--navy);">Bank:</strong> Chase Bank
+          </div>
+          <div style="margin-bottom: 20px;">
+            <strong style="color: var(--navy);">Sort Code:</strong> 80-07-60
           </div>
         </div>
-      </div>
 
-      <div class="contact-card">
-        <h4 style="color: var(--navy); margin-bottom: 20px;">Donation Methods</h4>
-        <p>Contact us for bank transfer details or PayPal donation options.</p>
-        <div style="margin: 20px 0;">
-          <a href="tel:+447723013160" class="btn-sag-primary">
-            <i class="fas fa-phone"></i> Call for Details
-          </a>
-          <span style="margin: 0 10px;">or</span>
-          <a href="mailto:scotland@sikhaidglobal.org" class="btn-sag-primary">
-            <i class="fas fa-envelope"></i> Email
-          </a>
+        <h4 style="color: var(--navy); margin-top: 30px; margin-bottom: 20px;">Contact Representative</h4>
+        
+        <div class="person-contact">
+          <div class="person-name">Gurcip Singh Samra</div>
+          <a href="tel:+447723013160" style="color: var(--orange); font-weight: 600;">+44 7723 013160</a>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: var(--cream); border-radius: 8px;">
+          <strong style="color: var(--navy);">Email:</strong><br>
+          <a href="mailto:scotland@sikhaidglobal.org" style="color: var(--orange);">scotland@sikhaidglobal.org</a>
         </div>
       </div>
 
+      <!-- Impact Section -->
       <div style="background: var(--cream); padding: 40px; border-radius: 12px; margin-top: 40px; text-align: center;">
         <h3 style="color: var(--navy); margin-bottom: 30px;">Your Donation Impact</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
-          <div><h4 style="color: var(--orange); font-size: 1.8rem;">£20</h4><p style="color: var(--gray);">Feeds a child</p></div>
-          <div><h4 style="color: var(--orange); font-size: 1.8rem;">£80</h4><p style="color: var(--gray);">School supplies</p></div>
-          <div><h4 style="color: var(--orange); font-size: 1.8rem;">£400</h4><p style="color: var(--gray);">Training program</p></div>
+          <div><h4 style="color: var(--orange); font-size: 1.8rem;">£20</h4><p style="color: var(--gray);">Feeds a child for a week</p></div>
+          <div><h4 style="color: var(--orange); font-size: 1.8rem;">£80</h4><p style="color: var(--gray);">Provides school supplies</p></div>
+          <div><h4 style="color: var(--orange); font-size: 1.8rem;">£400</h4><p style="color: var(--gray);">Skills training program</p></div>
           <div><h4 style="color: var(--orange); font-size: 1.8rem;">£800+</h4><p style="color: var(--gray);">Community support</p></div>
         </div>
       </div>

@@ -1,83 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Donate (USA) — Sikh Aid Global</title>
-  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donate - USA - Sikh Aid Global</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&family=Raleway:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="icon" type="image/png" href="https://sikhaidglobal.org/assets/images/favicon-32x32.png">
+
   <style>
-    :root { --navy:#00365B; --orange:#F44708; --orange2:#EE802F; }
-    *,*::before,*::after{box-sizing:border-box;}
-    body{font-family:'Jost',sans-serif;background:#F0F2F5;margin:0;min-height:100vh;}
-    .topbar{background:var(--navy);padding:18px 0;text-align:center;}
-    .topbar img{height:46px;}
-    .wrap{max-width:720px;margin:0 auto;padding:40px 16px 60px;}
-    .hero{background:#fff;border-radius:16px;padding:36px 32px;box-shadow:0 4px 24px rgba(0,0,0,.06);text-align:center;margin-bottom:24px;}
-    .hero h1{color:var(--navy);font-weight:800;font-size:1.9rem;margin-bottom:8px;}
-    .country-tag{display:inline-flex;align-items:center;gap:8px;background:#EFF6FF;color:#1D4ED8;font-size:.82rem;font-weight:600;padding:5px 12px;border-radius:20px;margin-bottom:18px;}
-    .hero p{color:#6B7280;font-size:1rem;margin-bottom:28px;}
-    .embed-wrap{min-height:120px;}
-    .placeholder-notice{background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:18px 20px;text-align:left;font-size:.88rem;color:#92400E;margin-bottom:24px;}
-    .placeholder-notice strong{display:block;margin-bottom:6px;color:#78350F;}
-    .placeholder-notice code{background:#FEF3C7;padding:2px 6px;border-radius:4px;font-size:.83rem;}
-    .switcher{text-align:center;font-size:.85rem;color:#6B7280;margin-top:4px;}
-    .switcher a{color:var(--orange);text-decoration:none;font-weight:600;}
-    .switcher a:hover{text-decoration:underline;}
-    .footer-note{text-align:center;color:#9CA3AF;font-size:.78rem;margin-top:28px;}
+    :root { --navy: #00365B; --orange: #F44708; --cream: #F7EDDB; --light: #F5F7FA; --gray: #6B7280; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lato', sans-serif; }
+
+    .donation-hero { background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%); color: #fff; padding: 120px 0 80px; text-align: center; }
+    .country-header { background: var(--cream); padding: 40px 0; text-align: center; margin: 40px 0; }
+    .contact-card { background: #fff; border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,.08); margin: 40px 0; }
+    .contact-card h3 { color: var(--navy); margin-bottom: 30px; }
+    .person-contact { margin: 20px 0; padding: 20px; background: var(--cream); border-radius: 8px; }
+    .person-name { font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .payment-section { background: var(--light); padding: 30px; border-radius: 12px; margin: 20px 0; }
+    .btn-sag-primary { background: var(--orange); color: #fff; padding: 12px 32px; border-radius: 4px; border: 2px solid var(--orange); font-weight: 600; display: inline-block; cursor: pointer; text-decoration: none; transition: all .3s ease; }
+    .btn-sag-primary:hover { background: transparent; color: var(--orange); }
   </style>
-<link rel="icon" type="image/png" href="https://sikhaidglobal.org/assets/images/favicon-32x32.png">
-  </head>
+</head>
 <body>
 
-  <div class="topbar">
-    <img src="https://sikhaidglobal.com/images/newLogo.png" alt="Sikh Aid Global" onerror="this.style.display='none'">
-  </div>
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container-lg">
+      <a class="navbar-brand" href="index.html">
+        <img src="https://sikhaidglobal.org/assets/images/sikhaidglobalLogo.png" alt="Logo" style="height: 50px;" />
+      </a>
+    </div>
+  </nav>
 
-  <div class="wrap">
-    <div class="hero">
-      <div class="country-tag"><span>🇺🇸</span> United States — USD ($)</div>
-      <h1>Support Sikh Aid Global</h1>
-      <p>Your donation funds education, clean water, and healthcare for communities in need. Apple Pay and Google Pay are accepted.</p>
+  <section class="donation-hero">
+    <div class="container-lg">
+      <h1>Support Our Mission</h1>
+      <p>Make a difference in communities across the USA</p>
+    </div>
+  </section>
 
-      <!--
-        SETUP INSTRUCTIONS
-        ==================
-        1. In your Stripe Dashboard, create a Payment Link for USD donations.
-        2. Enable "Buy Button" on that Payment Link.
-        3. Replace the two placeholder values below:
-           - buy-button-id="buy_btn_REPLACE_WITH_YOUR_US_ID"
-           - publishable-key="pk_live_REPLACE_WITH_YOUR_KEY"
-        4. Delete the yellow notice box above the buy button element.
-        5. For Apple Pay domain verification see donate-uk.html instructions.
-      -->
+  <section class="country-header">
+    <div class="container-lg">
+      <div style="font-size: 4rem; margin: 20px 0;">🇺🇸</div>
+      <h2 style="color: var(--navy); font-size: 2rem; margin: 0;">United States</h2>
+      <p style="margin: 20px 0 0; font-size: 1.1rem;">Donate via Zelle</p>
+    </div>
+  </section>
 
-      <div class="placeholder-notice">
-        <strong>⚙️ Stripe Setup Required</strong>
-        Replace the placeholder values in this file with your real Stripe Buy Button credentials:
-        <code>buy-button-id</code> and <code>publishable-key</code>.<br>
-        See the HTML comment above for step-by-step instructions.
+  <section style="padding: 60px 0;">
+    <div class="container-lg">
+      <!-- Payment Details -->
+      <div class="contact-card">
+        <h3>💳 Zelle Payment Details</h3>
+        
+        <div class="payment-section">
+          <strong style="color: var(--navy); display: block; margin-bottom: 10px;">Send Zelle Transfer to:</strong>
+          <div style="font-size: 1.1rem; color: var(--orange); margin-bottom: 20px;">
+            <a href="mailto:sikhaidamerica@gmail.com" style="color: var(--orange); font-weight: 700;">sikhaidamerica@gmail.com</a>
+          </div>
+          
+          <div style="border-top: 1px solid var(--gray); padding-top: 20px; margin-top: 20px;">
+            <div style="margin-bottom: 15px;">
+              <strong style="color: var(--navy);">Account Name:</strong> Sikh Aid America
+            </div>
+            <div style="margin-bottom: 15px;">
+              <strong style="color: var(--navy);">Bank:</strong> Chase Bank
+            </div>
+          </div>
+        </div>
+
+        <h4 style="color: var(--navy); margin-top: 30px; margin-bottom: 20px;">Contact Representatives</h4>
+        
+        <div class="person-contact">
+          <div class="person-name">Deep Singh</div>
+          <a href="tel:+15308441523" style="color: var(--orange); font-weight: 600;">+1 (530) 844-1523</a>
+        </div>
+
+        <div class="person-contact">
+          <div class="person-name">Baldev Singh Vij</div>
+          <a href="tel:+19519013652" style="color: var(--orange); font-weight: 600;">+1 (951) 901-3652</a>
+        </div>
+
+        <div class="person-contact">
+          <div class="person-name">Satnam Singh</div>
+          <a href="tel:+15306823962" style="color: var(--orange); font-weight: 600;">+1 (530) 682-3962</a>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: var(--cream); border-radius: 8px;">
+          <strong style="color: var(--navy);">General Email:</strong><br>
+          <a href="mailto:sikhaidamerica@gmail.com" style="color: var(--orange);">sikhaidamerica@gmail.com</a>
+        </div>
       </div>
 
-      <div class="embed-wrap">
-        <stripe-buy-button
-          buy-button-id="buy_btn_REPLACE_WITH_YOUR_US_ID"
-          publishable-key="pk_live_REPLACE_WITH_YOUR_KEY">
-        </stripe-buy-button>
+      <!-- Impact Section -->
+      <div style="background: var(--cream); padding: 40px; border-radius: 12px; margin-top: 40px; text-align: center;">
+        <h3 style="color: var(--navy); margin-bottom: 30px;">Your Donation Impact</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
+          <div>
+            <h4 style="color: var(--orange); font-size: 1.8rem;">$25</h4>
+            <p style="color: var(--gray);">Feeds a child for a week</p>
+          </div>
+          <div>
+            <h4 style="color: var(--orange); font-size: 1.8rem;">$100</h4>
+            <p style="color: var(--gray);">Provides school supplies</p>
+          </div>
+          <div>
+            <h4 style="color: var(--orange); font-size: 1.8rem;">$500</h4>
+            <p style="color: var(--gray);">Skills training program</p>
+          </div>
+          <div>
+            <h4 style="color: var(--orange); font-size: 1.8rem;">$1000+</h4>
+            <p style="color: var(--gray);">Community support</p>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="switcher">
-      Not in the USA? &nbsp;
-      <a href="/donate-uk.html">🇬🇧 UK / Scotland</a> &nbsp;&bull;&nbsp;
-      <a href="/donate-ca.html">🇨🇦 Canada</a> &nbsp;&bull;&nbsp;
-      <a href="/donate-in.html">🇮🇳 India</a>
+  <section style="padding: 40px 0; text-align: center;">
+    <div class="container-lg">
+      <a href="donation.html" style="color: var(--orange); font-weight: 600; font-size: 1.05rem;">
+        ← Back to All Countries
+      </a>
     </div>
+  </section>
 
-    <div class="footer-note">Sikh Aid Global &bull; info@sikhaidglobal.org</div>
-  </div>
+  <footer style="background: var(--navy); color: #fff; padding: 40px 0;">
+    <div class="container-lg">
+      <p style="text-align: center; margin: 0; opacity: .8;">&copy; 2025 Sikh Aid Global. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
