@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     :root { --navy:#00365B; --orange:#F44708; --orange2:#EE802F; --sw:260px; }
     *,*::before,*::after{box-sizing:border-box;}
@@ -781,6 +782,8 @@ const db      = firebase.firestore();
 const storage = firebase.storage();
 const TS      = firebase.firestore.FieldValue.serverTimestamp;
 
+emailjs.init({ publicKey: 'YOUR_EMAILJS_PUBLIC_KEY' });
+
 // ══════════════════════════════════
 //  STATE
 // ══════════════════════════════════
@@ -1513,29 +1516,23 @@ async function syncDonorPortal(donorId, excludeMatchId=null) {
     });
   } catch(e){ toast('Error syncing donor portal: '+e.message,'error'); }
 }
-function notifyDonor(matchId) {
-  const m = matches.find(x=>x.id===matchId);
+async function notifyDonor(matchId) {
+  const m = matches.find(x => x.id === matchId);
   if (!m) return;
-  const d = donors.find(x=>x.id===m.donorId);
-  if (!d || !d.email) { toast('This donor has no email on file.','error'); return; }
+  const d = donors.find(x => x.id === m.donorId);
+  if (!d || !d.email) { toast('This donor has no email on file.', 'error'); return; }
   const portalUrl = `https://sikhaidglobal.com/donor.html?t=${d.portalToken}`;
-  const sub = encodeURIComponent('You\'ve Been Matched — Sikh Aid Global');
-  const body =
-`Dear ${d.name},
-
-Thank you for your generous support. You have been matched to a student/institute through Sikh Aid Global.
-
-You can view your personal donor dashboard — showing which student(s), institute, and donation amount — at the link below:
-
-${portalUrl}
-
-Thank you for making a difference in a child's education.
-
-Warm regards,
-Sikh Aid Global
-info@sikhaidglobal.org`;
-  window.open(`mailto:${d.email}?subject=${sub}&body=${encodeURIComponent(body)}`);
-  toast('Email client opened!');
+  try {
+    await emailjs.send('YOUR_EMAILJS_SERVICE_ID', 'YOUR_EMAILJS_TEMPLATE_ID', {
+      to_name:    d.name,
+      to_email:   d.email,
+      portal_url: portalUrl
+    });
+    toast('Donor notified via info@sikhaidglobal.org');
+  } catch (err) {
+    console.error('EmailJS error:', err);
+    toast('Failed to send email — check EmailJS config.', 'error');
+  }
 }
 
 // ══════════════════════════════════

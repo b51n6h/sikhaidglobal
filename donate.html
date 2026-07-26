@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate — Sikh Aid Global</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root { --navy:#00365B; --orange:#F44708; --orange2:#EE802F; }
+    *,*::before,*::after{box-sizing:border-box;}
+    body{font-family:'Jost',sans-serif;background:#F0F2F5;margin:0;min-height:100vh;}
+    .topbar{background:var(--navy);padding:18px 0;text-align:center;}
+    .topbar img{height:46px;}
+    .wrap{max-width:720px;margin:0 auto;padding:40px 16px 60px;}
+    .hero{background:#fff;border-radius:16px;padding:36px 32px;box-shadow:0 4px 24px rgba(0,0,0,.06);text-align:center;margin-bottom:28px;}
+    .hero h1{color:var(--navy);font-weight:800;font-size:1.9rem;margin-bottom:8px;}
+    .hero p{color:#6B7280;font-size:1.05rem;margin-bottom:32px;}
+    .spinner-wrap{padding:40px 0;color:#9CA3AF;}
+    .spinner-wrap i{font-size:2rem;display:block;margin-bottom:12px;}
+    .country-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px;}
+    @media(max-width:480px){.country-grid{grid-template-columns:1fr;}}
+    .country-btn{display:flex;align-items:center;gap:14px;background:#fff;border:2px solid #E5E7EB;border-radius:12px;padding:18px 20px;text-decoration:none;color:#111827;font-weight:600;font-size:1rem;transition:border-color .2s,box-shadow .2s;}
+    .country-btn:hover{border-color:var(--orange);box-shadow:0 4px 16px rgba(244,71,8,.12);color:#111827;}
+    .country-btn .flag{font-size:1.8rem;line-height:1;}
+    .country-btn .label{display:flex;flex-direction:column;}
+    .country-btn .label span{font-size:.78rem;font-weight:400;color:#6B7280;}
+    .footer-note{text-align:center;color:#9CA3AF;font-size:.78rem;margin-top:28px;}
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <img src="https://sikhaidglobal.com/images/newLogo.png" alt="Sikh Aid Global" onerror="this.style.display='none'">
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <h1>Support Sikh Aid Global</h1>
+      <p>Your donation funds education, clean water, and healthcare for communities in need. Choose your country to donate in your local currency.</p>
+
+      <!-- shown briefly while JS detects timezone -->
+      <div id="detecting" class="spinner-wrap">
+        <i class="fas fa-spinner fa-spin"></i>Detecting your region…
+      </div>
+
+      <!-- fallback country picker (also shown if JS detection takes too long or is wrong) -->
+      <div id="picker" style="display:none;">
+        <div class="country-grid">
+          <a href="/donate-uk.html" class="country-btn">
+            <span class="flag">🇬🇧</span>
+            <span class="label">United Kingdom / Scotland<span>Donate in GBP (£)</span></span>
+          </a>
+          <a href="/donate-ca.html" class="country-btn">
+            <span class="flag">🇨🇦</span>
+            <span class="label">Canada<span>Donate in CAD ($)</span></span>
+          </a>
+          <a href="/donate-us.html" class="country-btn">
+            <span class="flag">🇺🇸</span>
+            <span class="label">United States<span>Donate in USD ($)</span></span>
+          </a>
+          <a href="/donate-in.html" class="country-btn">
+            <span class="flag">🇮🇳</span>
+            <span class="label">India<span>Donate in INR (₹)</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-note">Sikh Aid Global &bull; info@sikhaidglobal.org</div>
+  </div>
+
+  <script>
+    (function () {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      let dest = null;
+      if (/^Europe\/(London|Belfast|Dublin|Jersey|Guernsey|Isle_of_Man)/.test(tz)) {
+        dest = '/donate-uk.html';
+      } else if (/^America\/(Toronto|Vancouver|Winnipeg|Edmonton|Halifax|Regina|Moncton|St_Johns|Glace_Bay|Goose_Bay|Iqaluit|Rankin_Inlet|Resolute|Creston|Dawson|Dawson_Creek|Fort_Nelson|Whitehorse|Cambridge_Bay)/.test(tz)) {
+        dest = '/donate-ca.html';
+      } else if (/^America\//.test(tz)) {
+        dest = '/donate-us.html';
+      } else if (/^Asia\/(Calcutta|Kolkata)/.test(tz)) {
+        dest = '/donate-in.html';
+      }
+
+      if (dest) {
+        location.replace(dest);
+      } else {
+        document.getElementById('detecting').style.display = 'none';
+        document.getElementById('picker').style.display = 'block';
+      }
+    })();
+  </script>
+
+</body>
+</html>
