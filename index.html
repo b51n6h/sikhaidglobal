@@ -466,9 +466,35 @@
       width: 100%;
       height: 220px;
       object-fit: cover;
-      transition: transform .4s ease;
+      transition: transform .4s ease, opacity .6s ease;
+      opacity: 1;
+    }
+    .program-card-img img.fade-out {
+      opacity: 0;
     }
     .program-card:hover .program-card-img img { transform: scale(1.06); }
+    .carousel-indicators {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 2;
+    }
+    .carousel-indicators span {
+      width: 6px;
+      height: 6px;
+      background: rgba(255,255,255,.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .carousel-indicators span.active {
+      width: 20px;
+      background: var(--orange);
+      border-radius: 3px;
+    }
     .program-card-icon {
       position: absolute;
       bottom: -22px; left: 28px;
@@ -1161,8 +1187,16 @@
       <div class="row g-4">
         <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
           <div class="program-card">
-            <div class="program-card-img">
-              <img src="https://sikhaidglobal.org/assets/images/WhatsApp%20Image%202026-07-01%20at%2016.53.55.jpeg" alt="Training" />
+            <div class="program-card-img" id="skills-carousel">
+              <img src="https://sikhaidglobal.org/assets/images/IMG-20190210-WA0007.jpg" alt="Skills Training" />
+              <div class="carousel-indicators">
+                <span class="active" onclick="changeSkillsImage(0)"></span>
+                <span onclick="changeSkillsImage(1)"></span>
+                <span onclick="changeSkillsImage(2)"></span>
+                <span onclick="changeSkillsImage(3)"></span>
+                <span onclick="changeSkillsImage(4)"></span>
+                <span onclick="changeSkillsImage(5)"></span>
+              </div>
               <div class="program-card-icon"><i class="fas fa-tools"></i></div>
             </div>
             <div class="program-card-body">
@@ -1177,8 +1211,12 @@
 
         <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
           <div class="program-card">
-            <div class="program-card-img">
+            <div class="program-card-img" id="education-carousel">
               <img src="https://sikhaidglobal.org/assets/images/WhatsApp%20Image%202026-07-04%20at%2016.22.01%20(5).jpeg" alt="Education" />
+              <div class="carousel-indicators">
+                <span class="active" onclick="changeEducationImage(0)"></span>
+                <span onclick="changeEducationImage(1)"></span>
+              </div>
               <div class="program-card-icon"><i class="fas fa-graduation-cap"></i></div>
             </div>
             <div class="program-card-body">
@@ -1193,8 +1231,17 @@
 
         <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
           <div class="program-card">
-            <div class="program-card-img">
-              <img src="https://sikhaidglobal.org/assets/images/IMG_20260702_095951.jpg" alt="Welfare Aid" />
+            <div class="program-card-img" id="welfare-carousel">
+              <img src="https://sikhaidglobal.org/assets/images/IMG-20180122-WA0084.jpg" alt="Welfare Aid" />
+              <div class="carousel-indicators">
+                <span class="active" onclick="changeWelfareImage(0)"></span>
+                <span onclick="changeWelfareImage(1)"></span>
+                <span onclick="changeWelfareImage(2)"></span>
+                <span onclick="changeWelfareImage(3)"></span>
+                <span onclick="changeWelfareImage(4)"></span>
+                <span onclick="changeWelfareImage(5)"></span>
+                <span onclick="changeWelfareImage(6)"></span>
+              </div>
               <div class="program-card-icon"><i class="fas fa-hands-holding-child"></i></div>
             </div>
             <div class="program-card-body">
@@ -1683,6 +1730,80 @@
         }
       });
     });
+
+    // ── Image Carousel Rotation ──
+    const skillsImages = [
+      'https://sikhaidglobal.org/assets/images/IMG-20190210-WA0007.jpg',
+      'https://sikhaidglobal.org/assets/images/IMG-20180125-WA0002.jpg',
+      'https://sikhaidglobal.org/assets/images/P1030689.JPG',
+      'https://sikhaidglobal.org/assets/images/P1030713.JPG',
+      'https://sikhaidglobal.org/assets/images/Stiching.jpg',
+      'https://sikhaidglobal.org/assets/images/DSC00033.JPG'
+    ];
+    let skillsIndex = 0;
+    function changeSkillsImage(idx) {
+      skillsIndex = idx;
+      const img = document.querySelector('#skills-carousel img');
+      img.classList.add('fade-out');
+      setTimeout(() => {
+        img.src = skillsImages[skillsIndex];
+        img.classList.remove('fade-out');
+      }, 300);
+      updateIndicators('skills-carousel', skillsIndex);
+    }
+    setInterval(() => {
+      changeSkillsImage((skillsIndex + 1) % skillsImages.length);
+    }, 5000);
+
+    const educationImages = [
+      'https://sikhaidglobal.org/assets/images/WhatsApp%20Image%202026-07-04%20at%2016.22.01%20(5).jpeg',
+      'https://sikhaidglobal.org/assets/images/P1030876.JPG'
+    ];
+    let educationIndex = 0;
+    function changeEducationImage(idx) {
+      educationIndex = idx;
+      const img = document.querySelector('#education-carousel img');
+      img.classList.add('fade-out');
+      setTimeout(() => {
+        img.src = educationImages[educationIndex];
+        img.classList.remove('fade-out');
+      }, 300);
+      updateIndicators('education-carousel', educationIndex);
+    }
+    setInterval(() => {
+      changeEducationImage((educationIndex + 1) % educationImages.length);
+    }, 5000);
+
+    const welfareImages = [
+      'https://sikhaidglobal.org/assets/images/IMG-20180122-WA0084.jpg',
+      'https://sikhaidglobal.org/assets/images/IMG_4073.PNG',
+      'https://sikhaidglobal.org/assets/images/IMG-20250709-WA0014.jpg',
+      'https://sikhaidglobal.org/assets/images/IMG-20220624-WA0003.jpg',
+      'https://sikhaidglobal.org/assets/images/IMG-20260412-WA0009.jpg',
+      'https://sikhaidglobal.org/assets/images/IMG-20260707-WA0001.jpg',
+      'https://sikhaidglobal.org/assets/images/IMG-20260412-WA0008.jpg'
+    ];
+    let welfareIndex = 0;
+    function changeWelfareImage(idx) {
+      welfareIndex = idx;
+      const img = document.querySelector('#welfare-carousel img');
+      img.classList.add('fade-out');
+      setTimeout(() => {
+        img.src = welfareImages[welfareIndex];
+        img.classList.remove('fade-out');
+      }, 300);
+      updateIndicators('welfare-carousel', welfareIndex);
+    }
+    setInterval(() => {
+      changeWelfareImage((welfareIndex + 1) % welfareImages.length);
+    }, 5000);
+
+    function updateIndicators(carouselId, activeIdx) {
+      const indicators = document.querySelectorAll(`#${carouselId} .carousel-indicators span`);
+      indicators.forEach((span, idx) => {
+        span.classList.toggle('active', idx === activeIdx);
+      });
+    }
   </script>
 </body>
 </html>
