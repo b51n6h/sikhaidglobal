@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welfare Aid - Sikh Aid Global</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&family=Raleway:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="icon" type="image/png" href="https://sikhaidglobal.org/assets/images/favicon-32x32.png">
+
+  <style>
+    :root {
+      --navy: #00365B;
+      --orange: #F44708;
+      --cream: #F7EDDB;
+      --light: #F5F7FA;
+      --gray: #6B7280;
+    }
+
+    .project-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%);
+      color: #fff;
+      padding: 100px 0 60px;
+      text-align: center;
+    }
+
+    .project-hero h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin-bottom: 20px;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 60px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,.15);
+    }
+
+    .carousel-img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      transition: opacity .6s ease;
+    }
+
+    .carousel-img.fade-out {
+      opacity: 0;
+    }
+
+    .carousel-indicators {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .carousel-indicators span {
+      width: 8px;
+      height: 8px;
+      background: rgba(255,255,255,.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all .3s;
+    }
+
+    .carousel-indicators span.active {
+      width: 24px;
+      background: var(--orange);
+      border-radius: 4px;
+    }
+
+    .section-pad { padding: 90px 0; }
+    .section-label {
+      font-family: 'Jost', sans-serif;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--orange);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 2.2rem;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 40px;
+    }
+
+    .project-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+      margin-bottom: 25px;
+      border-left: 4px solid var(--orange);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.12);
+    }
+
+    .project-card h5 {
+      color: var(--navy);
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .project-card p {
+      color: var(--gray);
+      font-size: .9rem;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .85rem;
+      color: var(--gray);
+    }
+
+    .meta-item i {
+      color: var(--orange);
+    }
+
+    .badge-status {
+      display: inline-block;
+      background: #d4edda;
+      color: #155724;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: .8rem;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--gray);
+    }
+
+    .loading-spinner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+    }
+
+    .spinner-border {
+      color: var(--orange);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg sticky-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="index.html#home">
+        <img src="https://sikhaidglobal.org/assets/images/sikhaidglobalLogo.png" alt="Sikh Aid Global Logo" onerror="this.style.display='none'" />
+        <div class="brand-text">
+          <span class="brand-name">Sikh Aid Global</span>
+          <span class="brand-sub">Educate. Empower. Uplift.</span>
+        </div>
+      </a>
+      <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <i class="fas fa-bars text-navy"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#programs">Programs</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#impact">Impact</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+          <li class="nav-item"><a class="nav-link btn-donate-nav" href="donation.html"><i class="fas fa-heart me-1"></i>Donate</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="project-hero">
+    <div class="container-lg">
+      <h1>Welfare Aid Program</h1>
+      <p>Supporting communities through housing, healthcare, and comprehensive welfare initiatives</p>
+    </div>
+  </section>
+
+  <section class="section-pad bg-light-sag">
+    <div class="container-lg">
+      <div class="carousel-container">
+        <img src="https://sikhaidglobal.org/assets/images/IMG-20180122-WA0084.jpg" alt="Welfare Aid" class="carousel-img" id="carousel-img" />
+        <div class="carousel-indicators" id="carousel-indicators"></div>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 60px;">
+        <span class="section-label">Funded Projects</span>
+        <h2 class="section-title">Community Welfare Initiatives</h2>
+        <p style="font-size: 1.05rem; color: var(--gray); max-width: 600px; margin: 0 auto;">
+          We've funded numerous welfare projects that directly improve the lives of vulnerable families and communities.
+        </p>
+      </div>
+
+      <div id="projects-container">
+        <div class="loading-spinner">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background: var(--navy); color: #fff; padding: 60px 0 20px;">
+    <div class="container-lg">
+      <div class="row g-5 mb-5">
+        <div class="col-lg-3 col-md-6">
+          <h6 style="font-weight: 700; margin-bottom: 16px; font-size: .95rem; text-transform: uppercase; letter-spacing: 1px;">About</h6>
+          <p style="font-size: .9rem; line-height: 1.8; opacity: .9;">A non-profit organisation serving underprivileged communities through education, healthcare, and welfare since 2002.</p>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <h6 style="font-weight: 700; margin-bottom: 16px; font-size: .95rem; text-transform: uppercase; letter-spacing: 1px;">Quick Links</h6>
+          <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 8px;"><a href="index.html" style="color: rgba(255,255,255,.85); text-decoration: none;">Home</a></li>
+            <li style="margin-bottom: 8px;"><a href="donation.html" style="color: rgba(255,255,255,.85); text-decoration: none;">Donate</a></li>
+            <li style="margin-bottom: 8px;"><a href="welfare-aid.html" style="color: rgba(255,255,255,.85); text-decoration: none;">Welfare Aid</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h6 style="font-weight: 700; margin-bottom: 16px; font-size: .95rem; text-transform: uppercase; letter-spacing: 1px;">Country Contacts</h6>
+          <p style="font-size: .85rem; line-height: 1.8;">
+            <strong>🇬🇧 UK:</strong> <a href="mailto:scotland@sikhaidglobal.org" style="color: rgba(255,255,255,.85); text-decoration: none;">scotland@sikhaidglobal.org</a><br />
+            <strong>🇺🇸 USA:</strong> <a href="mailto:america@sikhaidglobal.org" style="color: rgba(255,255,255,.85); text-decoration: none;">america@sikhaidglobal.org</a><br />
+            <strong>🇨🇦 Canada:</strong> <a href="mailto:canada@sikhaidglobal.org" style="color: rgba(255,255,255,.85); text-decoration: none;">canada@sikhaidglobal.org</a><br />
+            <strong>🇮🇳 India:</strong> <a href="mailto:india@sikhaidglobal.org" style="color: rgba(255,255,255,.85); text-decoration: none;">india@sikhaidglobal.org</a>
+          </p>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <h6 style="font-weight: 700; margin-bottom: 16px; font-size: .95rem; text-transform: uppercase; letter-spacing: 1px;">Contact</h6>
+          <p style="font-size: .85rem; line-height: 1.8;">
+            <strong>General:</strong> <a href="mailto:info@sikhaidglobal.org" style="color: rgba(255,255,255,.85); text-decoration: none;">info@sikhaidglobal.org</a><br />
+            <strong>Phone:</strong> <a href="tel:+447723013160" style="color: rgba(255,255,255,.85); text-decoration: none;">+44 7723 013160</a>
+          </p>
+        </div>
+      </div>
+      <hr style="border-color: rgba(255,255,255,.1); margin: 32px 0;">
+      <p style="text-align: center; margin: 0; font-size: .85rem; color: rgba(255,255,255,.7);">
+        &copy; 2025 Sikh Aid Global. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="js/common.js"></script>
+
+  <script>
+    const welfareImages = [
+      'https://sikhaidglobal.org/assets/images/IMG-20180122-WA0084.jpg',
+      'https://sikhaidglobal.org/assets/images/IMG_4073.PNG',
+      'https://sikhaidglobal.org/assets/images/IMG-20250709-WA0014.jpg',
+      'https://sikhaidglobal.org/assets/images/IMG-20220624-WA0003.jpg',
+      'https://sikhaidglobal.org/assets/images/IMG-20260412-WA0009.jpg',
+      'https://sikhaidglobal.org/assets/images/IMG-20260707-WA0001.jpg',
+      'https://sikhaidglobal.org/assets/images/IMG-20260412-WA0008.jpg'
+    ];
+
+    let carouselIndex = 0;
+    const carouselImg = document.getElementById('carousel-img');
+    const indicatorsContainer = document.getElementById('carousel-indicators');
+
+    welfareImages.forEach((_, idx) => {
+      const span = document.createElement('span');
+      if (idx === 0) span.classList.add('active');
+      span.onclick = () => changeCarouselImage(idx);
+      indicatorsContainer.appendChild(span);
+    });
+
+    function changeCarouselImage(idx) {
+      carouselIndex = idx;
+      carouselImg.classList.add('fade-out');
+      setTimeout(() => {
+        carouselImg.src = welfareImages[carouselIndex];
+        carouselImg.classList.remove('fade-out');
+      }, 300);
+      updateCarouselIndicators();
+    }
+
+    function updateCarouselIndicators() {
+      document.querySelectorAll('.carousel-indicators span').forEach((span, idx) => {
+        span.classList.toggle('active', idx === carouselIndex);
+      });
+    }
+
+    setInterval(() => {
+      changeCarouselImage((carouselIndex + 1) % welfareImages.length);
+    }, 5000);
+
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBrwnnvO4Lm6tX-aeYf5xmhJWIp4JPCQTc",
+      authDomain: "sikh-aid-global.firebaseapp.com",
+      projectId: "sikh-aid-global",
+      storageBucket: "sikh-aid-global.firebasestorage.app",
+      messagingSenderId: "1051932848118",
+      appId: "1:1051932848118:web:7dd77fe18e04288557a1d7"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    async function loadProjects() {
+      try {
+        const snapshot = await db.collection('welfare_aid_projects').orderBy('date', 'desc').get();
+        const container = document.getElementById('projects-container');
+
+        if (snapshot.empty) {
+          container.innerHTML = `
+            <div class="no-data">
+              <div style="font-size: 3rem; margin-bottom: 20px;"><i class="fas fa-heart-hands"></i></div>
+              <h5>No Projects Yet</h5>
+              <p>Check back soon for updates on our welfare aid initiatives.</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = '';
+        snapshot.forEach((doc, index) => {
+          const data = doc.data();
+          const card = document.createElement('div');
+          card.className = 'project-card';
+          card.setAttribute('data-aos', 'fade-up');
+          card.setAttribute('data-aos-delay', (index * 100) % 400);
+
+          const statusBadge = data.completed ? '<span class="badge-status"><i class="fas fa-check-circle"></i> Completed</span>' : '';
+
+          let metaHtml = '';
+          if (data.location) metaHtml += `<div class="meta-item"><i class="fas fa-map-marker-alt"></i> ${data.location}</div>`;
+          if (data.beneficiaries) metaHtml += `<div class="meta-item"><i class="fas fa-users"></i> ${data.beneficiaries} Beneficiaries</div>`;
+          if (data.fundingAmount) metaHtml += `<div class="meta-item"><i class="fas fa-dollar-sign"></i> $${data.fundingAmount.toLocaleString()}</div>`;
+
+          card.innerHTML = `
+            <h5><i class="fas fa-project-diagram" style="color: var(--orange); margin-right: 8px;"></i>${data.projectName || 'Project'}</h5>
+            <p><strong>Type:</strong> ${data.projectType || 'Welfare Initiative'}</p>
+            <p>${data.description || ''}</p>
+            <div class="project-meta">
+              ${metaHtml}
+            </div>
+            ${statusBadge}
+          `;
+
+          container.appendChild(card);
+        });
+
+        AOS.refresh();
+      } catch (error) {
+        console.error('Error loading projects:', error);
+        document.getElementById('projects-container').innerHTML = `
+          <div class="no-data">
+            <p>Error loading projects. Please try again later.</p>
+          </div>
+        `;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadProjects);
+  </script>
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Education Program - Sikh Aid Global</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&family=Raleway:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="icon" type="image/png" href="https://sikhaidglobal.org/assets/images/favicon-32x32.png">
+
+  <style>
+    :root {
+      --navy: #00365B;
+      --orange: #F44708;
+      --cream: #F7EDDB;
+      --light: #F5F7FA;
+      --gray: #6B7280;
+    }
+
+    .project-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%);
+      color: #fff;
+      padding: 100px 0 60px;
+      text-align: center;
+    }
+
+    .project-hero h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin-bottom: 20px;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 60px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,.15);
+    }
+
+    .carousel-img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      transition: opacity .6s ease;
+    }
+
+    .carousel-img.fade-out {
+      opacity: 0;
+    }
+
+    .carousel-indicators {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .carousel-indicators span {
+      width: 8px;
+      height: 8px;
+      background: rgba(255,255,255,.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all .3s;
+    }
+
+    .carousel-indicators span.active {
+      width: 24px;
+      background: var(--orange);
+      border-radius: 4px;
+    }
+
+    .section-pad { padding: 90px 0; }
+    .section-label {
+      font-family: 'Jost', sans-serif;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--orange);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 2.2rem;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 40px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin: 60px 0;
+    }
+
+    .stat-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+    }
+
+    .stat-card h3 {
+      font-size: 2.8rem;
+      color: var(--orange);
+      margin-bottom: 10px;
+      font-weight: 800;
+    }
+
+    .stat-card p {
+      color: var(--gray);
+      font-size: .95rem;
+    }
+
+    .chart-container {
+      background: #fff;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+      margin: 40px 0;
+    }
+
+    .student-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+      margin-bottom: 20px;
+      border-left: 4px solid var(--orange);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .student-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.12);
+    }
+
+    .student-card h5 {
+      color: var(--navy);
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .student-card p {
+      color: var(--gray);
+      font-size: .9rem;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .badge-funded {
+      display: inline-block;
+      background: #d4edda;
+      color: #155724;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: .8rem;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--gray);
+    }
+
+    .loading-spinner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+    }
+
+    .spinner-border {
+      color: var(--orange);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg sticky-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="index.html#home">
+        <img src="https://sikhaidglobal.org/assets/images/sikhaidglobalLogo.png" alt="Sikh Aid Global Logo" onerror="this.style.display='none'" />
+        <div class="brand-text">
+          <span class="brand-name">Sikh Aid Global</span>
+          <span class="brand-sub">Educate. Empower. Uplift.</span>
+        </div>
+      </a>
+      <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <i class="fas fa-bars text-navy"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#programs">Programs</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#impact">Impact</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+          <li class="nav-item"><a class="nav-link btn-donate-nav" href="donation.html"><i class="fas fa-heart me-1"></i>Donate</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="project-hero">
+    <div class="container-lg">
+      <h1>Education Program</h1>
+      <p>Quality education unlocks the potential of every child and builds stronger communities</p>
+    </div>
+  </section>
+
+  <section class="section-pad bg-light-sag">
+    <div class="container-lg">
+      <div class="carousel-container">
+        <img src="https://sikhaidglobal.org/assets/images/WhatsApp%20Image%202026-07-04%20at%2016.22.01%20(5).jpeg" alt="Education" class="carousel-img" id="carousel-img" />
+        <div class="carousel-indicators" id="carousel-indicators"></div>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 40px;">
+        <span class="section-label">Our Impact</span>
+        <h2 class="section-title">Education Statistics</h2>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card" data-aos="zoom-in">
+          <h3 id="total-students">0</h3>
+          <p>Total Students Supported</p>
+        </div>
+        <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+          <h3 id="funded-students">0</h3>
+          <p>Students Funded</p>
+        </div>
+        <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+          <h3 id="total-funding">$0</h3>
+          <p>Total Funds Raised</p>
+        </div>
+      </div>
+
+      <div class="chart-container" data-aos="fade-up">
+        <h4 style="color: var(--navy); margin-bottom: 20px;">Funding Progress</h4>
+        <canvas id="fundingChart"></canvas>
+      </div>
+
+      <div style="text-align: center; margin: 60px 0 40px;">
+        <span class="section-label">Students</span>
+        <h2 class="section-title">Meet Our Students</h2>
+      </div>
+
+      <div id="students-container">
+        <div class="loading-spinner">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background: var(--navy); color: #fff; padding: 60px 0 20px;">
+    <div class="container-lg">
+      <div class="row g-5 mb-5">
+        <div class="col-lg-3 col-md-6">
+          <h6 style="font-weight: 700; margin-bottom: 16px; font-size: .95rem; text-transform: uppercase; letter-spacing: 1px;">About</h6>
+          <p style="font-size: .9rem; line-height: 1.8; opacity: .9;">A non-profit organisation serving underprivileged communities through education, healthcare, and welfare since 2002.</p>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <h6 style="font-weight: 700; margin-bottom: 16px; font-size: .95rem; text-transform: uppercase; letter-spacing: 1px;">Quick Links</h6>
+          <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 8px;"><a href="index.html" style="color: rgba(255,255,255,.85); text-decoration: none;">Home</a></li>
+            <li style="margin-bottom: 8px;"><a href="donation.html" style="color: rgba(255,255,255,.85); text-decoration: none;">Donate</a></li>
+            <li style="margin-bottom: 8px;"><a href="education.html" style="color: rgba(255,255,255,.85); text-decoration: none;">Education</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h6 style="font-weight: 700; margin-bottom: 16px; font-size: .95rem; text-transform: uppercase; letter-spacing: 1px;">Country Contacts</h6>
+          <p style="font-size: .85rem; line-height: 1.8;">
+            <strong>🇬🇧 UK:</strong> <a href="mailto:scotland@sikhaidglobal.org" style="color: rgba(255,255,255,.85); text-decoration: none;">scotland@sikhaidglobal.org</a><br />
+            <strong>🇺🇸 USA:</strong> <a href="mailto:america@sikhaidglobal.org" style="color: rgba(255,255,255,.85); text-decoration: none;">america@sikhaidglobal.org</a><br />
+            <strong>🇨🇦 Canada:</strong> <a href="mailto:canada@sikhaidglobal.org" style="color: rgba(255,255,255,.85); text-decoration: none;">canada@sikhaidglobal.org</a><br />
+            <strong>🇮🇳 India:</strong> <a href="mailto:india@sikhaidglobal.org" style="color: rgba(255,255,255,.85); text-decoration: none;">india@sikhaidglobal.org</a>
+          </p>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <h6 style="font-weight: 700; margin-bottom: 16px; font-size: .95rem; text-transform: uppercase; letter-spacing: 1px;">Contact</h6>
+          <p style="font-size: .85rem; line-height: 1.8;">
+            <strong>General:</strong> <a href="mailto:info@sikhaidglobal.org" style="color: rgba(255,255,255,.85); text-decoration: none;">info@sikhaidglobal.org</a><br />
+            <strong>Phone:</strong> <a href="tel:+447723013160" style="color: rgba(255,255,255,.85); text-decoration: none;">+44 7723 013160</a>
+          </p>
+        </div>
+      </div>
+      <hr style="border-color: rgba(255,255,255,.1); margin: 32px 0;">
+      <p style="text-align: center; margin: 0; font-size: .85rem; color: rgba(255,255,255,.7);">
+        &copy; 2025 Sikh Aid Global. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script src="js/common.js"></script>
+
+  <script>
+    const educationImages = [
+      'https://sikhaidglobal.org/assets/images/WhatsApp%20Image%202026-07-04%20at%2016.22.01%20(5).jpeg',
+      'https://sikhaidglobal.org/assets/images/P1030876.JPG'
+    ];
+
+    let carouselIndex = 0;
+    const carouselImg = document.getElementById('carousel-img');
+    const indicatorsContainer = document.getElementById('carousel-indicators');
+
+    educationImages.forEach((_, idx) => {
+      const span = document.createElement('span');
+      if (idx === 0) span.classList.add('active');
+      span.onclick = () => changeCarouselImage(idx);
+      indicatorsContainer.appendChild(span);
+    });
+
+    function changeCarouselImage(idx) {
+      carouselIndex = idx;
+      carouselImg.classList.add('fade-out');
+      setTimeout(() => {
+        carouselImg.src = educationImages[carouselIndex];
+        carouselImg.classList.remove('fade-out');
+      }, 300);
+      updateCarouselIndicators();
+    }
+
+    function updateCarouselIndicators() {
+      document.querySelectorAll('.carousel-indicators span').forEach((span, idx) => {
+        span.classList.toggle('active', idx === carouselIndex);
+      });
+    }
+
+    setInterval(() => {
+      changeCarouselImage((carouselIndex + 1) % educationImages.length);
+    }, 5000);
+
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBrwnnvO4Lm6tX-aeYf5xmhJWIp4JPCQTc",
+      authDomain: "sikh-aid-global.firebaseapp.com",
+      projectId: "sikh-aid-global",
+      storageBucket: "sikh-aid-global.firebasestorage.app",
+      messagingSenderId: "1051932848118",
+      appId: "1:1051932848118:web:7dd77fe18e04288557a1d7"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    let chart;
+
+    async function loadStudents() {
+      try {
+        const snapshot = await db.collection('education_students').orderBy('date', 'desc').get();
+        const container = document.getElementById('students-container');
+
+        let totalFunded = 0;
+        let totalFunding = 0;
+        const fundingByMonth = {};
+
+        if (snapshot.empty) {
+          container.innerHTML = `
+            <div class="no-data">
+              <div style="font-size: 3rem; margin-bottom: 20px;"><i class="fas fa-graduation-cap"></i></div>
+              <h5>No Students Yet</h5>
+              <p>Check back soon for updates on our education program.</p>
+            </div>
+          `;
+          document.getElementById('total-students').textContent = '0';
+          document.getElementById('funded-students').textContent = '0';
+          document.getElementById('total-funding').textContent = '$0';
+          return;
+        }
+
+        container.innerHTML = '';
+        const students = [];
+
+        snapshot.forEach((doc, index) => {
+          const data = doc.data();
+          students.push(data);
+
+          if (data.funded) totalFunded++;
+          if (data.fundingAmount) totalFunding += data.fundingAmount;
+
+          if (data.date) {
+            const date = new Date(data.date.seconds * 1000);
+            const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+            fundingByMonth[monthKey] = (fundingByMonth[monthKey] || 0) + (data.fundingAmount || 0);
+          }
+        });
+
+        students.forEach((data, index) => {
+          const card = document.createElement('div');
+          card.className = 'student-card';
+          card.setAttribute('data-aos', 'fade-up');
+          card.setAttribute('data-aos-delay', (index * 100) % 400);
+
+          const fundedBadge = data.funded ? '<span class="badge-funded"><i class="fas fa-check-circle"></i> Funded</span>' : '';
+
+          card.innerHTML = `
+            <h5><i class="fas fa-user-circle" style="color: var(--orange); margin-right: 8px;"></i>${data.name || 'Student'}</h5>
+            <p><strong>Grade/Level:</strong> ${data.grade || 'N/A'}</p>
+            <p><strong>School:</strong> ${data.school || 'N/A'}</p>
+            <p><strong>Location:</strong> ${data.location || 'N/A'}</p>
+            <p>${data.description || ''}</p>
+            ${data.fundingAmount ? `<p><strong>Funding:</strong> $${data.fundingAmount}</p>` : ''}
+            ${fundedBadge}
+          `;
+
+          container.appendChild(card);
+        });
+
+        document.getElementById('total-students').textContent = students.length;
+        document.getElementById('funded-students').textContent = totalFunded;
+        document.getElementById('total-funding').textContent = `$${totalFunding.toLocaleString()}`;
+
+        createChart(fundingByMonth);
+        AOS.refresh();
+      } catch (error) {
+        console.error('Error loading students:', error);
+        document.getElementById('students-container').innerHTML = `
+          <div class="no-data">
+            <p>Error loading students. Please try again later.</p>
+          </div>
+        `;
+      }
+    }
+
+    function createChart(fundingByMonth) {
+      const ctx = document.getElementById('fundingChart').getContext('2d');
+      const months = Object.keys(fundingByMonth).sort();
+      const amounts = months.map(m => fundingByMonth[m]);
+
+      chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: months.map(m => {
+            const [year, month] = m.split('-');
+            return new Date(year, month - 1).toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+          }),
+          datasets: [{
+            label: 'Monthly Funding ($)',
+            data: amounts,
+            backgroundColor: '#F44708',
+            borderColor: '#F44708',
+            borderWidth: 1,
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true,
+              labels: { color: '#6B7280', font: { size: 12, weight: '600' } }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { color: '#6B7280' },
+              grid: { color: 'rgba(0,0,0,.05)' }
+            },
+            x: {
+              ticks: { color: '#6B7280' },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', loadStudents);
+  </script>
+</body>
+</html>
