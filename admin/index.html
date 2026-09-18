@@ -790,7 +790,7 @@ emailjs.init({ publicKey: 'YOUR_EMAILJS_PUBLIC_KEY' });
 // ══════════════════════════════════
 let students = [], schools = [], events = [];
 let donors = [], receivingParties = [], matches = [];
-let applicants = [];
+let applicants = [], institutes = [], fundingData = [];
 let curStudentId = null;
 let selectedStudentIds = new Set();
 let curShareStudentIds = [];
@@ -851,6 +851,17 @@ function subscribe() {
     db.collection('applicants').orderBy('name').onSnapshot(snap => {
       applicants = snap.docs.map(d => ({id:d.id,...d.data()}));
       if (activeView() === 'students') filterStudents();
+    }),
+    db.collection('institutes').orderBy('name').onSnapshot(snap => {
+      institutes = snap.docs.map(d => ({id:d.id,...d.data()}));
+      if (activeView() === 'schools') renderSchools();
+    }),
+    db.collection('requestsforapproval').orderBy('name').onSnapshot(snap => {
+      fundingData = snap.docs.map(d => ({id:d.id,...d.data()}));
+      const v = activeView();
+      if (v === 'requests')  renderRequests();
+      if (v === 'monthly')   renderMonthly();
+      if (v === 'approvals') renderApprovals();
     }),
     db.collection('events').orderBy('date').onSnapshot(snap => {
       events = snap.docs.map(d => ({id:d.id,...d.data()}));
@@ -1139,19 +1150,20 @@ info@sikhaidglobal.org | +44 7723 013160`;
 // ══════════════════════════════════
 function renderSchools() {
   const q = (document.getElementById('sch_q')?.value||'').toLowerCase();
-  const list = schools.filter(s=>!q||(s.name||'').toLowerCase().includes(q)||(s.location||'').toLowerCase().includes(q));
+  const allSchools = [...schools, ...institutes];
+  const list = allSchools.filter(s=>!q||(s.name||'').toLowerCase().includes(q)||(s.location||s.city||'').toLowerCase().includes(q));
   document.getElementById('schoolsTbody').innerHTML = list.map(s=>`<tr>
-    <td><div style="font-weight:700">${s.name}</div><div style="font-size:.74rem;color:#9CA3AF;text-transform:capitalize">${s.type||''}</div></td>
-    <td style="font-size:.85rem">${s.location||''}<br><span style="color:#9CA3AF">${s.district||''}</span></td>
+    <td><div style="font-weight:700">${s.name}</div><div style="font-size:.74rem;color:#9CA3AF;text-transform:capitalize">${s.type||s.category||''}</div></td>
+    <td style="font-size:.85rem">${s.location||s.city||''}<br><span style="color:#9CA3AF">${s.district||''}</span></td>
     <td style="font-size:.84rem">${s.board||'—'}</td>
     <td style="font-size:.84rem">${s.principal||'—'}</td>
     <td style="font-weight:700;color:var(--navy)">${s.students||0}</td>
-    <td><span class="s-badge b-active">Active</span></td>
+    <td><span class="s-badge b-active">${s.status||'Active'}</span></td>
     <td><div class="d-flex gap-1">
       <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#schoolModal" onclick="openSchoolModal('${s.id}')"><i class="fas fa-edit"></i></button>
       <button class="btn btn-sm btn-outline-danger" onclick="confirmDel('school','${s.id}','${esc(s.name)}')"><i class="fas fa-trash"></i></button>
     </div></td>
-  </tr>`).join('') || `<tr><td colspan="7">${empty(7,'No schools added yet')}</td></tr>`;
+  </tr>`).join('') || `<tr><td colspan="7">${empty(7,'No schools/institutions found')}</td></tr>`;
 }
 function openSchoolModal(id=null) {
   document.getElementById('sch_id').value = id||'';
@@ -1207,29 +1219,33 @@ function renderApprovals() {
 //  REQUESTS
 // ══════════════════════════════════
 function renderRequests() {
-  const ab = s=>`
-    <button class="btn btn-sm btn-outline-secondary me-1" onclick="viewStudent('${s.id}')"><i class="fas fa-eye"></i></button>
-    ${s.status==='pending'?`
-      <button class="btn btn-sm btn-success me-1" onclick="approveStudent('${s.id}')"><i class="fas fa-check me-1"></i>Approve</button>
-      <button class="btn btn-sm btn-danger" onclick="rejectStudent('${s.id}')"><i class="fas fa-times me-1"></i>Reject</button>`:''}`;
+  const donations = fundingData.filter(f => f.isDonationRequest);
+  const pct = d => d.required>0 ? Math.min(100,Math.round((d.collected||0)/d.required*100)) : 0;
 
-  document.getElementById('pendTbody').innerHTML = students.filter(s=>s.status==='pending').map(s=>`<tr>
-    <td><div class="d-flex align-items-center gap-2">${avHTML(s)}<div style="font-weight:700">${s.name}</div></div></td>
-    <td style="font-weight:700">£${s.amount}</td><td>${typeBadge(s.fundingType)}</td>
-    <td style="font-size:.84rem">${fd(ts(s.createdAt))}</td><td>${ab(s)}</td>
-  </tr>`).join('') || `<tr><td colspan="5">${empty(5,'No pending requests')}</td></tr>`;
+  document.getElementById('pendTbody').innerHTML = donations.filter(d=>d.progress==='pending').map(d=>`<tr>
+    <td style="font-weight:700">${d.name||d.donationId||''}</td>
+    <td style="font-weight:700">₹${d.required||0}</td>
+    <td><span class="s-badge" style="background:#EDE9FE;color:#5B21B6">${d.category||'—'}</span></td>
+    <td style="font-size:.84rem">${d.lastDate||'—'}</td>
+    <td><button class="btn btn-sm btn-outline-secondary"><i class="fas fa-eye"></i></button></td>
+  </tr>`).join('') || `<tr><td colspan="5">${empty(5,'No pending donation requests')}</td></tr>`;
 
-  document.getElementById('otTbody').innerHTML = students.filter(s=>s.fundingType==='one-time').map(s=>`<tr>
-    <td><div class="d-flex align-items-center gap-2">${avHTML(s)}<div style="font-weight:700">${s.name}</div></div></td>
-    <td style="font-weight:700">£${s.amount}</td>
-    <td style="font-size:.84rem">${fd(ts(s.createdAt))}</td><td>${badge(s.status)}</td><td>${ab(s)}</td>
-  </tr>`).join('') || `<tr><td colspan="5">${empty(5,'No one-time requests')}</td></tr>`;
+  document.getElementById('otTbody').innerHTML = donations.filter(d=>d.progress==='in-progress').map(d=>`<tr>
+    <td style="font-weight:700">${d.name||d.donationId||''}</td>
+    <td style="font-weight:700">₹${d.collected||0}/₹${d.required||0}</td>
+    <td style="font-size:.84rem">${d.lastDate||'—'}</td>
+    <td><span class="s-badge" style="background:#D1FAE5;color:#065F46">${d.status||'Active'}</span></td>
+    <td><button class="btn btn-sm btn-outline-secondary"><i class="fas fa-eye"></i></button></td>
+  </tr>`).join('') || `<tr><td colspan="5">${empty(5,'No in-progress donation requests')}</td></tr>`;
 
-  document.getElementById('allTbody').innerHTML = students.map(s=>`<tr>
-    <td><div class="d-flex align-items-center gap-2">${avHTML(s)}<div style="font-weight:700">${s.name}</div></div></td>
-    <td style="font-weight:700">£${s.amount}</td><td>${typeBadge(s.fundingType)}</td>
-    <td>${badge(s.status)}</td><td style="font-size:.84rem">${fd(ts(s.createdAt))}</td><td>${ab(s)}</td>
-  </tr>`).join('') || `<tr><td colspan="6">${empty(6,'No requests found')}</td></tr>`;
+  document.getElementById('allTbody').innerHTML = donations.map(d=>`<tr>
+    <td style="font-weight:700">${d.name||d.donationId||''}</td>
+    <td style="font-weight:700">₹${d.collected||0}</td>
+    <td><span class="s-badge" style="background:#EDE9FE;color:#5B21B6">${d.category||'—'}</span></td>
+    <td><span class="s-badge" style="background:#D1FAE5;color:#065F46">${d.status||'Active'}</span></td>
+    <td style="font-size:.84rem">${d.lastDate||'—'}</td>
+    <td><button class="btn btn-sm btn-outline-secondary"><i class="fas fa-eye"></i></button></td>
+  </tr>`).join('') || `<tr><td colspan="6">${empty(6,'No donation requests found')}</td></tr>`;
 }
 
 async function approveStudent(id) {
@@ -1245,18 +1261,17 @@ async function rejectStudent(id) {
 //  MONTHLY
 // ══════════════════════════════════
 function renderMonthly() {
-  const list = students.filter(s=>s.fundingType==='monthly'&&s.status==='approved');
-  document.getElementById('monthlyTbody').innerHTML = list.map(s=>`<tr>
-    <td><div class="d-flex align-items-center gap-2">${avHTML(s)}<div><div style="font-weight:700">${s.name}</div><div style="font-size:.74rem;color:#9CA3AF">${s.village||''}</div></div></div></td>
-    <td style="font-weight:700;color:var(--navy)">£${s.amount}/mo</td>
-    <td style="font-size:.84rem">${fd(ts(s.approvedAt))}</td>
-    <td style="font-weight:700;text-align:center">${s.monthsFunded||0}</td>
-    <td style="font-weight:700;color:var(--orange)">£${(s.amount||0)*(s.monthsFunded||0)}</td>
-    <td>
-      <button class="btn btn-sm btn-success me-1" onclick="addMonth('${s.id}')"><i class="fas fa-plus me-1"></i>Record Month</button>
-      <button class="btn btn-sm btn-outline-secondary" onclick="viewStudent('${s.id}')"><i class="fas fa-eye"></i></button>
-    </td>
-  </tr>`).join('') || `<tr><td colspan="6">${empty(6,'No active monthly fundings')}</td></tr>`;
+  const studentMonthly = students.filter(s=>s.fundingType==='monthly'&&s.status==='approved');
+  const recurringPayments = fundingData.filter(f => f.isMonthly);
+  const allMonthly = [...studentMonthly, ...recurringPayments];
+  document.getElementById('monthlyTbody').innerHTML = allMonthly.map(s=>`<tr>
+    <td><div style="font-weight:700">${s.name}</div><div style="font-size:.74rem;color:#9CA3AF">${s.village||''}</div></td>
+    <td style="font-weight:700;color:var(--navy)">₹${s.requiredFund||s.amount}/mo</td>
+    <td style="font-size:.84rem">${s.fundLastDate||fd(ts(s.approvedAt))||'—'}</td>
+    <td style="font-weight:700;text-align:center">${s.monthsFunded||'—'}</td>
+    <td style="font-weight:700;color:var(--orange)">₹${(s.requiredFund||s.amount||0)*(s.monthsFunded||0)}</td>
+    <td><span class="s-badge" style="background:${s.approved||s.status==='approved'?'#D1FAE5':'#FEF3C7'};color:${s.approved||s.status==='approved'?'#065F46':'#92400E'}">${s.approved||s.status==='approved'?'Approved':'Pending'}</span></td>
+  </tr>`).join('') || `<tr><td colspan="6">${empty(6,'No monthly fundings')}</td></tr>`;
 }
 async function addMonth(id) {
   const s = students.find(x=>x.id===id);
