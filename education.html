@@ -376,10 +376,19 @@
 
     let chart;
 
+    function maskName(fullName) {
+      if (!fullName) return 'Student';
+      const parts = fullName.trim().split(/\s+/);
+      if (parts.length === 0) return 'Student';
+      const firstName = parts[0];
+      if (firstName.length <= 1) return firstName + '***';
+      return firstName[0] + '*'.repeat(Math.max(3, firstName.length - 2)) + firstName[firstName.length - 1];
+    }
+
     async function loadStudents() {
       try {
-        const snapshot = await db.collection('education_students').orderBy('date', 'desc').get();
         const container = document.getElementById('students-container');
+        const snapshot = await db.collection('applicants').orderBy('name', 'desc').limit(20).get();
 
         let totalFunded = 0;
         let totalFunding = 0;
@@ -402,18 +411,12 @@
         container.innerHTML = '';
         const students = [];
 
-        snapshot.forEach((doc, index) => {
+        snapshot.forEach((doc) => {
           const data = doc.data();
           students.push(data);
 
-          if (data.funded) totalFunded++;
-          if (data.fundingAmount) totalFunding += data.fundingAmount;
-
-          if (data.date) {
-            const date = new Date(data.date.seconds * 1000);
-            const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-            fundingByMonth[monthKey] = (fundingByMonth[monthKey] || 0) + (data.fundingAmount || 0);
-          }
+          if (data.status === 'approved') totalFunded++;
+          if (data.amount) totalFunding += parseInt(data.amount) || 0;
         });
 
         students.forEach((data, index) => {
@@ -422,15 +425,17 @@
           card.setAttribute('data-aos', 'fade-up');
           card.setAttribute('data-aos-delay', (index * 100) % 400);
 
-          const fundedBadge = data.funded ? '<span class="badge-funded"><i class="fas fa-check-circle"></i> Funded</span>' : '';
+          const maskedName = maskName(data.name);
+          const fundedBadge = data.status === 'approved' ? '<span class="badge-funded"><i class="fas fa-check-circle"></i> Approved</span>' : '';
+          const categoryIcon = data.category === 'education' ? '📚' : data.category === 'skills' ? '🛠️' : '🤝';
 
           card.innerHTML = `
-            <h5><i class="fas fa-user-circle" style="color: var(--orange); margin-right: 8px;"></i>${data.name || 'Student'}</h5>
-            <p><strong>Grade/Level:</strong> ${data.grade || 'N/A'}</p>
-            <p><strong>School:</strong> ${data.school || 'N/A'}</p>
-            <p><strong>Location:</strong> ${data.location || 'N/A'}</p>
-            <p>${data.description || ''}</p>
-            ${data.fundingAmount ? `<p><strong>Funding:</strong> $${data.fundingAmount}</p>` : ''}
+            <h5><i class="fas fa-user-circle" style="color: var(--orange); margin-right: 8px;"></i>${maskedName}</h5>
+            <p><strong>Category:</strong> ${categoryIcon} ${(data.category || 'education').charAt(0).toUpperCase() + (data.category || 'education').slice(1)}</p>
+            <p><strong>Village:</strong> ${data.village || 'N/A'}</p>
+            ${data.school ? `<p><strong>School:</strong> ${data.school}</p>` : ''}
+            ${data.fatherName ? `<p><strong>Father:</strong> ${maskName(data.fatherName)}</p>` : ''}
+            ${data.amount ? `<p><strong>Funding Required:</strong> ₹${data.amount}</p>` : ''}
             ${fundedBadge}
           `;
 
@@ -439,9 +444,8 @@
 
         document.getElementById('total-students').textContent = students.length;
         document.getElementById('funded-students').textContent = totalFunded;
-        document.getElementById('total-funding').textContent = `$${totalFunding.toLocaleString()}`;
+        document.getElementById('total-funding').textContent = `₹${totalFunding.toLocaleString()}`;
 
-        createChart(fundingByMonth);
         AOS.refresh();
       } catch (error) {
         console.error('Error loading students:', error);
@@ -454,11 +458,19 @@
     }
 
     function createChart(fundingByMonth) {
-      const ctx = document.getElementById('fundingChart').getContext('2d');
+      const ctx = document.getElementById('fundingChart');
+      if (!ctx) return;
+
+      const ctxElement = ctx.getContext('2d');
       const months = Object.keys(fundingByMonth).sort();
       const amounts = months.map(m => fundingByMonth[m]);
 
-      chart = new Chart(ctx, {
+      if (amounts.length === 0) {
+        ctx.style.display = 'none';
+        return;
+      }
+
+      chart = new Chart(ctxElement, {
         type: 'bar',
         data: {
           labels: months.map(m => {
@@ -466,7 +478,7 @@
             return new Date(year, month - 1).toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
           }),
           datasets: [{
-            label: 'Monthly Funding ($)',
+            label: 'Monthly Funding (₹)',
             data: amounts,
             backgroundColor: '#F44708',
             borderColor: '#F44708',
