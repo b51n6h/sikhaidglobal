@@ -372,9 +372,21 @@
     };
 
     let db = null;
-    if (typeof firebase !== 'undefined') {
-      firebase.initializeApp(firebaseConfig);
-      db = firebase.firestore();
+
+    function initializeFirebase() {
+      if (typeof firebase !== 'undefined' && !db) {
+        try {
+          if (!firebase.apps || firebase.apps.length === 0) {
+            firebase.initializeApp(firebaseConfig);
+          }
+          db = firebase.firestore();
+          loadStudents();
+        } catch (e) {
+          console.error('Firebase init error:', e);
+        }
+      } else if (!db) {
+        setTimeout(initializeFirebase, 100);
+      }
     }
 
     let chart;
@@ -521,7 +533,7 @@
       });
     }
 
-    document.addEventListener('DOMContentLoaded', loadStudents);
+    document.addEventListener('DOMContentLoaded', initializeFirebase);
   </script>
 </body>
 </html>
