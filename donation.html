@@ -218,10 +218,6 @@
           <div class="qr-code-container">
             <img src="https://sikhaidglobal.org/assets/images/zelle-qr.png" alt="Zelle QR Code" onerror="this.style.display='none'" />
           </div>
-
-          <button class="btn btn-sag-primary w-100" onclick="showToast('Zelle details: See above or contact info@sikhaidglobal.org')">
-            <i class="fas fa-mobile-alt"></i> Donate via Zelle
-          </button>
         </div>
 
         <!-- Canada - Bank Transfer -->
@@ -239,10 +235,6 @@
             Contact: info@sikhaidglobal.org<br>
             for current account details
           </div>
-
-          <button class="btn btn-sag-primary w-100" onclick="window.location.href='mailto:info@sikhaidglobal.org?subject=Canada Donation Details'">
-            <i class="fas fa-envelope"></i> Request Account Details
-          </button>
         </div>
 
         <!-- UK - Bank & PayPal -->
@@ -250,10 +242,9 @@
           <div class="donation-card-icon"><i class="fas fa-pound-sign"></i></div>
           <h3>United Kingdom</h3>
           <span class="region">🇬🇧 UK</span>
-          <p>Donate via bank transfer to our UK account.</p>
+          <p>Donate via bank transfer or PayPal to support our cause.</p>
           <a href="donate-uk.html" class="btn btn-sag-primary" style="margin-top: 20px;">View Details & Donate</a>
           <p style="margin-top: 15px; font-size: .85rem;">Account: 00703341 | Sort Code: 80-07-60</p>
-          <p>Donate via bank transfer or PayPal.</p>
 
           <div class="donation-details">
             <strong>Bank Transfer:</strong>
@@ -261,23 +252,22 @@
             for current account details
           </div>
 
-          <button class="btn btn-sag-primary w-100" onclick="window.location.href='mailto:info@sikhaidglobal.org?subject=UK Donation Details'">
-            <i class="fas fa-university"></i> Bank Transfer Details
-          </button>
+          <p style="margin-top: 15px; margin-bottom: 15px;"><strong>Or donate via PayPal:</strong></p>
+          <a href="https://www.paypal.com/donate/?hosted_button_id=MTZF6X8639NKS" class="btn btn-sag-primary w-100" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-paypal"></i> Donate via PayPal
+          </a>
         </div>
 
-        <!-- PayPal Global -->
+        <!-- Stripe Worldwide -->
         <div class="donation-card" data-aos="fade-up" data-aos-delay="300">
-          <div class="donation-card-icon"><i class="fab fa-paypal"></i></div>
-          <h3>PayPal Global</h3>
+          <div class="donation-card-icon"><i class="fas fa-credit-card"></i></div>
+          <h3>Worldwide</h3>
           <span class="region">🌍 WORLDWIDE</span>
-          <p>Donate securely via PayPal from anywhere in the world.</p>
-          <button class="btn btn-sag-primary" style="margin-top: 20px;" onclick="alert('PayPal donations coming soon')">Donate via PayPal</button>
-          <p>Donate securely via PayPal from anywhere in the world.</p>
-
-          <button class="btn btn-sag-primary w-100" onclick="window.location.href='https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID'">
-            <i class="fab fa-paypal"></i> Donate via PayPal
-          </button>
+          <p>Donate securely via Stripe from anywhere in the world.</p>
+          <a href="https://stripe.com/@sikhaidglobal" class="btn btn-sag-primary" style="margin-top: 20px;" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-stripe"></i> Donate via Stripe
+          </a>
+          <p style="margin-top: 15px; font-size: .9rem;">Simple, secure, and supports international donations with multiple payment methods.</p>
         </div>
       </div>
     </div>
