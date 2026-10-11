@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Institutes - Sikh Aid Global</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&family=Raleway:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="icon" type="image/png" href="https://sikhaidglobal.org/assets/images/favicon-32x32.png">
+
+  <style>
+    :root {
+      --navy: #00365B;
+      --orange: #F44708;
+      --cream: #F7EDDB;
+      --light: #F5F7FA;
+      --gray: #6B7280;
+    }
+
+    .project-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%);
+      color: #fff;
+      padding: 100px 0 60px;
+      text-align: center;
+    }
+
+    .project-hero h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin-bottom: 20px;
+    }
+
+    .section-pad { padding: 90px 0; }
+
+    .section-label {
+      font-family: 'Jost', sans-serif;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--orange);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 40px;
+    }
+
+    .institutes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .institute-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+      transition: transform .3s ease, box-shadow .3s ease;
+      border-top: 4px solid var(--orange);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .institute-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.15);
+    }
+
+    .institute-card h3 {
+      color: var(--navy);
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .institute-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 15px;
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    .institute-detail i {
+      color: var(--orange);
+      min-width: 20px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .institute-detail-text {
+      flex: 1;
+      line-height: 1.5;
+    }
+
+    .institute-detail a {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all .3s ease;
+    }
+
+    .institute-detail a:hover {
+      text-decoration: underline;
+    }
+
+    .institute-meta {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid var(--light);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--cream);
+      color: var(--navy);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: .8rem;
+      font-weight: 600;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      justify-content: center;
+    }
+
+    .filter-btn {
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: 2px solid var(--light);
+      background: #fff;
+      color: var(--navy);
+      cursor: pointer;
+      transition: all .3s ease;
+      font-weight: 600;
+      font-size: .9rem;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--gray);
+    }
+
+    .loading-spinner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+    }
+
+    .spinner-border {
+      color: var(--orange);
+    }
+  </style>
+</head>
+<body>
+
+  <section class="project-hero">
+    <div class="container-lg">
+      <h1>Our Institutes</h1>
+      <p>Explore our network of educational and training institutions across the globe</p>
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="container-lg">
+      <div style="text-align: center; margin-bottom: 60px;">
+        <span class="section-label">Network</span>
+        <h2 class="section-title">All Institutes</h2>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters">
+        <button class="filter-btn active" onclick="filterByCountry('all')">All Countries</button>
+        <button class="filter-btn" onclick="filterByCountry('India')">🇮🇳 India</button>
+        <button class="filter-btn" onclick="filterByCountry('UK')">🇬🇧 UK</button>
+        <button class="filter-btn" onclick="filterByCountry('USA')">🇺🇸 USA</button>
+        <button class="filter-btn" onclick="filterByCountry('Canada')">🇨🇦 Canada</button>
+      </div>
+
+      <!-- Institutes Grid -->
+      <div id="institutes-container">
+        <div class="loading-spinner">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="js/common.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+  <script src="js/header-loader.js"></script>
+  <script src="js/footer-loader.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBrwnnvO4Lm6tX-aeYf5xmhJWIp4JPCQTc",
+      authDomain: "sikh-aid-global.firebaseapp.com",
+      projectId: "sikh-aid-global",
+      storageBucket: "sikh-aid-global.firebasestorage.app",
+      messagingSenderId: "1051932848118",
+      appId: "1:1051932848118:web:7dd77fe18e04288557a1d7"
+    };
+
+    let app;
+    let db;
+    let allInstitutes = [];
+    let currentFilter = 'all';
+
+    function initializeFirebase() {
+      try {
+        if (!firebase.apps.length) {
+          app = firebase.initializeApp(firebaseConfig);
+        } else {
+          app = firebase.app();
+        }
+        db = firebase.firestore();
+        loadInstitutes();
+      } catch (error) {
+        console.error('Firebase initialization error:', error);
+        document.getElementById('institutes-container').innerHTML = `
+          <div class="no-data">
+            <p>Unable to connect to the database. Please try again later.</p>
+          </div>
+        `;
+      }
+    }
+
+    function loadInstitutes() {
+      try {
+        db.collection('institutes').orderBy('name').onSnapshot(
+          (snapshot) => {
+            allInstitutes = [];
+            snapshot.forEach((doc) => {
+              allInstitutes.push({
+                id: doc.id,
+                ...doc.data()
+              });
+            });
+            renderInstitutes();
+          },
+          (error) => {
+            console.error('Error loading institutes:', error);
+            document.getElementById('institutes-container').innerHTML = `
+              <div class="no-data">
+                <p>Error loading institutes. Please try again later.</p>
+              </div>
+            `;
+          }
+        );
+      } catch (error) {
+        console.error('Error loading institutes:', error);
+        document.getElementById('institutes-container').innerHTML = `
+          <div class="no-data">
+            <p>Error loading institutes. Please try again later.</p>
+          </div>
+        `;
+      }
+    }
+
+    function filterByCountry(country) {
+      currentFilter = country;
+
+      // Update active button
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+
+      renderInstitutes();
+    }
+
+    function renderInstitutes() {
+      const container = document.getElementById('institutes-container');
+
+      let filteredInstitutes = allInstitutes;
+      if (currentFilter !== 'all') {
+        filteredInstitutes = allInstitutes.filter(inst => inst.country === currentFilter);
+      }
+
+      if (filteredInstitutes.length === 0) {
+        container.innerHTML = `
+          <div class="no-data">
+            <p>No institutes found for the selected filter.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const html = filteredInstitutes.map((institute, index) => `
+        <div class="institute-card" data-aos="fade-up" data-aos-delay="${index * 100}">
+          <h3>${institute.name || 'N/A'}</h3>
+
+          ${institute.country ? `
+            <div class="institute-detail">
+              <i class="fas fa-globe"></i>
+              <div class="institute-detail-text">
+                <strong>Country:</strong> ${institute.country}
+              </div>
+            </div>
+          ` : ''}
+
+          ${institute.city || institute.location ? `
+            <div class="institute-detail">
+              <i class="fas fa-map-marker-alt"></i>
+              <div class="institute-detail-text">
+                <strong>Location:</strong> ${institute.city || institute.location}
+              </div>
+            </div>
+          ` : ''}
+
+          ${institute.address ? `
+            <div class="institute-detail">
+              <i class="fas fa-home"></i>
+              <div class="institute-detail-text">
+                <strong>Address:</strong> ${institute.address}
+              </div>
+            </div>
+          ` : ''}
+
+          ${institute.email ? `
+            <div class="institute-detail">
+              <i class="fas fa-envelope"></i>
+              <div class="institute-detail-text">
+                <a href="mailto:${institute.email}">${institute.email}</a>
+              </div>
+            </div>
+          ` : ''}
+
+          ${institute.phone ? `
+            <div class="institute-detail">
+              <i class="fas fa-phone"></i>
+              <div class="institute-detail-text">
+                <a href="tel:${institute.phone}">${institute.phone}</a>
+              </div>
+            </div>
+          ` : ''}
+
+          ${institute.website ? `
+            <div class="institute-detail">
+              <i class="fas fa-link"></i>
+              <div class="institute-detail-text">
+                <a href="${institute.website}" target="_blank" rel="noopener noreferrer">Visit Website</a>
+              </div>
+            </div>
+          ` : ''}
+
+          ${institute.description ? `
+            <div class="institute-detail">
+              <i class="fas fa-info-circle"></i>
+              <div class="institute-detail-text">
+                <strong>About:</strong> ${institute.description}
+              </div>
+            </div>
+          ` : ''}
+
+          <div class="institute-meta">
+            ${institute.type ? `<span class="badge">${institute.type}</span>` : ''}
+            ${institute.established ? `<span class="badge">Est. ${institute.established}</span>` : ''}
+            ${institute.students ? `<span class="badge">${institute.students} Students</span>` : ''}
+          </div>
+        </div>
+      `).join('');
+
+      container.innerHTML = html;
+
+      // Reinitialize AOS for new elements
+      if (typeof AOS !== 'undefined') {
+        AOS.refresh();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initializeFirebase);
+  </script>
+
+</body>
+</html>
