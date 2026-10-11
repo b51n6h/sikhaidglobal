@@ -41,11 +41,16 @@
       margin-bottom: 20px;
     }
 
+    .carousel-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 60px;
+    }
+
     .carousel-container {
       position: relative;
       width: 100%;
       max-width: 600px;
-      margin: 0 auto 60px;
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 10px 40px rgba(0,0,0,.15);
@@ -209,9 +214,11 @@
 
   <section class="section-pad bg-light-sag">
     <div class="container-lg">
-      <div class="carousel-container">
-        <img src="https://sikhaidglobal.org/assets/images/WhatsApp%20Image%202026-07-04%20at%2016.22.01%20(5).jpeg" alt="Education" class="carousel-img" id="carousel-img" />
-        <div class="carousel-indicators" id="carousel-indicators"></div>
+      <div class="carousel-wrapper">
+        <div class="carousel-container">
+          <img src="https://sikhaidglobal.org/assets/images/WhatsApp%20Image%202026-07-04%20at%2016.22.01%20(5).jpeg" alt="Education" class="carousel-img" id="carousel-img" />
+          <div class="carousel-indicators" id="carousel-indicators"></div>
+        </div>
       </div>
 
       <div style="text-align: center; margin-bottom: 40px;">
