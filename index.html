@@ -959,6 +959,142 @@
     @media (max-width: 575px) {
       .hero-stat-bar { grid-template-columns: 1fr 1fr; }
     }
+
+    /* ── MODAL STYLES ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 16px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      padding: 24px;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: var(--navy);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--gray);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      color: var(--orange);
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--navy);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(244, 71, 8, 0.1);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background: #e63700;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(244, 71, 8, 0.2);
+    }
+
+    .form-success {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--navy);
+    }
+
+    .form-success i {
+      font-size: 3rem;
+      color: var(--orange);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .form-success h3 {
+      margin: 16px 0;
+      color: var(--navy);
+    }
   </style>
 <link rel="icon" type="image/png" href="https://sikhaidglobal.org/assets/images/favicon-32x32.png">
   </head>
@@ -1357,7 +1493,7 @@
             <div class="involve-icon"><i class="fas fa-person-walking-luggage"></i></div>
             <h4>Volunteer</h4>
             <p>Join our global network of volunteers. Whether in the UK, India, USA or Canada, your skills can make a real difference on the ground.</p>
-            <a href="https://sikhaidglobal.org/signup" target="_blank" class="btn-sag-primary">Register</a>
+            <a href="javascript:openVolunteerModal()" class="btn-sag-primary">Register</a>
           </div>
         </div>
         <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
@@ -1365,7 +1501,7 @@
             <div class="involve-icon"><i class="fas fa-building-columns"></i></div>
             <h4>Partner With Us</h4>
             <p>Are you an institution, school, or corporate? Partner with Sikh Aid Global to extend your social impact and reach underserved communities.</p>
-            <a href="https://sikhaidglobal.org/institutes" target="_blank" class="btn-sag-primary">Learn More</a>
+            <a href="javascript:openPartnerModal()" class="btn-sag-primary">Learn More</a>
           </div>
         </div>
       </div>
@@ -1804,6 +1940,351 @@
         span.classList.toggle('active', idx === activeIdx);
       });
     }
+
+
+    // ── MODAL FUNCTIONS ──
+    function openDonorModal() {
+      document.getElementById('donorModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDonorModal() {
+      document.getElementById('donorModal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+      document.getElementById('donorForm').reset();
+    }
+
+    function openVolunteerModal() {
+      document.getElementById('volunteerModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeVolunteerModal() {
+      document.getElementById('volunteerModal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+      document.getElementById('volunteerForm').reset();
+    }
+
+    function openPartnerModal() {
+      document.getElementById('partnerModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePartnerModal() {
+      document.getElementById('partnerModal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+      document.getElementById('partnerForm').reset();
+    }
+
+    // Close modal when clicking outside
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        }
+      });
+    });
+
+    // ── FORM SUBMISSION HANDLERS ──
+    async function handleDonorSubmit(event) {
+      event.preventDefault();
+      const form = document.getElementById('donorForm');
+      const submitBtn = form.querySelector('.btn-submit');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        const formData = {
+          type: 'donor',
+          name: document.getElementById('donor_name').value,
+          email: document.getElementById('donor_email').value,
+          phone: document.getElementById('donor_phone').value || 'N/A',
+          country: document.getElementById('donor_country').value,
+          submittedAt: new Date().toISOString(),
+          status: 'pending'
+        };
+
+        // Save to Firebase
+        if (typeof db !== 'undefined') {
+          await db.collection('registrations').add(formData);
+        }
+
+        // Show success message
+        form.innerHTML = `
+          <div class="form-success">
+            <i class="fas fa-check-circle"></i>
+            <h3>Thank You!</h3>
+            <p>Your registration has been submitted successfully. We will contact you soon with more information about how you can support our mission.</p>
+          </div>
+        `;
+
+        setTimeout(() => closeDonorModal(), 2000);
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('An error occurred. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Register as Donor';
+      }
+    }
+
+    async function handleVolunteerSubmit(event) {
+      event.preventDefault();
+      const form = document.getElementById('volunteerForm');
+      const submitBtn = form.querySelector('.btn-submit');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        const formData = {
+          type: 'volunteer',
+          name: document.getElementById('volunteer_name').value,
+          email: document.getElementById('volunteer_email').value,
+          phone: document.getElementById('volunteer_phone').value,
+          country: document.getElementById('volunteer_country').value,
+          skills: document.getElementById('volunteer_skills').value,
+          availability: document.getElementById('volunteer_availability').value,
+          submittedAt: new Date().toISOString(),
+          status: 'pending'
+        };
+
+        // Save to Firebase
+        if (typeof db !== 'undefined') {
+          await db.collection('registrations').add(formData);
+        }
+
+        // Show success message
+        form.innerHTML = `
+          <div class="form-success">
+            <i class="fas fa-check-circle"></i>
+            <h3>Thank You!</h3>
+            <p>Your volunteer registration has been submitted successfully. Our team will review your profile and contact you with available opportunities.</p>
+          </div>
+        `;
+
+        setTimeout(() => closeVolunteerModal(), 2000);
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('An error occurred. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Register as Volunteer';
+      }
+    }
+
+    async function handlePartnerSubmit(event) {
+      event.preventDefault();
+      const form = document.getElementById('partnerForm');
+      const submitBtn = form.querySelector('.btn-submit');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        const formData = {
+          type: 'partner',
+          organization: document.getElementById('partner_name').value,
+          contact_person: document.getElementById('partner_contact').value,
+          email: document.getElementById('partner_email').value,
+          phone: document.getElementById('partner_phone').value,
+          country: document.getElementById('partner_country').value,
+          organization_type: document.getElementById('partner_type').value,
+          interest: document.getElementById('partner_interest').value,
+          submittedAt: new Date().toISOString(),
+          status: 'pending'
+        };
+
+        // Save to Firebase
+        if (typeof db !== 'undefined') {
+          await db.collection('registrations').add(formData);
+        }
+
+        // Show success message
+        form.innerHTML = `
+          <div class="form-success">
+            <i class="fas fa-check-circle"></i>
+            <h3>Thank You!</h3>
+            <p>Your partnership request has been submitted successfully. Our partnerships team will review your request and contact you within 5-7 business days.</p>
+          </div>
+        `;
+
+        setTimeout(() => closePartnerModal(), 2000);
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('An error occurred. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Partnership Request';
+      }
+    }
   </script>
+
+  <!-- ── MODALS ── -->
+  
+  <!-- Donor Modal -->
+  <div id="donorModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-heart text-orange me-2"></i>Become a Donor</h2>
+        <button class="modal-close" onclick="closeDonorModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="color: #6B7280; margin-bottom: 24px;">
+          Join our community of donors making a real difference. Your contribution helps us educate, empower, and uplift communities across the UK, USA, and India.
+        </p>
+        <form id="donorForm" onsubmit="handleDonorSubmit(event)">
+          <div class="form-group">
+            <label for="donor_name">Full Name *</label>
+            <input type="text" id="donor_name" name="name" class="form-input" required="">
+          </div>
+          <div class="form-group">
+            <label for="donor_email">Email Address *</label>
+            <input type="email" id="donor_email" name="email" class="form-input" required="">
+          </div>
+          <div class="form-group">
+            <label for="donor_phone">Phone (Optional)</label>
+            <input type="tel" id="donor_phone" name="phone" class="form-input">
+          </div>
+          <div class="form-group">
+            <label for="donor_country">Country *</label>
+            <select id="donor_country" name="country" class="form-input" required="">
+              <option value="">Select your country</option>
+              <option value="UK">United Kingdom</option>
+              <option value="USA">United States</option>
+              <option value="Canada">Canada</option>
+              <option value="India">India</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-submit">
+            <i class="fas fa-paper-plane me-2"></i>Register as Donor
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Volunteer Modal -->
+  <div id="volunteerModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-hands-helping text-orange me-2"></i>Become a Volunteer</h2>
+        <button class="modal-close" onclick="closeVolunteerModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="color: #6B7280; margin-bottom: 24px;">
+          Share your skills and passion to make a difference. Volunteers are the backbone of our mission to serve underprivileged communities.
+        </p>
+        <form id="volunteerForm" onsubmit="handleVolunteerSubmit(event)">
+          <div class="form-group">
+            <label for="volunteer_name">Full Name *</label>
+            <input type="text" id="volunteer_name" name="name" class="form-input" required="">
+          </div>
+          <div class="form-group">
+            <label for="volunteer_email">Email Address *</label>
+            <input type="email" id="volunteer_email" name="email" class="form-input" required="">
+          </div>
+          <div class="form-group">
+            <label for="volunteer_phone">Phone *</label>
+            <input type="tel" id="volunteer_phone" name="phone" class="form-input" required="">
+          </div>
+          <div class="form-group">
+            <label for="volunteer_country">Country *</label>
+            <select id="volunteer_country" name="country" class="form-input" required="">
+              <option value="">Select your country</option>
+              <option value="UK">United Kingdom</option>
+              <option value="USA">United States</option>
+              <option value="Canada">Canada</option>
+              <option value="India">India</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="volunteer_skills">Skills/Expertise *</label>
+            <input type="text" id="volunteer_skills" name="skills" class="form-input" placeholder="e.g., Teaching, Healthcare, IT" required="">
+          </div>
+          <div class="form-group">
+            <label for="volunteer_availability">Availability *</label>
+            <select id="volunteer_availability" name="availability" class="form-input" required="">
+              <option value="">Select availability</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Flexible">Flexible</option>
+              <option value="Weekends only">Weekends only</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-submit">
+            <i class="fas fa-check me-2"></i>Register as Volunteer
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Partner Modal -->
+  <div id="partnerModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-handshake text-orange me-2"></i>Partner With Us</h2>
+        <button class="modal-close" onclick="closePartnerModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="color: #6B7280; margin-bottom: 24px;">
+          Are you an institution, school, or corporate? Partner with Sikh Aid Global to extend your social impact and reach underserved communities.
+        </p>
+        <form id="partnerForm" onsubmit="handlePartnerSubmit(event)">
+          <div class="form-group">
+            <label for="partner_name">Organization Name *</label>
+            <input type="text" id="partner_name" name="organization" class="form-input" required="">
+          </div>
+          <div class="form-group">
+            <label for="partner_contact">Contact Person *</label>
+            <input type="text" id="partner_contact" name="contact_person" class="form-input" required="">
+          </div>
+          <div class="form-group">
+            <label for="partner_email">Email Address *</label>
+            <input type="email" id="partner_email" name="email" class="form-input" required="">
+          </div>
+          <div class="form-group">
+            <label for="partner_phone">Phone *</label>
+            <input type="tel" id="partner_phone" name="phone" class="form-input" required="">
+          </div>
+          <div class="form-group">
+            <label for="partner_country">Country *</label>
+            <select id="partner_country" name="country" class="form-input" required="">
+              <option value="">Select your country</option>
+              <option value="UK">United Kingdom</option>
+              <option value="USA">United States</option>
+              <option value="Canada">Canada</option>
+              <option value="India">India</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="partner_type">Organization Type *</label>
+            <select id="partner_type" name="organization_type" class="form-input" required="">
+              <option value="">Select type</option>
+              <option value="School">School</option>
+              <option value="College">College</option>
+              <option value="Corporate">Corporate</option>
+              <option value="NGO">NGO</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="partner_interest">Partnership Interest *</label>
+            <textarea id="partner_interest" name="interest" class="form-input" rows="3" placeholder="Tell us how you'd like to partner with us" required=""></textarea>
+          </div>
+          <button type="submit" class="btn-submit">
+            <i class="fas fa-arrow-right me-2"></i>Submit Partnership Request
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
