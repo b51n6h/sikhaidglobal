@@ -232,12 +232,12 @@
 
           card.innerHTML = `
             <div class="event-card-img">
-              <img src="${event.image || 'https://via.placeholder.com/400x240?text=' + encodeURIComponent(event.title)}" alt="${event.title}" />
+              <img src="${event.image || 'https://via.placeholder.com/400x240?text=' + encodeURIComponent(event.name)}" alt="${event.name}" />
               <span class="event-date-badge">${dateStr}</span>
             </div>
             <div class="event-card-body">
-              <h3>${event.title}</h3>
-              <p>${event.description || 'No description available'}</p>
+              <h3>${event.name}</h3>
+              <p>${event.desc || 'No description available'}</p>
               <div class="event-card-meta">
                 <span><i class="fas fa-map-marker-alt"></i> ${event.location || 'TBA'}</span>
               </div>
