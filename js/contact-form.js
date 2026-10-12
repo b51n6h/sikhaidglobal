@@ -13,10 +13,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const email = contactForm.querySelector('input[name="email"]').value;
     const subject = contactForm.querySelector('input[name="subject"]').value;
     const message = contactForm.querySelector('textarea[name="message"]').value;
+    const notSpam = contactForm.querySelector('input[name="not_spam"]').checked;
 
     // Validate inputs
     if (!name || !email || !subject || !message) {
       showToast('Please fill in all fields', 'error');
+      return;
+    }
+
+    if (!notSpam) {
+      showToast('Please confirm you\'re not a robot', 'error');
       return;
     }
 
