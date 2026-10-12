@@ -1837,6 +1837,14 @@
     // ── FORM SUBMISSION HANDLERS ──
     async function handleDonorSubmit(event) {
       event.preventDefault();
+      const spamCheck = document.getElementById("donor_spam");
+      if (!spamCheck || !spamCheck.checked) {
+        showToast("Please confirm you\'re not a robot", "error");
+        const submitBtn = document.getElementById("donorForm").querySelector(".btn-submit");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Register as Donor";
+        return;
+      }
       const form = document.getElementById('donorForm');
       const submitBtn = form.querySelector('.btn-submit');
       submitBtn.disabled = true;
@@ -1878,6 +1886,14 @@
 
     async function handleVolunteerSubmit(event) {
       event.preventDefault();
+      const spamCheck = document.getElementById("volunteer_spam");
+      if (!spamCheck || !spamCheck.checked) {
+        showToast("Please confirm you\'re not a robot", "error");
+        const submitBtn = document.getElementById("volunteerForm").querySelector(".btn-submit");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Register as Volunteer";
+        return;
+      }
       const form = document.getElementById('volunteerForm');
       const submitBtn = form.querySelector('.btn-submit');
       submitBtn.disabled = true;
@@ -1921,6 +1937,14 @@
 
     async function handlePartnerSubmit(event) {
       event.preventDefault();
+      const spamCheck = document.getElementById("partner_spam");
+      if (!spamCheck || !spamCheck.checked) {
+        showToast("Please confirm you\'re not a robot", "error");
+        const submitBtn = document.getElementById("partnerForm").querySelector(".btn-submit");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Partnership Request";
+        return;
+      }
       const form = document.getElementById('partnerForm');
       const submitBtn = form.querySelector('.btn-submit');
       submitBtn.disabled = true;
