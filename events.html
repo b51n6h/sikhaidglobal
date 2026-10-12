@@ -218,12 +218,19 @@
         container.innerHTML = '';
         snapshot.forEach((doc, index) => {
           const event = doc.data();
-          const eventDate = event.date ? new Date(event.date.seconds * 1000) : new Date();
-          const dateStr = eventDate.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-          });
+          let dateStr = 'TBA';
+          if (event.date) {
+            try {
+              const eventDate = new Date(event.date);
+              dateStr = eventDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              });
+            } catch (e) {
+              dateStr = event.date;
+            }
+          }
 
           const card = document.createElement('div');
           card.className = 'event-card';
@@ -241,9 +248,7 @@
               <div class="event-card-meta">
                 <span><i class="fas fa-map-marker-alt"></i> ${event.location || 'TBA'}</span>
               </div>
-              <a href="event.html?id=${doc.id}" class="event-card-link">
-                View Details <i class="fas fa-arrow-right"></i>
-              </a>
+              
             </div>
           `;
 
