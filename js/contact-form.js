@@ -1,5 +1,5 @@
 // Contact Form Handler
-// Sends contact form submissions to Firebase Cloud Function
+// Saves contact form submissions to Firebase Firestore
 
 document.addEventListener('DOMContentLoaded', function() {
   const contactForm = document.getElementById('contact-form');
@@ -27,28 +27,26 @@ document.addEventListener('DOMContentLoaded', function() {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
 
     try {
-      // Send to Firebase Cloud Function
-      const response = await fetch('https://us-central1-sikh-aid-global.cloudfunctions.net/sendContactEmail', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          subject: subject,
-          message: message,
-        }),
+      // Check if Firebase is available
+      if (typeof db === 'undefined') {
+        showToast('Unable to connect to database. Please try again.', 'error');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+        return;
+      }
+
+      // Save to Firestore
+      await db.collection('contact_messages').add({
+        name: name,
+        email: email,
+        subject: subject,
+        message: message,
+        submittedAt: new Date().toISOString(),
+        status: 'new'
       });
 
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        showToast('Message sent successfully! We\'ll get back to you soon.', 'success');
-        contactForm.reset();
-      } else {
-        showToast(result.error || 'Failed to send message. Please try again.', 'error');
-      }
+      showToast('Message sent successfully! We\'ll get back to you soon.', 'success');
+      contactForm.reset();
     } catch (error) {
       console.error('Contact form error:', error);
       showToast('An error occurred. Please try again later.', 'error');
