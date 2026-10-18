@@ -21,6 +21,10 @@
   <link rel="icon" type="image/png" href="https://sikhaidglobal.org/assets/images/favicon-32x32.png">
 
   <style>
+    :root { --navy: #00365B; --orange: #F44708; --cream: #F7EDDB; --light: #F5F7FA; --gray: #6B7280; }
+    .project-hero { background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%); color: #fff; padding: 100px 0 60px; text-align: center; }
+    .project-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 20px; }
+    .section-pad { padding: 90px 0; }
     .gallery-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 40px 0; width: 100%; }
     .gallery-item { position: relative; overflow: hidden; border-radius: 8px; cursor: pointer; width: 100%; height: 280px; background: #f0f0f0; }
     .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; display: block; }
