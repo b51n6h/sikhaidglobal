@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Donate in India - Sikh Aid Global</title>
+  <title>Donate - India - Sikh Aid Global</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,26 +21,38 @@
 
   <style>
     :root { --navy: #00365B; --orange: #F44708; --cream: #F7EDDB; --light: #F5F7FA; --gray: #6B7280; }
-    .hero { background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%); color: #fff; padding: 80px 0 60px; text-align: center; }
-    .hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 20px; }
-    .section-pad { padding: 80px 0; }
-    .bank-card { background: #fff; border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,.08); margin: 30px 0; }
-    .bank-card h3 { color: var(--navy); margin-bottom: 25px; font-size: 1.5rem; }
-    .bank-detail { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e5e7eb; }
-    .bank-detail:last-child { border-bottom: none; }
-    .bank-label { color: var(--gray); font-size: 0.9rem; font-weight: 600; margin-bottom: 5px; }
-    .bank-value { color: var(--navy); font-size: 1.1rem; font-weight: 600; }
-    .bank-value.account { font-family: 'Courier New', monospace; letter-spacing: 1px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lato', sans-serif; }
+
+    .donation-hero { background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%); color: #fff; padding: 120px 0 80px; text-align: center; }
+    .country-header { background: var(--cream); padding: 40px 0; text-align: center; margin: 40px 0; }
+    .contact-card { background: #fff; border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,.08); margin: 40px 0; }
+    .contact-card h3 { color: var(--navy); margin-bottom: 30px; }
+    .person-contact { margin: 20px 0; padding: 20px; background: var(--cream); border-radius: 8px; }
+    .person-name { font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .payment-section { background: var(--light); padding: 30px; border-radius: 12px; margin: 20px 0; }
+    .btn-sag-primary { background: var(--orange); color: #fff; padding: 12px 32px; border-radius: 4px; border: 2px solid var(--orange); font-weight: 600; display: inline-block; cursor: pointer; text-decoration: none; transition: all .3s ease; }
+    .btn-sag-primary:hover { background: transparent; color: var(--orange); }
   </style>
 </head>
 <body>
 
-  <section class="hero">
+  <section class="donation-hero">
     <div class="container-lg">
-      <h1>🇮🇳 Donate in India</h1>
-      <p>Support our mission through bank transfer in India</p>
+      <h1>Support Our Mission</h1>
+      <p>Make a difference in communities across India</p>
     </div>
   </section>
+
+  <section class="country-header">
+    <div class="container-lg">
+      <div style="font-size: 4rem; margin: 20px 0;">🇮🇳</div>
+      <h2 style="color: var(--navy); font-size: 2rem; margin: 0;">India</h2>
+      <p style="margin: 20px 0 0; font-size: 1.1rem;">Bank Transfer via HDFC Bank</p>
+    </div>
+  </section>
+
   <!-- Important Notice -->
   <div style="background: #fff3cd; border-bottom: 3px solid var(--orange); padding: 20px 0; text-align: center;">
     <div class="container-lg">
@@ -50,59 +62,48 @@
     </div>
   </div>
 
-  <section class="section-pad bg-light-sag">
+  <section style="padding: 60px 0;">
     <div class="container-lg">
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          
-          <div class="bank-card">
-            <h3><i class="fas fa-university" style="color: var(--orange); margin-right: 10px;"></i>Bank Transfer Details</h3>
-            
-            <div class="bank-detail">
-              <div class="bank-label">Bank Name</div>
-              <div class="bank-value">HDFC Bank Limited</div>
-            </div>
+      <!-- Bank Transfer Details -->
+      <div class="contact-card">
+        <h3>💳 Bank Transfer Details</h3>
 
-            <div class="bank-detail">
-              <div class="bank-label">Branch</div>
-              <div class="bank-value">Baba Hotel, Khandawa Road<br/>Barwaha - 451115<br/>Madhya Pradesh, India</div>
-            </div>
-
-            <div class="bank-detail">
-              <div class="bank-label">Account Holder</div>
-              <div class="bank-value">Satsachiar Welfare and Education Society</div>
-            </div>
-
-            <div class="bank-detail">
-              <div class="bank-label">Account Number</div>
-              <div class="bank-value account">50200081849703</div>
-            </div>
-
-            <div class="bank-detail">
-              <div class="bank-label">Account Type</div>
-              <div class="bank-value">CA - Institution</div>
-            </div>
-
-            <div class="bank-detail">
-              <div class="bank-label">Branch Code</div>
-              <div class="bank-value">02109</div>
-            </div>
-
-            <div class="bank-detail">
-              <div class="bank-label">IFSC Code</div>
-              <div class="bank-value account">HDFC0000762</div>
-            </div>
-
-            <div class="bank-detail">
-              <div class="bank-label">Purpose</div>
-              <div class="bank-value">For Satsachiar Welfare and Education Society</div>
-            </div>
+        <div class="payment-section">
+          <strong style="color: var(--navy); display: block; margin-bottom: 10px;">Bank Account Information:</strong>
+          <div style="font-size: 1.1rem; color: var(--orange); margin-bottom: 20px; font-weight: 700;">
+            HDFC Bank Limited
           </div>
 
-          <div style="background: #fff3cd; border-left: 4px solid var(--orange); padding: 20px; border-radius: 8px; margin: 40px 0;">
-            <p style="margin: 0; color: var(--navy);"><strong>✓ Important:</strong> Please include a reference or note with your donation mentioning "Sikh Aid Global" so we can acknowledge your contribution.</p>
+          <div style="border-top: 1px solid var(--gray); padding-top: 20px; margin-top: 20px;">
+            <div style="margin-bottom: 15px;">
+              <strong style="color: var(--navy);">Account Holder:</strong> Satsachiar Welfare and Education Society
+            </div>
+            <div style="margin-bottom: 15px;">
+              <strong style="color: var(--navy);">Account Number:</strong> <span style="font-family: monospace; letter-spacing: 1px;">50200081849703</span>
+            </div>
+            <div style="margin-bottom: 15px;">
+              <strong style="color: var(--navy);">Branch:</strong> Baba Hotel, Khandawa Road, Barwaha - 451115, Madhya Pradesh
+            </div>
+            <div style="margin-bottom: 15px;">
+              <strong style="color: var(--navy);">Branch Code:</strong> 02109
+            </div>
+            <div style="margin-bottom: 15px;">
+              <strong style="color: var(--navy);">IFSC Code:</strong> <span style="font-family: monospace; letter-spacing: 1px;">HDFC0000762</span>
+            </div>
+            <div style="margin-bottom: 15px;">
+              <strong style="color: var(--navy);">Account Type:</strong> CA - Institution
+            </div>
           </div>
+        </div>
 
+        <h4 style="color: var(--navy); margin-top: 30px; margin-bottom: 20px;">Important Information</h4>
+
+        <div style="background: var(--cream); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+          <p style="margin: 0; color: var(--navy);"><strong>✓ Note:</strong> Please include "Sikh Aid Global" as a reference or note with your donation so we can acknowledge your contribution.</p>
+        </div>
+
+        <div style="background: var(--light); padding: 20px; border-radius: 8px;">
+          <p style="margin: 0; color: var(--navy);"><strong>Citizen Requirement:</strong> Donations through this bank transfer method are only available for Indian citizens due to regulatory requirements.</p>
         </div>
       </div>
     </div>
