@@ -221,12 +221,18 @@
           let dateStr = 'TBA';
           if (event.date) {
             try {
-              const eventDate = new Date(event.date);
-              dateStr = eventDate.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-              });
+              // Parse YYYY-MM-DD format
+              const [year, month, day] = event.date.split('-');
+              const eventDate = new Date(year, month - 1, day);
+              if (!isNaN(eventDate.getTime())) {
+                dateStr = eventDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                });
+              } else {
+                dateStr = event.date;
+              }
             } catch (e) {
               dateStr = event.date;
             }

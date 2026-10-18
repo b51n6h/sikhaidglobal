@@ -21,464 +21,62 @@
   <link rel="icon" type="image/png" href="https://sikhaidglobal.org/assets/images/favicon-32x32.png">
 
   <style>
-    :root {
-      --navy: #00365B;
-      --orange: #F44708;
-      --cream: #F7EDDB;
-      --light: #F5F7FA;
-      --gray: #6B7280;
-    }
-
-    .project-hero {
-      background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%);
-      color: #fff;
-      padding: 100px 0 60px;
-      text-align: center;
-    }
-
-    .project-hero h1 {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      margin-bottom: 20px;
-    }
-
-    .carousel-wrapper {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 60px;
-    }
-
-    .carousel-container {
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0,0,0,.15);
-    }
-
-    .carousel-img {
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
-      transition: opacity .6s ease;
-    }
-
-    .carousel-img.fade-out {
-      opacity: 0;
-    }
-
-    .carousel-indicators {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
-      z-index: 2;
-    }
-
-    .carousel-indicators span {
-      width: 8px;
-      height: 8px;
-      background: rgba(255,255,255,.5);
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all .3s;
-    }
-
-    .carousel-indicators span.active {
-      width: 24px;
-      background: var(--orange);
-      border-radius: 4px;
-    }
-
+    :root { --navy: #00365B; --orange: #F44708; --cream: #F7EDDB; --light: #F5F7FA; --gray: #6B7280; }
+    .project-hero { background: linear-gradient(135deg, var(--navy) 0%, rgba(0,54,91,.8) 100%); color: #fff; padding: 100px 0 60px; text-align: center; }
+    .project-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 20px; }
     .section-pad { padding: 90px 0; }
-    .section-label {
-      font-family: 'Jost', sans-serif;
-      font-size: .8rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--orange);
-      display: block;
-      margin-bottom: 10px;
-    }
-    .section-title {
-      font-size: 2.2rem;
-      color: var(--navy);
-      line-height: 1.2;
-      margin-bottom: 40px;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px;
-      margin: 60px 0;
-    }
-
-    .stat-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 30px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,.08);
-    }
-
-    .stat-card h3 {
-      font-size: 2.8rem;
-      color: var(--orange);
-      margin-bottom: 10px;
-      font-weight: 800;
-    }
-
-    .stat-card p {
-      color: var(--gray);
-      font-size: .95rem;
-    }
-
-    .chart-container {
-      background: #fff;
-      border-radius: 12px;
-      padding: 40px;
-      box-shadow: 0 4px 20px rgba(0,0,0,.08);
-      margin: 40px 0;
-    }
-
-    .student-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 4px 20px rgba(0,0,0,.08);
-      margin-bottom: 20px;
-      border-left: 4px solid var(--orange);
-      transition: transform .3s ease, box-shadow .3s ease;
-    }
-
-    .student-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,.12);
-    }
-
-    .student-card h5 {
-      color: var(--navy);
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-      font-weight: 700;
-    }
-
-    .student-card p {
-      color: var(--gray);
-      font-size: .9rem;
-      line-height: 1.6;
-      margin-bottom: 8px;
-    }
-
-    .badge-funded {
-      display: inline-block;
-      background: #d4edda;
-      color: #155724;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: .8rem;
-      font-weight: 600;
-      margin-top: 10px;
-    }
-
-    .no-data {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--gray);
-    }
-
-    .loading-spinner {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 300px;
-    }
-
-    .spinner-border {
-      color: var(--orange);
-    }
+    .gallery-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 40px 0; }
+    .gallery-item { position: relative; overflow: hidden; border-radius: 8px; cursor: pointer; aspect-ratio: 1; background: #f0f0f0; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; }
+    .gallery-container:hover .gallery-item img { opacity: 0.4; }
+    .gallery-container .gallery-item:hover img { opacity: 1 !important; }
+    .gallery-description { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.85); color: #fff; padding: 12px; font-size: 0.9rem; opacity: 0; transition: opacity 0.3s ease; z-index: 10; }
+    .gallery-item:hover .gallery-description { opacity: 1; }
+    .gallery-item:nth-child(2) { grid-column: span 2; }
+    .gallery-item:nth-child(4) { grid-column: span 2; }
+    .gallery-item:nth-child(6) { grid-column: span 2; }
+    @media (max-width: 768px) { .gallery-container { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); } .gallery-item:nth-child(2), .gallery-item:nth-child(4), .gallery-item:nth-child(6) { grid-column: span 1; } }
   </style>
 </head>
 <body>
-
   <section class="project-hero">
     <div class="container-lg">
       <h1>Education Program</h1>
-      <p>Quality education unlocks the potential of every child and builds stronger communities</p>
+      <p>Transforming lives through quality education</p>
     </div>
   </section>
 
   <section class="section-pad bg-light-sag">
     <div class="container-lg">
-      <div class="carousel-wrapper">
-        <div class="carousel-container">
-          <img src="https://sikhaidglobal.org/assets/images/WhatsApp%20Image%202026-07-04%20at%2016.22.01%20(5).jpeg" alt="Education" class="carousel-img" id="carousel-img" />
-          <div class="carousel-indicators" id="carousel-indicators"></div>
-        </div>
-      </div>
-
-      <div style="text-align: center; margin-bottom: 40px;">
-        <span class="section-label">Our Impact</span>
-        <h2 class="section-title">Education Statistics</h2>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-card" data-aos="zoom-in">
-          <h3 id="total-students">0</h3>
-          <p>Total Students Supported</p>
-        </div>
-        <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
-          <h3 id="funded-students">0</h3>
-          <p>Students Funded</p>
-        </div>
-        <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
-          <h3 id="total-funding">$0</h3>
-          <p>Total Funds Raised</p>
-        </div>
-      </div>
-
-      <div class="chart-container" data-aos="fade-up">
-        <h4 style="color: var(--navy); margin-bottom: 20px;">Funding Progress</h4>
-        <canvas id="fundingChart"></canvas>
-      </div>
-
-      <div style="text-align: center; margin: 60px 0 40px;">
-        <span class="section-label">Students</span>
-        <h2 class="section-title">Meet Our Students</h2>
-      </div>
-
-      <div id="students-container">
-        <div class="loading-spinner">
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      </div>
+      <div class="gallery-container" id="imageGallery"></div>
     </div>
   </section>
 
-
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-  <script src="js/common.js"></script>
-
   <script>
-    const educationImages = [
-      'https://sikhaidglobal.org/assets/images/WhatsApp%20Image%202026-07-04%20at%2016.22.01%20(5).jpeg',
-      'https://sikhaidglobal.org/assets/images/P1030876.JPG'
+    const galleryImages = [
+      { src: 'backup/images/education-school-group.jpg', description: 'Uniformed pupils and volunteers proudly standing outside Future Flying School' },
+      { src: 'backup/images/education-students-uniforms.jpg', description: 'Two smiling students showcasing their school uniforms with dignity' },
+      { src: 'backup/images/education-students-waving.jpg', description: 'Joyful students waving with energy and enthusiasm' },
+      { src: 'backup/images/education-students-row.jpg', description: 'A row of uniformed students showing school pride' },
+      { src: 'backup/images/education-classroom.jpg', description: 'Children engaged in learning at their desks in a bright classroom' },
+      { src: 'backup/images/education-certificates.jpg', description: 'Students proudly holding achievement certificates with school banner' },
+      { src: 'backup/images/education-studying-floor.jpg', description: 'Real study session with children learning together' },
+      { src: 'backup/images/education-assembly.jpg', description: 'Whole-school assembly showing the scale and spirit of the program' },
+      { src: 'backup/images/education-panorama.jpg', description: 'Wide panoramic view of uniformed pupils with teachers' }
     ];
-
-    let carouselIndex = 0;
-    const carouselImg = document.getElementById('carousel-img');
-    const indicatorsContainer = document.getElementById('carousel-indicators');
-
-    educationImages.forEach((_, idx) => {
-      const span = document.createElement('span');
-      if (idx === 0) span.classList.add('active');
-      span.onclick = () => changeCarouselImage(idx);
-      indicatorsContainer.appendChild(span);
-    });
-
-    function changeCarouselImage(idx) {
-      carouselIndex = idx;
-      carouselImg.classList.add('fade-out');
-      setTimeout(() => {
-        carouselImg.src = educationImages[carouselIndex];
-        carouselImg.classList.remove('fade-out');
-      }, 300);
-      updateCarouselIndicators();
+    function initGallery() {
+      const gallery = document.getElementById('imageGallery');
+      gallery.innerHTML = galleryImages.map((img, index) => `
+        <div class="gallery-item" data-aos="fade-up" data-aos-delay="${index * 50}">
+          <img src="${img.src}" alt="Education" loading="lazy" />
+          <div class="gallery-description">${img.description}</div>
+        </div>
+      `).join('');
+      AOS.refresh();
     }
-
-    function updateCarouselIndicators() {
-      document.querySelectorAll('.carousel-indicators span').forEach((span, idx) => {
-        span.classList.toggle('active', idx === carouselIndex);
-      });
-    }
-
-    setInterval(() => {
-      changeCarouselImage((carouselIndex + 1) % educationImages.length);
-    }, 5000);
-
-    // Firebase Config
-    const firebaseConfig = {
-      apiKey: "AIzaSyBrwnnvO4Lm6tX-aeYf5xmhJWIp4JPCQTc",
-      authDomain: "sikh-aid-global.firebaseapp.com",
-      projectId: "sikh-aid-global",
-      storageBucket: "sikh-aid-global.firebasestorage.app",
-      messagingSenderId: "1051932848118",
-      appId: "1:1051932848118:web:7dd77fe18e04288557a1d7"
-    };
-
-    let db = null;
-
-    function initializeFirebase() {
-      if (typeof firebase !== 'undefined' && !db) {
-        try {
-          if (!firebase.apps || firebase.apps.length === 0) {
-            firebase.initializeApp(firebaseConfig);
-          }
-          db = firebase.firestore();
-          loadStudents();
-        } catch (e) {
-          console.error('Firebase init error:', e);
-        }
-      } else if (!db) {
-        setTimeout(initializeFirebase, 100);
-      }
-    }
-
-    let chart;
-
-    function maskName(fullName) {
-      if (!fullName) return 'Student';
-      const parts = fullName.trim().split(/\s+/);
-      if (parts.length === 0) return 'Student';
-      const firstName = parts[0];
-      if (firstName.length <= 1) return firstName + '***';
-      return firstName[0] + '*'.repeat(Math.max(3, firstName.length - 2)) + firstName[firstName.length - 1];
-    }
-
-    async function loadStudents() {
-      try {
-        if (!db) {
-          document.getElementById('students-container').innerHTML = `
-            <div class="no-data">
-              <p>Firebase not initialized. Please refresh the page.</p>
-            </div>
-          `;
-          return;
-        }
-
-        const container = document.getElementById('students-container');
-        const snapshot = await db.collection('applicants').orderBy('name', 'desc').limit(20).get();
-
-        let totalFunded = 0;
-        let totalFunding = 0;
-        const fundingByMonth = {};
-
-        if (snapshot.empty) {
-          container.innerHTML = `
-            <div class="no-data">
-              <div style="font-size: 3rem; margin-bottom: 20px;"><i class="fas fa-graduation-cap"></i></div>
-              <h5>No Students Yet</h5>
-              <p>Check back soon for updates on our education program.</p>
-            </div>
-          `;
-          document.getElementById('total-students').textContent = '0';
-          document.getElementById('funded-students').textContent = '0';
-          document.getElementById('total-funding').textContent = '$0';
-          return;
-        }
-
-        container.innerHTML = '';
-        const students = [];
-
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          students.push(data);
-
-          if (data.status === 'approved') totalFunded++;
-          if (data.amount) totalFunding += parseInt(data.amount) || 0;
-        });
-
-        students.forEach((data, index) => {
-          const card = document.createElement('div');
-          card.className = 'student-card';
-          card.setAttribute('data-aos', 'fade-up');
-          card.setAttribute('data-aos-delay', (index * 100) % 400);
-
-          const maskedName = maskName(data.name);
-          const fundedBadge = data.status === 'approved' ? '<span class="badge-funded"><i class="fas fa-check-circle"></i> Approved</span>' : '';
-          const categoryIcon = data.category === 'education' ? '📚' : data.category === 'skills' ? '🛠️' : '🤝';
-
-          card.innerHTML = `
-            <h5><i class="fas fa-user-circle" style="color: var(--orange); margin-right: 8px;"></i>${maskedName}</h5>
-            <p><strong>Category:</strong> ${categoryIcon} ${(data.category || 'education').charAt(0).toUpperCase() + (data.category || 'education').slice(1)}</p>
-            <p><strong>Village:</strong> ${data.village || 'N/A'}</p>
-            ${data.school ? `<p><strong>School:</strong> ${data.school}</p>` : ''}
-            ${data.fatherName ? `<p><strong>Father:</strong> ${maskName(data.fatherName)}</p>` : ''}
-            ${data.amount ? `<p><strong>Funding Required:</strong> ₹${data.amount}</p>` : ''}
-            ${fundedBadge}
-          `;
-
-          container.appendChild(card);
-        });
-
-        document.getElementById('total-students').textContent = students.length;
-        document.getElementById('funded-students').textContent = totalFunded;
-        document.getElementById('total-funding').textContent = `₹${totalFunding.toLocaleString()}`;
-
-        AOS.refresh();
-      } catch (error) {
-        console.error('Error loading students:', error);
-        document.getElementById('students-container').innerHTML = `
-          <div class="no-data">
-            <p>Error loading students. Please try again later.</p>
-          </div>
-        `;
-      }
-    }
-
-    function createChart(fundingByMonth) {
-      const ctx = document.getElementById('fundingChart');
-      if (!ctx) return;
-
-      const ctxElement = ctx.getContext('2d');
-      const months = Object.keys(fundingByMonth).sort();
-      const amounts = months.map(m => fundingByMonth[m]);
-
-      if (amounts.length === 0) {
-        ctx.style.display = 'none';
-        return;
-      }
-
-      chart = new Chart(ctxElement, {
-        type: 'bar',
-        data: {
-          labels: months.map(m => {
-            const [year, month] = m.split('-');
-            return new Date(year, month - 1).toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
-          }),
-          datasets: [{
-            label: 'Monthly Funding (₹)',
-            data: amounts,
-            backgroundColor: '#F44708',
-            borderColor: '#F44708',
-            borderWidth: 1,
-            borderRadius: 6
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              display: true,
-              labels: { color: '#6B7280', font: { size: 12, weight: '600' } }
-            }
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: { color: '#6B7280' },
-              grid: { color: 'rgba(0,0,0,.05)' }
-            },
-            x: {
-              ticks: { color: '#6B7280' },
-              grid: { display: false }
-            }
-          }
-        }
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', initializeFirebase);
+    document.addEventListener('DOMContentLoaded', initGallery);
   </script>
   <script src="js/header-loader.js"></script>
   <script src="js/footer-loader.js"></script>
