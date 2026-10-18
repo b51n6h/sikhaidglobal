@@ -65,12 +65,12 @@
     function initGallery() {
       const gallery = document.getElementById('imageGallery');
       gallery.innerHTML = galleryImages.map((img, index) => `
-        <div class="gallery-item" data-aos="fade-up" data-aos-delay="${index * 50}">
+        <div class="gallery-item">
           <img src="${img.src}" alt="Education" loading="lazy" />
           <div class="gallery-description">${img.description}</div>
         </div>
       `).join('');
-      AOS.refresh();
+      
     }
     document.addEventListener('DOMContentLoaded', initGallery);
   </script>
